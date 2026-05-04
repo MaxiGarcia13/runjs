@@ -38,6 +38,12 @@ export function Editor({ className }: EditorProps) {
         },
       });
 
+      instance.onDidChangeModelContent(() => {
+        const value = instance.getValue();
+
+        console.warn('Content changed:', value);
+      });
+
       return () => {
         instance.dispose();
       };
