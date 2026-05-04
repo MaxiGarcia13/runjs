@@ -15,16 +15,27 @@ export function Editor({ className }: EditorProps) {
         value: 'console.log("Hello, world!");',
         language: 'javascript',
         theme: 'vs-dark',
-        fontSize: 15,
+
+        fontSize: 18,
         minimap: {
           enabled: false,
-
         },
+
+        lineNumbers: 'off',
+        fontLigatures: true,
+        wordWrap: 'on',
+        cursorBlinking: 'smooth',
+        cursorSmoothCaretAnimation: 'off',
+        tabSize: 2,
 
         automaticLayout: true,
         fixedOverflowWidgets: true,
         scrollBeyondLastLine: false,
         roundedSelection: false,
+
+        padding: {
+          top: 16,
+        },
       });
 
       return () => {
