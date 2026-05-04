@@ -1,3 +1,5 @@
+import { Editor } from '@/components/editor'
+
 export function App() {
-  return <div>Hello World</div>
+  return <Editor />
 }
