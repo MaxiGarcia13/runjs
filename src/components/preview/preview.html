@@ -34,14 +34,14 @@
       window.error = overwriteFunction(originalError, 'error');
       window.info = overwriteFunction(originalInfo, 'info');
 
-      const perfNow = typeof performance !== 'undefined' && typeof performance.now === 'function'
-        ? performance.now.bind(performance)
-        : Date.now.bind(Date);
+      const perfNow =
+        typeof performance !== 'undefined' && typeof performance.now === 'function'
+          ? performance.now.bind(performance)
+          : Date.now.bind(Date);
       const getNow = () => perfNow();
 
       const getHeapUsed = () => {
-        if (typeof performance === 'undefined' || !performance.memory)
-          return null;
+        if (typeof performance === 'undefined' || !performance.memory) return null;
 
         const { usedJSHeapSize } = performance.memory;
 
@@ -89,7 +89,9 @@
       };
 
       try {
-        // your code here
+        (() => {
+          // your code here
+        })();
       } catch (error) {
         console.error(error);
       }
