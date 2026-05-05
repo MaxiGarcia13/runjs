@@ -40,13 +40,14 @@ export function Preview({ className }: PreviewProps) {
 
   useEffect(() => {
     setOutput([]);
-    setLoading(true);
 
     const onMessage = (event: MessageEvent) => {
       const data: Message = event.data;
 
       if (data.source !== 'runjs-preview')
         return;
+
+      setLoading(true);
 
       if (data.type === 'error') {
         setOutput([{
