@@ -7,5 +7,8 @@ The code is:
 
 \`\`\`javascript
   ${code}
-\`\`\``;
+\`\`\`
+
+do not chage log, warn, error, info and perf functions.
+`;
 }
