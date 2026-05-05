@@ -59,6 +59,43 @@ Open the URL shown in the terminal (typically `http://localhost:5173`).
 4. Console calls are intercepted in the iframe and sent to the app via `postMessage`.
 5. Output is rendered in the preview panel with type-aware styling.
 
+## Runtime Helpers
+
+Inside the preview runtime, a few global helper functions are available in addition to `console.*`:
+
+- `log(...args)` - same behavior as `console.log(...)`, output appears in the preview panel.
+- `warn(...args)` - same behavior as `console.warn(...)`.
+- `error(...args)` - same behavior as `console.error(...)`.
+- `info(...args)` - same behavior as `console.info(...)`.
+- `perf(fn, options?, ...args)` - measures execution time for sync and async functions.
+
+### `perf` helper
+
+`perf` calls your function and reports how long it took:
+
+```js
+perf(() => {
+  for (let i = 0; i < 1_000_000; i++) {}
+}, { label: 'loop' });
+```
+
+For async functions:
+
+```js
+await perf(
+  async () => {
+    await new Promise(resolve => setTimeout(resolve, 250));
+  },
+  { label: 'fetch simulation' },
+);
+```
+
+Supported `options`:
+
+- `label` (`string`) - label shown in the output (`[perf] <label>: <duration>ms`).
+- `log` (`boolean`, default `true`) - when `false`, skips printing the perf line.
+- `onMeasure` (`(durationMs: number) => void`) - callback with measured duration in milliseconds.
+
 ## Contributing
 
 1. Create a branch for your change.
