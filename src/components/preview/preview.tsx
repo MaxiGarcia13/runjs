@@ -9,6 +9,7 @@ interface PreviewProps {
 }
 
 interface Output {
+  id: string;
   type: string;
   content: string;
 }
@@ -17,6 +18,7 @@ interface Message {
   source?: string;
   payload?: string;
   type?: string;
+  id: string;
 }
 
 export function Preview({ className }: PreviewProps) {
@@ -38,6 +40,7 @@ export function Preview({ className }: PreviewProps) {
 
   useEffect(() => {
     setOutput([]);
+    setLoading(true);
 
     const onMessage = (event: MessageEvent) => {
       const data: Message = event.data;
@@ -45,15 +48,15 @@ export function Preview({ className }: PreviewProps) {
       if (data.source !== 'runjs-preview')
         return;
 
-      setLoading(true);
-
       if (data.type === 'error') {
         setOutput([{
+          id: data.id,
           type: data.type,
           content: Array.isArray(data.payload) ? data.payload.join('\n') : data.payload,
         }]);
       } else {
-        setOutput(prev => [...prev, {
+        setOutput((prev) => [...prev, {
+          id: data.id,
           type: data.type,
           content: Array.isArray(data.payload)
             ? data.payload.map(formatOutput).join('\n')
@@ -81,22 +84,24 @@ export function Preview({ className }: PreviewProps) {
 
       <p className="h-full w-full pt-2 flex flex-col">
         {
-          output.length > 0
-            ? output
-                .map((item, index) => (
-                  <span
-                    key={index}
-                    className={cn(
-                      item.type === 'error' && 'text-red-400',
-                      item.type === 'warn' && 'text-amber-300',
-                      item.type === 'info' && 'text-cyan-300',
-                      item.type === 'log' && 'text-slate-100',
-                    )}
-                  >
-                    {item.content}
-                  </span>
-                ))
-            : loading ? null : <EmptyOutput />
+          loading
+            ? 'Loading...'
+            : output.length > 0
+              ? output
+                  .map((item) => (
+                    <span
+                      key={item.id}
+                      className={cn(
+                        item.type === 'error' && 'text-red-400',
+                        item.type === 'warn' && 'text-amber-300',
+                        item.type === 'info' && 'text-cyan-300',
+                        item.type === 'log' && 'text-slate-100',
+                      )}
+                    >
+                      {item.content}
+                    </span>
+                  ))
+              : <EmptyOutput />
         }
       </p>
     </div>

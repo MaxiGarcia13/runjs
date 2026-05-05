@@ -10,15 +10,19 @@
 
       const overwriteFunction = (originalFunction, type) => {
         return (...args) => {
-          window.parent.postMessage({ 
-            source: 'runjs-preview',
-            payload: args,
-            type
-          }, '*');
+          window.parent.postMessage(
+            {
+              source: 'runjs-preview',
+              payload: args,
+              id: Math.random().toString(36).substring(2, 15),
+              type,
+            },
+            '*',
+          );
 
           originalFunction(...args);
-        }
-      }
+        };
+      };
 
       console.log = overwriteFunction(originalLog, 'log');
       console.warn = overwriteFunction(originalWarn, 'warn');
@@ -32,37 +36,43 @@
 
       const getNow = () => (typeof performance !== 'undefined' ? performance.now() : Date.now());
 
-      const isPromiseLike = value => (
-        typeof value === 'object'
-        && value !== null
-        && typeof value.then === 'function'
-      );
+      const isPromiseLike = (value) => typeof value === 'object' && value !== null && typeof value.then === 'function';
 
       window.perf = (fn, options = {}, ...args) => {
-        const { label = fn?.name || 'anonymous', log = true, onMeasure } = options;
+        const { label = fn?.name || 'anonymous' } = options;
 
-        const reportDuration = startTime => {
+        console.log('=>[perf] Function name: ', label);
+
+        const reportDuration = (startTime) => {
           const durationMs = getNow() - startTime;
-          if (typeof onMeasure === 'function') {
-            onMeasure(durationMs);
-          }
-          if (log) {
-            console.log(`[perf] ${label}: ${durationMs.toFixed(2)}ms`);
-          }
+
+          console.log(`duration: ${durationMs.toFixed(2)}ms`);
         };
 
+        const reportMemory = (startHeapUsed, endHeapUsed) => {
+          console.log(`memory usage: ${((endHeapUsed - startHeapUsed) / 1024 / 1024).toFixed(2)} MB`);
+        };
+
+        const startHeapUsed = performance.memory.usedJSHeapSize;
         const startTime = getNow();
         const result = fn(...args);
 
         if (isPromiseLike(result)) {
-          return result.finally(() => reportDuration(startTime));
+          return result.finally(() => {
+            reportDuration(startTime);
+
+            reportMemory(startHeapUsed, performance.memory.usedJSHeapSize);
+          });
         }
 
         reportDuration(startTime);
+        reportMemory(startHeapUsed, performance.memory.usedJSHeapSize);
+
         return result;
       };
+
       try {
-       // your code here
+        // your code here
       } catch (error) {
         console.error(error);
       }
