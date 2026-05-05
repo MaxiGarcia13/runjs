@@ -67,7 +67,7 @@ export function ResizablePanel({
         {leftContent}
       </div>
       <div
-        className={cn(dividerClassName, 'bg-gray-200', cursorClassName, 'hover:bg-gray-300')}
+        className={cn(dividerClassName, 'bg-gray-700', cursorClassName)}
         onMouseDown={handleMouseDown}
       >
       </div>
@@ -87,7 +87,7 @@ function getClassNames({ className, direction }: Partial<ResizablePanelProps>) {
       mainClassName: cn(className, 'flex flex-row'),
       containerClassName: 'w-1/2',
       cursorClassName: 'cursor-col-resize',
-      dividerClassName: 'w-px hover:w-1',
+      dividerClassName: 'w-px mb-2',
     };
   }
 
@@ -95,6 +95,6 @@ function getClassNames({ className, direction }: Partial<ResizablePanelProps>) {
     mainClassName: cn(className, 'flex flex-col'),
     containerClassName: 'h-1/2',
     cursorClassName: 'cursor-row-resize',
-    dividerClassName: 'h-px hover:h-1',
+    dividerClassName: 'h-px mr-2',
   };
 }

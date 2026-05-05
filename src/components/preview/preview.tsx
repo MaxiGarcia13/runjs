@@ -79,7 +79,7 @@ export function Preview({ className }: PreviewProps) {
         sandbox="allow-scripts"
       />
 
-      <p className="h-full w-full pl-2 pt-2 flex flex-col">
+      <p className="h-full w-full pt-2 flex flex-col">
         {
           output.length > 0
             ? output
