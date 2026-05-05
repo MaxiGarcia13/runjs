@@ -38,7 +38,7 @@ export function Preview({ className }: PreviewProps) {
   }, [code]);
 
   return (
-    <div className={cn('h-full overflow-auto', className)}>
+    <div className={cn('h-full overflow-auto rounded-md border border-[#44475A] bg-[#282A36]', className)}>
       <iframe
         srcDoc={html()}
         className="hidden"
@@ -46,8 +46,25 @@ export function Preview({ className }: PreviewProps) {
         sandbox="allow-scripts"
       />
 
-      <pre className="h-full w-full p-3">
-        {output.length > 0 ? output.join('\n') : 'Run console.log(...) to see output here.'}
+      <pre className="h-full w-full p-3 text-[#F8F8F2]">
+        {
+          output.length > 0
+            ? output.join('\n')
+            : (
+                <span className="text-green-300">
+                  Run log, warn, error, info to see output here.
+                  <br />
+                  <br />
+                  log('Hello World');
+                  <br />
+                  warn('Hello World');
+                  <br />
+                  error('Hello World');
+                  <br />
+                  info('Hello World');
+                </span>
+              )
+        }
       </pre>
     </div>
   );

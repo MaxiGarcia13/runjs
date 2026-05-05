@@ -56,7 +56,7 @@ export function Editor({ className }: EditorProps) {
   }, []);
 
   return (
-    <section className={cn('box-border h-full min-h-0 w-full overflow-hidden', className)}>
+    <section className={cn('box-border h-full min-h-0 w-full overflow-hidden rounded-md border border-[#44475A] bg-[#282A36]', className)}>
       <div ref={editorRef} className="h-full w-full" />
     </section>
   );
