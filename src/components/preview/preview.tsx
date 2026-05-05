@@ -26,9 +26,7 @@ export function Preview({ className }: PreviewProps) {
 
   const [output, setOutput] = useState<Output[]>([]);
 
-  const html = () => {
-    return previewHtml.replace('// your code here', code);
-  };
+  const html = previewHtml.replace('// your code here', code);
 
   const formatOutput = (content: string) => {
     if (typeof content === 'object' || Array.isArray(content))
@@ -72,7 +70,7 @@ export function Preview({ className }: PreviewProps) {
   return (
     <div className={cn('h-full overflow-auto', className)}>
       <iframe
-        srcDoc={html()}
+        srcDoc={html}
         className="hidden"
         title="preview-runtime"
         sandbox="allow-scripts"
