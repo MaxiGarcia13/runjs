@@ -25,7 +25,9 @@ export function Editor({ className }: EditorProps) {
         setCode(value);
       });
 
-      instance.focus();
+      if (window === window.parent) {
+        instance.focus();
+      }
 
       return () => {
         instance.dispose();
