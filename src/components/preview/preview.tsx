@@ -84,24 +84,23 @@ export function Preview({ className }: PreviewProps) {
 
       <p className="h-full w-full pt-2 flex flex-col">
         {
-          loading
-            ? 'Loading...'
-            : output.length > 0
-              ? output
-                  .map((item) => (
-                    <span
-                      key={item.id}
-                      className={cn(
-                        item.type === 'error' && 'text-red-400',
-                        item.type === 'warn' && 'text-amber-300',
-                        item.type === 'info' && 'text-cyan-300',
-                        item.type === 'log' && 'text-slate-100',
-                      )}
-                    >
-                      {item.content}
-                    </span>
-                  ))
-              : <EmptyOutput />
+
+          output.length > 0
+            ? output
+                .map((item) => (
+                  <span
+                    key={item.id}
+                    className={cn(
+                      item.type === 'error' && 'text-red-400',
+                      item.type === 'warn' && 'text-amber-300',
+                      item.type === 'info' && 'text-cyan-300',
+                      item.type === 'log' && 'text-slate-100',
+                    )}
+                  >
+                    {item.content}
+                  </span>
+                ))
+            : loading ? null : <EmptyOutput />
         }
       </p>
     </div>
