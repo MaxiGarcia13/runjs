@@ -25,7 +25,6 @@ export function Preview({ className }: PreviewProps) {
   const { code } = useEditorStore();
 
   const [output, setOutput] = useState<Output[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const html = () => {
     return previewHtml.replace('// your code here', code);
@@ -47,8 +46,6 @@ export function Preview({ className }: PreviewProps) {
       if (data.source !== 'runjs-preview')
         return;
 
-      setLoading(true);
-
       if (data.type === 'error') {
         setOutput([{
           id: data.id,
@@ -64,8 +61,6 @@ export function Preview({ className }: PreviewProps) {
             : formatOutput(data.payload),
         }]);
       }
-
-      setLoading(false);
     };
 
     window.removeEventListener('message', onMessage);
@@ -101,7 +96,7 @@ export function Preview({ className }: PreviewProps) {
                     {item.content}
                   </span>
                 ))
-            : loading ? null : <EmptyOutput />
+            : code.length !== 0 ? null : <EmptyOutput />
         }
       </p>
     </div>
