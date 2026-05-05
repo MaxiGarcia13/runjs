@@ -1,4 +1,4 @@
-import { editor } from 'monaco-editor';
+import { editor, typescript } from 'monaco-editor';
 import { draculaTheme } from './themes/dracula';
 
 const THEME_NAME = 'dracula';
@@ -37,3 +37,30 @@ export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOp
     top: 16,
   },
 };
+
+export const RUNJS_RUNTIME_GLOBALS = `
+/** Same as \`console.log\`, but output is also sent to the RunJS preview panel (and mirrored to the browser console). */
+declare function log(...args: unknown[]): void;
+/** Same as \`console.warn\`, but output is also sent to the RunJS preview panel (and mirrored to the browser console). */
+declare function warn(...args: unknown[]): void;
+/** Same as \`console.error\`, but output is also sent to the RunJS preview panel (and mirrored to the browser console). */
+declare function error(...args: unknown[]): void;
+
+interface PerfOptions {
+  /** Label printed in perf logs; defaults to \`fn.name\` or \`"anonymous"\`. */
+  label?: string;
+}
+
+/**
+ * Runs a function, then logs timing (ms) and approximate JS heap delta (when available).
+ * If the function returns a thenable, metrics are reported in a \`finally\` callback after it settles.
+ * @returns Whatever \`fn\` returns (including a Promise if \`fn\` is async).
+ */
+declare function perf<TResult, TArgs extends unknown[] = []>(
+  fn: (...args: TArgs) => TResult,
+  options?: PerfOptions,
+  ...args: TArgs
+): TResult;
+`;
+
+typescript.javascriptDefaults.addExtraLib(RUNJS_RUNTIME_GLOBALS, 'runjs-runtime.d.ts');
