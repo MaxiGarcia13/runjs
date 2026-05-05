@@ -1,5 +1,6 @@
 import { editor } from 'monaco-editor';
 import { useEffect, useRef } from 'react';
+import { useEditorStore } from '@/store/useEditorStore';
 import { cn } from '@/utils/classes';
 
 interface EditorProps {
@@ -8,21 +9,26 @@ interface EditorProps {
 
 export function Editor({ className }: EditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
+  const { code, setCode } = useEditorStore();
 
   useEffect(() => {
     if (editorRef.current) {
       const instance = editor.create(editorRef.current, {
-        value: 'console.log("Hello, world!");',
+        value: code,
+
         language: 'javascript',
         theme: 'vs-dark',
 
-        fontSize: 18,
+        fontFamily: 'Fira Code, monospace',
+        fontLigatures: true,
+        fontSize: 16,
+
         minimap: {
           enabled: false,
         },
 
         lineNumbers: 'off',
-        fontLigatures: true,
+
         wordWrap: 'on',
         cursorBlinking: 'smooth',
         cursorSmoothCaretAnimation: 'off',
@@ -40,8 +46,7 @@ export function Editor({ className }: EditorProps) {
 
       instance.onDidChangeModelContent(() => {
         const value = instance.getValue();
-
-        console.warn('Content changed:', value);
+        setCode(value);
       });
 
       return () => {
