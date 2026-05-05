@@ -83,9 +83,9 @@ export function Preview({ className }: PreviewProps) {
         {
           output.length > 0
             ? output
-                .map(item => (
+                .map((item, index) => (
                   <span
-                    key={item.content}
+                    key={index}
                     className={cn(
                       item.type === 'error' && 'text-red-300',
                       item.type === 'warn' && 'text-yellow-300',
