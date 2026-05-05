@@ -1,3 +1,4 @@
+import { OpenAiButton } from '../openai-button';
 import { ShareButton } from '../share-button';
 
 export function Header() {
@@ -11,7 +12,10 @@ export function Header() {
         </h1>
       </div>
 
-      <ShareButton />
+      <div className="flex items-center gap-2">
+        <OpenAiButton />
+        <ShareButton />
+      </div>
     </header>
   );
 }
