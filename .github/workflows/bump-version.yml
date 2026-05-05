@@ -11,3 +11,5 @@ permissions:
 jobs:
   bump:
     uses: MaxiGarcia13/gh-actions/.github/workflows/bump-version/action.yml@main
+    with:
+      default_branch: main
