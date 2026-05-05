@@ -15,6 +15,7 @@
     "url": "https://github.com/MaxiGarcia13/runjs/issues"
   },
   "scripts": {
+    "prepare": "simple-git-hooks",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -22,9 +23,11 @@
     "lint:fix": "eslint --fix"
   },
   "dependencies": {
+    "lint-staged": "^16.4.0",
     "monaco-editor": "^0.55.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "simple-git-hooks": "^2.13.1",
     "zustand": "^5.0.12"
   },
   "devDependencies": {
@@ -40,5 +43,11 @@
     "tailwindcss": "^4.2.4",
     "typescript": "^6.0.3",
     "vite": "^8.0.10"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,astro}": "eslint --fix"
   }
 }
