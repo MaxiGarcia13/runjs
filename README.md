@@ -74,9 +74,14 @@ Inside the preview runtime, a few global helper functions are available in addit
 `perf` calls your function and reports how long it took:
 
 ```js
-perf(() => {
-  for (let i = 0; i < 1_000_000; i++) {}
-}, { label: 'loop' });
+perf(
+  () => {
+    for (let i = 0; i < 1_000_000; i++) {
+      // do something
+    }
+  },
+  { label: 'loop' },
+);
 ```
 
 For async functions:
@@ -84,7 +89,7 @@ For async functions:
 ```js
 await perf(
   async () => {
-    await new Promise(resolve => setTimeout(resolve, 250));
+    await new Promise((resolve) => setTimeout(resolve, 250));
   },
   { label: 'fetch simulation' },
 );

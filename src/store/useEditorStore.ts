@@ -10,7 +10,7 @@ interface EditorStore {
 const CODE_URL_PARAM = 'code';
 const DEBOUNCE_TIME = 800;
 
-export const useEditorStore = create<EditorStore>(set => ({
+export const useEditorStore = create<EditorStore>((set) => ({
   code: getUrlParam(CODE_URL_PARAM) ? decodeUrlParam(getUrlParam(CODE_URL_PARAM)) : '',
   setCode: debounce((code) => {
     set({ code });

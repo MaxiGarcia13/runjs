@@ -16,7 +16,7 @@ export function getState(): ToastState {
 
 function setState(next: Partial<ToastState>) {
   state = { ...state, ...next };
-  listeners.forEach(listener => listener(state));
+  listeners.forEach((listener) => listener(state));
 }
 
 export function subscribe(listener: (state: ToastState) => void): () => void {

@@ -13,7 +13,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
   const TOAST_AUTO_CLOSE_MS = 5000;
 
   useEffect(() => {
-    return subscribe(next => setToastState(next));
+    return subscribe((next) => setToastState(next));
   }, []);
 
   const handleClose = useCallback(() => {
