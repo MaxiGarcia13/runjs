@@ -34,7 +34,19 @@
       window.error = overwriteFunction(originalError, 'error');
       window.info = overwriteFunction(originalInfo, 'info');
 
-      const getNow = () => (typeof performance !== 'undefined' ? performance.now() : Date.now());
+      const perfNow = typeof performance !== 'undefined' && typeof performance.now === 'function'
+        ? performance.now.bind(performance)
+        : Date.now.bind(Date);
+      const getNow = () => perfNow();
+
+      const getHeapUsed = () => {
+        if (typeof performance === 'undefined' || !performance.memory)
+          return null;
+
+        const { usedJSHeapSize } = performance.memory;
+
+        return Number.isFinite(usedJSHeapSize) && usedJSHeapSize > 0 ? usedJSHeapSize : null;
+      };
 
       const isPromiseLike = (value) => typeof value === 'object' && value !== null && typeof value.then === 'function';
 
@@ -44,16 +56,21 @@
         console.log('=>[perf] Function name: ', label);
 
         const reportDuration = (startTime) => {
-          const durationMs = getNow() - startTime;
+          const durationMs = Math.max(0, getNow() - startTime);
 
           console.log(`duration: ${durationMs.toFixed(2)}ms`);
         };
 
         const reportMemory = (startHeapUsed, endHeapUsed) => {
+          if (startHeapUsed == null || endHeapUsed == null) {
+            console.log('memory usage: unavailable in this browser/runtime');
+            return;
+          }
+
           console.log(`memory usage: ${((endHeapUsed - startHeapUsed) / 1024 / 1024).toFixed(2)} MB`);
         };
 
-        const startHeapUsed = performance.memory.usedJSHeapSize;
+        const startHeapUsed = getHeapUsed();
         const startTime = getNow();
         const result = fn(...args);
 
@@ -61,12 +78,12 @@
           return result.finally(() => {
             reportDuration(startTime);
 
-            reportMemory(startHeapUsed, performance.memory.usedJSHeapSize);
+            reportMemory(startHeapUsed, getHeapUsed());
           });
         }
 
         reportDuration(startTime);
-        reportMemory(startHeapUsed, performance.memory.usedJSHeapSize);
+        reportMemory(startHeapUsed, getHeapUsed());
 
         return result;
       };
