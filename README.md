@@ -11,6 +11,7 @@ Write code in Monaco, run it in a sandboxed preview runtime, and share snippets 
 - URL-synced code state (debounced), so snippets can be shared as a link.
 - One-click "Copy link" action in the header.
 - Resizable editor/preview layout (horizontal on desktop, vertical on mobile).
+- Web app manifest and platform icons for installable/mobile-friendly behavior.
 
 ## Stack
 
@@ -67,11 +68,19 @@ Inside the preview runtime, a few global helper functions are available in addit
 - `warn(...args)` - same behavior as `console.warn(...)`.
 - `error(...args)` - same behavior as `console.error(...)`.
 - `info(...args)` - same behavior as `console.info(...)`.
-- `perf(fn, options?, ...args)` - measures execution time for sync and async functions.
+- `perf(fn, options?, ...args)` - measures execution time and memory delta for sync and async functions.
 
 ### `perf` helper
 
-`perf` calls your function and reports how long it took:
+`perf` calls your function and prints:
+
+- `=>[perf] Function name: <label>`
+- `duration: <ms>ms`
+- `memory usage: <delta> MB` (or `unavailable in this browser/runtime`)
+
+`perf` returns the wrapped function result. If the function is async/Promise-like, `perf` returns that Promise and reports metrics in a `finally` block.
+
+Sync example:
 
 ```js
 perf(
@@ -80,26 +89,24 @@ perf(
       // do something
     }
   },
-  { label: 'loop' },
+  { label: "loop" },
 );
 ```
 
-For async functions:
+Async example:
 
 ```js
 await perf(
   async () => {
     await new Promise((resolve) => setTimeout(resolve, 250));
   },
-  { label: 'fetch simulation' },
+  { label: "fetch simulation" },
 );
 ```
 
 Supported `options`:
 
-- `label` (`string`) - label shown in the output (`[perf] <label>: <duration>ms`).
-- `log` (`boolean`, default `true`) - when `false`, skips printing the perf line.
-- `onMeasure` (`(durationMs: number) => void`) - callback with measured duration in milliseconds.
+- `label` (`string`) - custom function name shown by the helper. Defaults to `fn.name` or `anonymous`.
 
 ## Contributing
 
