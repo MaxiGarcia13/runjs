@@ -6,7 +6,12 @@ interface EditorStore {
   setCode: (code: string) => void;
 }
 
+const STORAGE_KEY = 'runjs-code';
+
 export const useEditorStore = create<EditorStore>(set => ({
-  code: '',
-  setCode: debounce(code => set({ code }), 500),
+  code: localStorage.getItem(STORAGE_KEY) || '',
+  setCode: debounce((code) => {
+    localStorage.setItem('runjs-code', code);
+    set({ code });
+  }, 1000),
 }));
