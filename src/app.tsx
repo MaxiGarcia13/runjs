@@ -8,7 +8,7 @@ import { isMobile } from '@/utils/device';
 import { Footer } from './components/footer';
 
 const LazyEditor = lazy(() =>
-  import('@/components/editor/editor').then((mod) => ({ default: mod.Editor })),
+  import('@/components/editor').then((mod) => ({ default: mod.Editor })),
 );
 
 export function App() {
