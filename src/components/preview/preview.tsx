@@ -37,8 +37,6 @@ export function Preview({ className }: PreviewProps) {
   };
 
   useEffect(() => {
-    setOutput([]);
-
     const onMessage = (event: MessageEvent) => {
       const data: Message = event.data;
 
