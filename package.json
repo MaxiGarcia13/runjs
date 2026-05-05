@@ -48,6 +48,6 @@
     "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,astro}": "eslint --fix"
+    "*.{js,jsx,ts,tsx,astro}": "npm run lint:fix"
   }
 }
