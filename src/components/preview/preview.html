@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <body>
+    <script type="module">
+      //overwrite console.log
+      const originalLog = console.log.bind(console);
+      const originalWarn = console.warn.bind(console);
+      const originalError = console.error.bind(console);
+      const originalInfo = console.info.bind(console);
+
+      const overwriteFunction = (originalFunction, type) => {
+        return (...args) => {
+          window.parent.postMessage({ 
+            source: 'runjs-preview',
+            payload: args,
+            type
+          }, '*');
+
+          originalFunction(...args);
+        }
+      }
+
+      console.log = overwriteFunction(originalLog, 'log');
+      console.warn = overwriteFunction(originalWarn, 'warn');
+      console.error = overwriteFunction(originalError, 'error');
+      console.info = overwriteFunction(originalInfo, 'info');
+
+      window.log = overwriteFunction(originalLog, 'log');
+      window.warn = overwriteFunction(originalWarn, 'warn');
+      window.error = overwriteFunction(originalError, 'error');
+      window.info = overwriteFunction(originalInfo, 'info');
+      try {
+       // your code here
+      } catch (error) {
+        console.error(error);
+      }
+    </script>
+  </body>
+</html>

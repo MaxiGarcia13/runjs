@@ -1,0 +1,98 @@
+import { useEffect, useState } from 'react';
+import { useEditorStore } from '@/store/useEditorStore';
+import { cn } from '@/utils/classes';
+import { EmptyOutput } from './empty-output';
+import previewHtml from './preview.html?raw';
+
+interface PreviewProps {
+  className?: string;
+}
+
+interface Output {
+  type: string;
+  content: string;
+}
+
+interface Message {
+  source?: string;
+  payload?: string;
+  type?: string;
+}
+
+export function Preview({ className }: PreviewProps) {
+  const { code } = useEditorStore();
+
+  const [output, setOutput] = useState<Output[]>([]);
+
+  const html = () => {
+    return previewHtml.replace('// your code here', code);
+  };
+
+  const formatOutput = (content: string) => {
+    if (typeof content === 'object' || Array.isArray(content))
+      return JSON.stringify(content, null, 2);
+
+    return content;
+  };
+
+  useEffect(() => {
+    setOutput([]);
+
+    const onMessage = (event: MessageEvent) => {
+      const data: Message = event.data;
+
+      if (data.source !== 'runjs-preview')
+        return;
+
+      if (data.type === 'error') {
+        setOutput([{
+          type: data.type,
+          content: Array.isArray(data.payload) ? data.payload.join('\n') : data.payload,
+        }]);
+      } else {
+        setOutput(prev => [...prev, {
+          type: data.type,
+          content: Array.isArray(data.payload)
+            ? data.payload.map(formatOutput).join('\n')
+            : formatOutput(data.payload),
+        }]);
+      }
+    };
+
+    window.removeEventListener('message', onMessage);
+    window.addEventListener('message', onMessage);
+
+    return () => window.removeEventListener('message', onMessage);
+  }, [code]);
+
+  return (
+    <div className={cn('h-full overflow-auto', className)}>
+      <iframe
+        srcDoc={html()}
+        className="hidden"
+        title="preview-runtime"
+        sandbox="allow-scripts"
+      />
+
+      <p className="h-full w-full pl-2 pt-2 flex flex-col">
+        {
+          output.length > 0
+            ? output
+                .map(item => (
+                  <span
+                    key={item.content}
+                    className={cn(
+                      item.type === 'error' && 'text-red-300',
+                      item.type === 'warn' && 'text-yellow-300',
+                      item.type === 'info' && 'text-blue-300',
+                    )}
+                  >
+                    {item.content}
+                  </span>
+                ))
+            : <EmptyOutput />
+        }
+      </p>
+    </div>
+  );
+}
