@@ -25,6 +25,8 @@ export function Editor({ className }: EditorProps) {
         setCode(value);
       });
 
+      instance.focus();
+
       return () => {
         instance.dispose();
       };
