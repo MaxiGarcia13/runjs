@@ -11,7 +11,7 @@ const STORAGE_KEY = 'runjs-code';
 export const useEditorStore = create<EditorStore>(set => ({
   code: localStorage.getItem(STORAGE_KEY) || '',
   setCode: debounce((code) => {
-    localStorage.setItem('runjs-code', code);
+    localStorage.setItem(STORAGE_KEY, code);
     set({ code });
   }, 1000),
 }));
