@@ -7,12 +7,12 @@ interface EditorStore {
 }
 
 const STORAGE_KEY = 'runjs-code';
-const DEBOUNCE_TIME = 1000;
+const DEBOUNCE_TIME = 800;
 
 export const useEditorStore = create<EditorStore>(set => ({
   code: localStorage.getItem(STORAGE_KEY) || '',
   setCode: debounce((code) => {
-    localStorage.setItem(STORAGE_KEY, code);
     set({ code });
+    localStorage.setItem(STORAGE_KEY, code);
   }, DEBOUNCE_TIME),
 }));
