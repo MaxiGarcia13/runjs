@@ -87,9 +87,10 @@ export function Preview({ className }: PreviewProps) {
                   <span
                     key={index}
                     className={cn(
-                      item.type === 'error' && 'text-red-300',
-                      item.type === 'warn' && 'text-yellow-300',
-                      item.type === 'info' && 'text-blue-300',
+                      item.type === 'error' && 'text-red-400',
+                      item.type === 'warn' && 'text-amber-300',
+                      item.type === 'info' && 'text-cyan-300',
+                      item.type === 'log' && 'text-slate-100',
                     )}
                   >
                     {item.content}
