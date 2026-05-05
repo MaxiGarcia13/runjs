@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --dracula-background: #282A36;
+  --dracula-background: #1F2937;
   --dracula-current-line: #44475A;
   --dracula-selection: #44475A;
   --dracula-foreground: #F8F8F2;
