@@ -9,5 +9,5 @@ permissions:
   contents: write
 
 jobs:
-  version:
+  release:
     uses: MaxiGarcia13/gh-actions/.github/workflows/bump-version.yml@main
