@@ -9,5 +9,11 @@ permissions:
   contents: write
 
 jobs:
+  configure-git-author:
+    uses: MaxiGarcia13/gh-actions/.github/actions/configure-git-author@main
+    with:
+      user_name: github-actions[bot]
+      user_email: github-actions[bot]@users.noreply.github.com
+
   bump:
     uses: MaxiGarcia13/gh-actions/.github/workflows/bump-version.yml@main
