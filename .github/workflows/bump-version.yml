@@ -1,8 +1,14 @@
+name: Bump version on main
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
 jobs:
   bump:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Bump version
-        uses: MaxiGarcia13/gh-actions/.github/workflows/bump-version@main
+    uses: MaxiGarcia13/gh-actions/.github/workflows/bump-version/action.yml@main
+    secrets: inherit
