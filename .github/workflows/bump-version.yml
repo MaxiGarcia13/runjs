@@ -10,4 +10,4 @@ permissions:
 
 jobs:
   bump:
-    uses: MaxiGarcia13/gh-actions/.github/workflows/bump-version/action.yml@main
+    uses: MaxiGarcia13/gh-actions/.github/workflows/bump-version@main
