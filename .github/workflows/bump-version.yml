@@ -9,11 +9,17 @@ permissions:
   contents: write
 
 jobs:
-  configure-git-author:
-    uses: MaxiGarcia13/gh-actions/.github/actions/configure-git-author@main
-    with:
-      user_name: github-actions[bot]
-      user_email: github-actions[bot]@users.noreply.github.com
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-  bump:
-    uses: MaxiGarcia13/gh-actions/.github/workflows/bump-version.yml@main
+      - name: Configure git author
+        uses: MaxiGarcia13/gh-actions/.github/actions/configure-git-author@main
+        with:
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
+
+      - name: Bump version
+        uses: MaxiGarcia13/gh-actions/.github/workflows/bump-version.yml@main
