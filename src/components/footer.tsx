@@ -2,7 +2,7 @@ import { homepage, version } from '../../package.json';
 
 export function Footer() {
   return (
-    <footer className="flex justify-center items-center p-2 gap-2 text-xs">
+    <footer className="flex items-center justify-center gap-2 p-2 text-xs">
       <span>
         v
         {version}
@@ -12,7 +12,7 @@ export function Footer() {
         href={homepage}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-pink-400 hover:text-pink-300 transition-colors"
+        className="text-pink-400 transition-colors hover:text-pink-300"
       >
         Repository
       </a>

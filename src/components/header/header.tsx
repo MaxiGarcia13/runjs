@@ -3,10 +3,10 @@ import { ShareButton } from '../share-button';
 
 export function Header() {
   return (
-    <header className="flex justify-between items-center p-2">
+    <header className="flex items-center justify-between p-2">
       <div className="flex items-center gap-2">
         <img src="/favicon.png" alt="RunJS" className="size-6" />
-        <h1 className="font-bold text-2xl">
+        <h1 className="text-2xl font-bold">
           Run
           <span className="text-amber-300">JS</span>
         </h1>

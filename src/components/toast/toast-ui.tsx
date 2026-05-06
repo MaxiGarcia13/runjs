@@ -65,7 +65,7 @@ export function Toast({
     >
       <div className="animate-toast-appear">
         <Alert variant={variant} className="flex items-center gap-2">
-          <span className="flex-1 min-w-0">{children}</span>
+          <span className="min-w-0 flex-1">{children}</span>
           {onClose && (
             <Button onClick={onClose} aria-label="Close">
               <CloseIcon className="size-4" />
