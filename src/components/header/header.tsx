@@ -6,9 +6,9 @@ export function Header() {
     <header className="flex justify-between items-center p-2">
       <div className="flex items-center gap-2">
         <img src="/favicon.png" alt="RunJS" className="size-6" />
-        <h1 className="font-bold text-lg">
+        <h1 className="font-bold text-2xl">
           Run
-          <span className="text-amber-400">JS</span>
+          <span className="text-amber-300">JS</span>
         </h1>
       </div>
 
