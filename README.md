@@ -68,7 +68,6 @@ Inside the preview runtime, a few global helper functions are available in addit
 - `warn(...args)` - same behavior as `console.warn(...)`.
 - `error(...args)` - same behavior as `console.error(...)`.
 - `info(...args)` - same behavior as `console.info(...)`.
-- `perf(fn, options?, ...args)` - measures execution time and memory delta for sync and async functions.
 
 ### `perf` helper
 
