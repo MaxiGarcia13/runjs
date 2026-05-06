@@ -88,7 +88,7 @@ perf(
       // do something
     }
   },
-  { label: "loop" },
+  { label: 'loop' },
 );
 ```
 
@@ -99,7 +99,7 @@ await perf(
   async () => {
     await new Promise((resolve) => setTimeout(resolve, 250));
   },
-  { label: "fetch simulation" },
+  { label: 'fetch simulation' },
 );
 ```
 
