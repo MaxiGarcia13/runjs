@@ -51,6 +51,13 @@ interface PerfOptions {
   label?: string;
 }
 
+interface ExpectMatcher {
+  /** Checks strict equality (\`===\`) and prints a pass/fail message in the preview output. */
+  toBe(expected: boolean | number | string | null | undefined): Promise<void>;
+  /** Checks deep equality and prints a pass/fail message in the preview output. */
+  toEqual(expected: boolean | number | string | null | undefined | object | unknown[]): Promise<void>;
+}
+
 /**
  * Runs a function, then logs timing (ms) and approximate JS heap delta (when available).
  * If the function returns a thenable, metrics are reported in a \`finally\` callback after it settles.
@@ -61,6 +68,11 @@ declare function perf<TResult, TArgs extends unknown[] = []>(
   options?: PerfOptions,
   ...args: TArgs
 ): TResult;
+/**
+ * Creates assertion matchers for a value or lazy callback.
+ * If a function is provided, it is awaited before running each matcher.
+ */
+declare function expect<T>(value: T | (() => T | Promise<T>)): ExpectMatcher;
 `;
 
 typescript.javascriptDefaults.addExtraLib(RUNJS_RUNTIME_GLOBALS, 'runjs-runtime.d.ts');
