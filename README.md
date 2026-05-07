@@ -68,6 +68,7 @@ Inside the preview runtime, a few global helper functions are available in addit
 - `warn(...args)` - same behavior as `console.warn(...)`.
 - `error(...args)` - same behavior as `console.error(...)`.
 - `info(...args)` - same behavior as `console.info(...)`.
+- `expect(value)` - creates async assertions with `toBe(...)` (strict equality) and `toEqual(...)` (deep equality).
 
 ### `perf` helper
 
@@ -106,6 +107,23 @@ await perf(
 Supported `options`:
 
 - `label` (`string`) - custom function name shown by the helper. Defaults to `fn.name` or `anonymous`.
+
+### `expect` helper
+
+`expect` can receive either a direct value or a callback. If a callback is provided, it is awaited before each assertion.
+
+Available matchers:
+
+- `expect(value).toBe(expected)` - checks strict equality (`===`) and returns a Promise.
+- `expect(value).toEqual(expected)` - checks deep structural equality and returns a Promise.
+
+Examples:
+
+```js
+expect(2 + 2).toBe(4);
+expect({ id: 1, tags: ['a'] }).toEqual({ id: 1, tags: ['a'] });
+expect(() => Promise.resolve({ id: 1 })).toEqual({ id: 1 });
+```
 
 ## Contributing
 
