@@ -61,14 +61,14 @@ export function HistoryListItem({ history, onNavigateToHistory }: HistoryListIte
       <div className="flex shrink-0 items-center gap-2">
         <Button
           onClick={() => remove(history.createdAt)}
-          tooltip="Remove history"
+          tooltip="Delete session"
         >
           <BinIcon className="size-4" />
         </Button>
 
         <Button onClick={navigateToHistory}>
           <EyeIcon className="size-4" />
-          <span className="hidden md:block">Go to history</span>
+          <span className="hidden md:block">Open session</span>
         </Button>
       </div>
     </li>

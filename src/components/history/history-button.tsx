@@ -14,7 +14,7 @@ export function HistoryButton() {
   return (
     <>
       <Button
-        tooltip="View your history of instances"
+        tooltip="Open session history"
         onClick={() => setOpenHistoryModal(true)}
       >
         <HistoryIcon className="size-5" />
@@ -23,7 +23,7 @@ export function HistoryButton() {
         openHistoryModal && (
           <Modal
             open={openHistoryModal}
-            title="History of instances"
+            title="Session history"
             onClose={handleCloseHistoryModal}
           >
             <HistoryList onNavigateToHistory={handleCloseHistoryModal} />

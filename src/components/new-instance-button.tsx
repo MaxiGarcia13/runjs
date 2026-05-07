@@ -18,7 +18,7 @@ export function NewInstanceButton() {
 
   return (
     <Button
-      tooltip="Create a new instance"
+      tooltip="Start a new session"
       disabled={!code}
       onClick={handleNewInstance}
     >
