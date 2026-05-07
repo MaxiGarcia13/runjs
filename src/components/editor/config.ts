@@ -62,6 +62,12 @@ interface ExpectMatcher {
   toBe(expected: boolean | number | string | null | undefined): Promise<void>;
   /** Checks deep equality and prints a pass/fail message in the preview output. */
   toEqual(expected: boolean | number | string | null | undefined | object | unknown[]): Promise<void>;
+  /** Checks that a received string contains the expected string or matches the expected RegExp. */
+  stringMatching(expected: string | RegExp): Promise<void>;
+  /** Checks that all expected object keys exist and their values deep-equal the received object. */
+  objectContaining(expected: object): Promise<void>;
+  /** Checks that every expected item exists in the received array (deep equality). */
+  arrayContaining(expected: unknown[]): Promise<void>;
 }
 
 /**
