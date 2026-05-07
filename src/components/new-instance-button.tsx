@@ -8,10 +8,10 @@ import { Button } from './button';
 export function NewInstanceButton() {
   const { code, setCode } = useEditorStore();
 
-  const historyPush = useHistory((state) => state.push);
+  const addHistory = useHistory((state) => state.addHistory);
 
   const handleNewInstance = () => {
-    historyPush(getUrlParam(CODE_URL_PARAM));
+    addHistory(getUrlParam(CODE_URL_PARAM));
 
     setCode('');
   };
