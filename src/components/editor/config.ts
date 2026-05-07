@@ -15,8 +15,14 @@ export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOp
   fontLigatures: true,
   fontSize: 16,
 
+  tabSize: 2,
+
   minimap: {
     enabled: false,
+  },
+
+  bracketPairColorization: {
+    enabled: true,
   },
 
   lineNumbers: 'off',
@@ -24,9 +30,9 @@ export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOp
   renderWhitespace: 'all',
 
   wordWrap: 'on',
-  cursorBlinking: 'smooth',
-  cursorSmoothCaretAnimation: 'off',
-  tabSize: 2,
+  cursorBlinking: 'expand',
+
+  formatOnPaste: true,
 
   automaticLayout: true,
   fixedOverflowWidgets: true,
