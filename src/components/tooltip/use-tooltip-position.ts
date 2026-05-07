@@ -1,5 +1,5 @@
 import type { TooltipCoordinates, TooltipPosition } from './types';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const TOOLTIP_GAP = 8;
 
@@ -18,7 +18,7 @@ export function useTooltipPosition({
 }: UseTooltipPositionOptions) {
   const [coords, setCoords] = useState<TooltipCoordinates | null>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!isOpen) {
       return;
     }
