@@ -38,6 +38,7 @@ export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOp
   fixedOverflowWidgets: true,
   scrollBeyondLastLine: false,
   roundedSelection: false,
+  clipboard: true,
 
   padding: {
     top: 16,
