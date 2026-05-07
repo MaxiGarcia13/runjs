@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import type { TooltipCoordinates } from './types';
 import { cn } from '@maxigarcia/js-utils';
-import { createPortal } from 'react-dom';
 
 interface TooltipContentProps {
   content: ReactNode;
@@ -16,7 +15,7 @@ export function TooltipContent({
   contentClassName,
   setTooltipElement,
 }: TooltipContentProps) {
-  return createPortal(
+  return (
     <span
       ref={setTooltipElement}
       role="tooltip"
@@ -32,7 +31,6 @@ export function TooltipContent({
       }}
     >
       {content}
-    </span>,
-    document.body,
+    </span>
   );
 }
