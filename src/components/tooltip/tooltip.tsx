@@ -20,7 +20,7 @@ export function Tooltip({
   position = 'top',
   className,
   contentClassName,
-  disabled = false,
+  disabled,
 }: TooltipProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [triggerElement, setTriggerElement] = useState<HTMLDivElement | null>(null);
