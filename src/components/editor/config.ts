@@ -35,7 +35,7 @@ export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOp
   formatOnPaste: true,
 
   automaticLayout: true,
-  fixedOverflowWidgets: true,
+  // fixedOverflowWidgets: true,
   scrollBeyondLastLine: false,
   roundedSelection: false,
   clipboard: true,
