@@ -23,7 +23,7 @@ interface PerfOptions {
 function perf(fn: any, options: PerfOptions = {}, ...args: any[]) {
   const { label = fn?.name || 'anonymous' } = options;
 
-  console.log('=>[perf] Function name: ', label);
+  console.log(`=>[perf] Function name: ${label}`);
 
   const reportDuration = (startTime) => {
     const durationMs = Math.max(0, getNow() - startTime);
