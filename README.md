@@ -10,6 +10,7 @@ Write code in Monaco, run it in a sandboxed preview runtime, and share snippets 
 - Captured output for `console.log`, `console.warn`, `console.error`, and `console.info`.
 - URL-synced code state (debounced), so snippets can be shared as a link.
 - One-click "Copy link" action in the header.
+- Session history stored in `localStorage`, with rename, reopen, and delete actions.
 - Resizable editor/preview layout (horizontal on desktop, vertical on mobile).
 - Web app manifest and platform icons for installable/mobile-friendly behavior.
 
@@ -59,6 +60,7 @@ Open the URL shown in the terminal (typically `http://localhost:5173`).
 3. The preview builds an HTML runtime and injects your code into a `try/catch` block.
 4. Console calls are intercepted in the iframe and sent to the app via `postMessage`.
 5. Output is rendered in the preview panel with type-aware styling.
+6. Starting a new session stores the previous snippet in session history (deduped by payload) for later retrieval.
 
 ## Runtime Helpers
 
