@@ -116,6 +116,9 @@ Available matchers:
 
 - `expect(value).toBe(expected)` - checks strict equality (`===`) and returns a Promise.
 - `expect(value).toEqual(expected)` - checks deep structural equality and returns a Promise.
+- `expect(value).stringMatching(expected)` - checks that a string contains `expected` (when `expected` is a string) or matches it (when `expected` is a RegExp).
+- `expect(value).objectContaining(expectedObject)` - checks that all expected keys exist in the received object and their values are deep-equal.
+- `expect(value).arrayContaining(expectedArray)` - checks that each expected item exists in the received array using deep equality.
 
 Examples:
 
@@ -123,6 +126,10 @@ Examples:
 expect(2 + 2).toBe(4);
 expect({ id: 1, tags: ['a'] }).toEqual({ id: 1, tags: ['a'] });
 expect(() => Promise.resolve({ id: 1 })).toEqual({ id: 1 });
+expect('Hello World').stringMatching('World');
+expect('Version v1.2.3').stringMatching(/v\d+\.\d+\.\d+/);
+expect({ id: 1, user: { name: 'Max' } }).objectContaining({ user: { name: 'Max' } });
+expect([{ id: 1 }, { id: 2 }]).arrayContaining([{ id: 2 }]);
 ```
 
 ## Contributing
