@@ -1,7 +1,7 @@
+import { cn } from '@maxigarcia/js-utils';
 import { editor } from 'monaco-editor';
 import { useEffect, useRef } from 'react';
 import { useEditorStore } from '@/store/useEditorStore';
-import { cn } from '@/utils/classes';
 import { EDITOR_CONSTRUCTION_OPTIONS } from './config';
 
 interface EditorProps {

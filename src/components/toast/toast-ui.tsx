@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import type { ToastPosition, ToastVariant } from './types';
+import { cn } from '@maxigarcia/js-utils';
 import { useEffect, useRef } from 'react';
 import { CloseIcon } from '@/assets/icons/close.tsx';
-import { cn } from '@/utils/classes';
 import { Alert } from '../alert';
 import { Button } from '../button';
 

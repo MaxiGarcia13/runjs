@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { cn } from '@/utils/classes';
+import { cn } from '@maxigarcia/js-utils';
 
 export type AlertVariant = 'default';
 

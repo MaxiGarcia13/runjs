@@ -1,4 +1,4 @@
-import { cn } from '@/utils/classes';
+import { cn } from '@maxigarcia/js-utils';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;

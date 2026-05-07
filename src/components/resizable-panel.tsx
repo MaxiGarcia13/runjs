@@ -1,5 +1,5 @@
+import { cn } from '@maxigarcia/js-utils';
 import { useState } from 'react';
-import { cn } from '@/utils/classes';
 
 interface ResizablePanelProps {
   className?: string;

@@ -1,6 +1,6 @@
+import { cn } from '@maxigarcia/js-utils';
 import { useEffect, useState } from 'react';
 import { useEditorStore } from '@/store/useEditorStore';
-import { cn } from '@/utils/classes';
 import { EmptyOutput } from './empty-output';
 import previewHtml from './preview.html?raw';
 
