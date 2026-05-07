@@ -1,7 +1,7 @@
 import { cn } from '@maxigarcia/js-utils';
 import { useEffect, useState } from 'react';
 import { useEditorStore } from '@/store/useEditorStore';
-import { EmptyOutput } from './empty-output';
+import { EmptyOutput } from './empty-output.tsx';
 import previewHtml from './preview.html?raw';
 
 interface PreviewProps {
@@ -76,27 +76,29 @@ export function Preview({ className }: PreviewProps) {
         sandbox="allow-scripts"
       />
 
-      <p className="flex h-full w-full flex-col pt-2">
-        {
+      {
+        output.length > 0
+          ? (
+              <pre className="flex h-full w-full flex-col pt-2">
 
-          output.length > 0
-            ? output
-                .map((item) => (
-                  <span
-                    key={item.id}
-                    className={cn(
-                      item.type === 'error' && 'text-red-400',
-                      item.type === 'warn' && 'text-amber-300',
-                      item.type === 'info' && 'text-cyan-300',
-                      item.type === 'log' && 'text-slate-100',
-                    )}
-                  >
-                    {item.content}
-                  </span>
-                ))
-            : code.length !== 0 ? null : <EmptyOutput />
-        }
-      </p>
+                {output
+                  .map((item) => (
+                    <span
+                      key={item.id}
+                      className={cn(
+                        item.type === 'error' && 'text-red-400',
+                        item.type === 'warn' && 'text-amber-300',
+                        item.type === 'info' && 'text-cyan-300',
+                      )}
+                    >
+                      {item.content}
+                    </span>
+                  ))}
+
+              </pre>
+            )
+          : code.length !== 0 ? null : <EmptyOutput />
+      }
     </div>
   );
 }
