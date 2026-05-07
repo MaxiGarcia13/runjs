@@ -1,7 +1,9 @@
 export function EmptyOutput() {
   return (
-    <span className="text-green-200">
-      Run logs with:
+    <span>
+      <span className="font-bold text-green-400">
+        Run logs with:
+      </span>
       <br />
       log('Hello World');
       <br />
@@ -12,14 +14,19 @@ export function EmptyOutput() {
       error('Hello World');
       <br />
       <br />
-      Measure performance:
+      <span className="font-bold text-green-400">
+        Measure performance with:
+      </span>
       <br />
       perf(heavyTask);
+
       <br />
       {'perf(() => heavyTask(), { label: \'heavyTask\' });'}
       <br />
       <br />
-      Run assertions:
+      <span className="font-bold text-green-400">
+        Run assertions with:
+      </span>
       <br />
       expect(2 + 2).toBe(4);
       <br />
