@@ -9,6 +9,6 @@ The code is:
   ${code}
 \`\`\`
 
-do not chage log, warn, error, info and perf functions.
+do not chage log, warn, error, info, perf and expect functions.
 `;
 }
