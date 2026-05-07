@@ -9,35 +9,47 @@ interface EditorProps {
 }
 
 export function Editor({ className }: EditorProps) {
-  const editorRef = useRef<HTMLDivElement>(null);
+  const editorContainerRef = useRef<HTMLDivElement>(null);
+  const editorInstanceRef = useRef<editor.IStandaloneCodeEditor>(null);
 
-  const { code, setCode } = useEditorStore();
+  const { code, debounceSetCode } = useEditorStore();
+
+  const focusEditor = () => {
+    if (window === window.parent) {
+      editorInstanceRef.current?.focus();
+    }
+  };
 
   useEffect(() => {
-    if (editorRef.current) {
-      const instance = editor.create(editorRef.current, {
+    if (editorContainerRef.current) {
+      editorInstanceRef.current = editor.create(editorContainerRef.current, {
         ...EDITOR_CONSTRUCTION_OPTIONS,
         value: code,
       });
 
-      instance.onDidChangeModelContent(() => {
-        const value = instance.getValue();
-        setCode(value);
+      editorInstanceRef.current.onDidChangeModelContent(() => {
+        const value = editorInstanceRef.current.getValue();
+        debounceSetCode(value);
       });
 
-      if (window === window.parent) {
-        instance.focus();
-      }
+      focusEditor();
 
       return () => {
-        instance.dispose();
+        editorInstanceRef.current?.dispose();
       };
     }
   }, []);
 
+  useEffect(() => {
+    if (editorInstanceRef.current && code !== editorInstanceRef.current.getValue()) {
+      editorInstanceRef.current.setValue(code);
+      focusEditor();
+    }
+  }, [code]);
+
   return (
     <section className={cn('box-border h-full min-h-0 w-full overflow-hidden', className)}>
-      <div ref={editorRef} className="h-full w-full" />
+      <div ref={editorContainerRef} className="h-full w-full" />
     </section>
   );
 }
