@@ -4,6 +4,7 @@ import { BinIcon, EyeIcon } from '@/assets/icons';
 import { useEditorStore } from '@/store/useEditorStore';
 import { useHistory } from '@/store/useHistory';
 import { Button } from '../button';
+import { Tooltip } from '../tooltip';
 
 interface HistoryListItemProps {
   history: History;
@@ -36,13 +37,15 @@ export function HistoryListItem({ history, onNavigateToHistory }: HistoryListIte
       className="flex items-center justify-between gap-2 rounded-md border border-gray-700 p-2"
     >
       <div className="flex flex-col gap-2 truncate">
-        <h3
-          className="truncate text-sm font-medium"
-          onBlur={(e) => handleInputCapture(e.currentTarget.textContent || undefined)}
-          contentEditable="plaintext-only"
-        >
-          {history.label ?? 'Untitled'}
-        </h3>
+        <Tooltip content="Edit history label" position="top">
+          <h3
+            className="truncate text-sm font-medium"
+            onBlur={(e) => handleInputCapture(e.currentTarget.textContent || undefined)}
+            contentEditable="plaintext-only"
+          >
+            {history.label ?? 'Untitled'}
+          </h3>
+        </Tooltip>
         <span className="text-xs text-gray-400">
           <span>
             Created at:
