@@ -1,6 +1,34 @@
 import { deepEqual } from '@maxigarcia/js-utils';
 
-function expect(value: any) {
+function formatValue(value: any) {
+  return JSON.stringify(value, null, 2);
+}
+
+function print(isPassed: boolean, message: string) {
+  if (isPassed) {
+    console.log(`✅ ${message}`);
+  } else {
+    console.warn(`❌ ${message}`);
+  }
+}
+
+function isPrimitive(value: any) {
+  return typeof value !== 'object' || value === null;
+}
+
+function isString(value: any) {
+  return typeof value === 'string';
+}
+
+function isRegExp(value: any) {
+  return value instanceof RegExp;
+}
+
+function isObject(value: any) {
+  return typeof value === 'object' && value !== null;
+}
+
+function expect<T>(value: T) {
   async function getValue() {
     if (typeof value === 'function') {
       return await value();
@@ -9,35 +37,102 @@ function expect(value: any) {
     return value;
   }
 
-  function formatValue(value: any) {
-    return JSON.stringify(value, null, 2);
-  }
-
-  async function toBe(expected: boolean | number | string | null | undefined) {
+  async function toBe(expected: boolean | number | string | null | undefined): Promise<void> {
     const result = await getValue();
+
+    if (!isPrimitive(result)) {
+      print(false, `Received value must be a primitive, but got ${typeof result}`);
+      return;
+    }
+
+    if (!isPrimitive(expected)) {
+      print(false, `Expected value must be a primitive, but got ${typeof expected}`);
+      return;
+    }
+
     const isPassed = result === expected;
 
-    if (isPassed) {
-      console.log(`✅ expect ${formatValue(result)} to be ${formatValue(expected)}`);
-    } else {
-      console.warn(`❌ expect ${formatValue(result)} to be ${formatValue(expected)}`);
-    }
+    print(isPassed, `Expected ${formatValue(result)} to be ${formatValue(expected)}`);
   }
 
   async function toEqual(expected: boolean | number | string | null | undefined | object | Array<any>) {
     const result = await getValue();
     const isPassed = deepEqual(result, expected);
 
-    if (isPassed) {
-      console.log(`✅ expect ${formatValue(result)} to equal ${formatValue(expected)}`);
-    } else {
-      console.warn(`❌ expect ${formatValue(result)} to equal ${formatValue(expected)}`);
+    print(isPassed, `Expected ${formatValue(result)} to equal ${formatValue(expected)}`);
+  }
+
+  async function stringMatching(expected: string | RegExp) {
+    const result = await getValue();
+
+    if (!isString(result)) {
+      print(false, `Received value must be a string, but got ${typeof result}`);
+      return;
     }
+
+    if (!isString(expected) && !isRegExp(expected)) {
+      print(false, `Expected value must be a string or RegExp, but got ${typeof expected}`);
+      return;
+    }
+
+    const resultString = result.toString();
+    const isPassed
+      = typeof expected === 'string'
+        ? resultString.includes(expected)
+        : expected.test(resultString);
+
+    print(isPassed, `Expected ${formatValue(result)} to match ${formatValue(expected)}`);
+  }
+
+  async function objectContaining(expected: object) {
+    const result = await getValue();
+
+    if (!isObject(result)) {
+      print(false, `Received value must be an object, but got ${typeof result}`);
+      return;
+    }
+
+    if (!isObject(expected)) {
+      print(false, `Expected value must be an object, but got ${typeof expected}`);
+      return;
+    }
+
+    const expectedKeys = Object.keys(expected);
+    const isPassed = expectedKeys.every((key) => {
+      const typedResult = result as Record<string, any>;
+      const typedExpected = expected as Record<string, any>;
+      return key in typedResult && deepEqual(typedResult[key], typedExpected[key]);
+    });
+
+    print(isPassed, `Expected ${formatValue(result)} to object contain ${formatValue(expected)}`);
+  }
+
+  async function arrayContaining(expected: Array<any>) {
+    const result = await getValue();
+
+    if (!Array.isArray(result)) {
+      print(false, `Received value must be an array, but got ${typeof result}`);
+      return;
+    }
+
+    if (!Array.isArray(expected)) {
+      print(false, `Expected value must be an array, but got ${typeof expected}`);
+      return;
+    }
+
+    const isPassed = expected.every((expectedItem) =>
+      result.some((resultItem) => deepEqual(resultItem, expectedItem)),
+    );
+
+    print(isPassed, `Expected ${formatValue(result)} to array contain ${formatValue(expected)}`);
   }
 
   return {
     toBe,
     toEqual,
+    stringMatching,
+    objectContaining,
+    arrayContaining,
   };
 }
 
