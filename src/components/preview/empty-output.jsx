@@ -3,7 +3,6 @@ export function EmptyOutput() {
     <span className="text-green-200">
       Run logs with:
       <br />
-      <br />
       log('Hello World');
       <br />
       warn('Hello World');
@@ -19,6 +18,13 @@ export function EmptyOutput() {
       {' '}
       {' '}
       {'perf(() => heavyTask(), { label: \'heavyTask\' });'}
+      <br />
+      <br />
+      Run assertions:
+      <br />
+      await expect(2 + 2).toBe(4);
+      <br />
+      {'expect(() => Promise.resolve({ id: 1 })).toEqual({ id: 1 });'}
       <br />
       <br />
     </span>
