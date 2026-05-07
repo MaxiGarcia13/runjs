@@ -7,18 +7,17 @@ import {
   setUrlParams,
 } from '@maxigarcia/js-utils';
 import { create } from 'zustand';
+import { CODE_URL_PARAM } from '@/constants/url';
 
 interface EditorStore {
   code: string;
   setCode: (code: string) => void;
+  debounceSetCode: (code: string) => void;
 }
+const DEBOUNCE_TIME = 500;
 
-const CODE_URL_PARAM = 'code';
-const DEBOUNCE_TIME = 800;
-
-export const useEditorStore = create<EditorStore>((set) => ({
-  code: getUrlParam(CODE_URL_PARAM) ? decodeText(getUrlParam(CODE_URL_PARAM)) : '',
-  setCode: debounce((code: string) => {
+export const useEditorStore = create<EditorStore>((set) => {
+  const setCode = (code: string) => {
     set({ code });
 
     if (code) {
@@ -26,5 +25,11 @@ export const useEditorStore = create<EditorStore>((set) => ({
     } else {
       removeUrlParam(CODE_URL_PARAM);
     }
-  }, DEBOUNCE_TIME),
-}));
+  };
+
+  return ({
+    code: getUrlParam(CODE_URL_PARAM) ? decodeText(getUrlParam(CODE_URL_PARAM)) : '',
+    setCode,
+    debounceSetCode: debounce(setCode, DEBOUNCE_TIME),
+  });
+});
