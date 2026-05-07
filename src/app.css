@@ -62,3 +62,24 @@ body {
   background-color: var(--dracula-background);
   color: var(--dracula-foreground);
 }
+
+/* Width of the scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track (the background) */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle (the part you grab) */
+::-webkit-scrollbar-thumb {
+  background: var(--dracula-current-line);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dracula-current-line);
+}
