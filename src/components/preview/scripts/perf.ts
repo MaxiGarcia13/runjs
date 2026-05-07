@@ -1,3 +1,5 @@
+import { isThenable } from '@/utils/data-type';
+
 const perfNow
   = typeof performance !== 'undefined' && typeof performance.now === 'function'
     ? performance.now.bind(performance)
@@ -13,8 +15,6 @@ function getHeapUsed() {
 
   return Number.isFinite(usedJSHeapSize) && usedJSHeapSize > 0 ? usedJSHeapSize : null;
 }
-
-const isPromiseLike = (value) => typeof value === 'object' && value !== null && typeof value.then === 'function';
 
 interface PerfOptions {
   label?: string;
@@ -44,7 +44,7 @@ function perf(fn: any, options: PerfOptions = {}, ...args: any[]) {
   const startTime = getNow();
   const result = fn(...args);
 
-  if (isPromiseLike(result)) {
+  if (isThenable(result)) {
     return result.finally(() => {
       reportDuration(startTime);
 

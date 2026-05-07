@@ -1,3 +1,5 @@
+import { isObject } from '@/utils/data-type';
+
 const originalLog = console.log.bind(console);
 const originalWarn = console.warn.bind(console);
 const originalError = console.error.bind(console);
@@ -33,7 +35,7 @@ declare global {
   }
 }
 
-if (typeof window === 'object') {
+if (isObject(window)) {
   window.log = overwriteFunction(originalLog, 'log');
   window.warn = overwriteFunction(originalWarn, 'warn');
   window.error = overwriteFunction(originalError, 'error');

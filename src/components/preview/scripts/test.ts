@@ -1,4 +1,5 @@
 import { deepEqual } from '@maxigarcia/js-utils';
+import { isObject, isPrimitive, isRegExp, isString } from '@/utils/data-type';
 
 function formatValue(value: any) {
   return JSON.stringify(value, null, 2);
@@ -10,22 +11,6 @@ function print(isPassed: boolean, message: string) {
   } else {
     console.warn(`❌ ${message}`);
   }
-}
-
-function isPrimitive(value: any) {
-  return typeof value !== 'object' || value === null;
-}
-
-function isString(value: any) {
-  return typeof value === 'string';
-}
-
-function isRegExp(value: any) {
-  return value instanceof RegExp;
-}
-
-function isObject(value: any) {
-  return typeof value === 'object' && value !== null;
 }
 
 function expect<T>(value: T) {
