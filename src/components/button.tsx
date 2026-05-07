@@ -1,11 +1,27 @@
+import type { TooltipPosition } from './tooltip';
 import { cn } from '@maxigarcia/js-utils';
+import { Tooltip } from './tooltip';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   className?: string;
+  tooltip?: string;
+  tooltipPosition?: TooltipPosition;
 }
 
-export function Button({ children, className, ...props }: ButtonProps) {
+export function Button({ children, className, tooltip, tooltipPosition = 'bottom', ...props }: ButtonProps) {
+  if (tooltip) {
+    return (
+      <Tooltip content={tooltip} position={tooltipPosition}>
+        <BaseButton className={className} {...props}>{children}</BaseButton>
+      </Tooltip>
+    );
+  }
+
+  return <BaseButton className={className} {...props}>{children}</BaseButton>;
+}
+
+export function BaseButton({ children, className, ...props }: ButtonProps) {
   return (
     <button
       className={

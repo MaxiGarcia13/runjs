@@ -14,7 +14,8 @@ export function ShareButton() {
 
   return (
     <Button onClick={handleShare}>
-      <LinkIcon className="size-4" />
+      <LinkIcon className="size-5" />
+
       <span>Copy link</span>
     </Button>
   );

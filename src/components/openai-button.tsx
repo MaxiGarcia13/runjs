@@ -16,8 +16,8 @@ export function OpenAiButton() {
   };
 
   return (
-    <Button type="button" onClick={openChatGptWithCode} disabled={!code}>
-      <OpenIAIcon className="size-4" />
+    <Button type="button" onClick={openChatGptWithCode} disabled={!code} tooltip="Open in ChatGPT">
+      <OpenIAIcon className="size-5" />
     </Button>
   );
 }
