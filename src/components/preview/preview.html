@@ -1,100 +1,22 @@
 <!doctype html>
 <html>
-  <body>
-    <script type="module">
-      //overwrite console.log
-      const originalLog = console.log.bind(console);
-      const originalWarn = console.warn.bind(console);
-      const originalError = console.error.bind(console);
-      const originalInfo = console.info.bind(console);
+  <!-- Console Log -->
+  <script src="/preview/scripts/log.js"></script>
 
-      const overwriteFunction = (originalFunction, type) => {
-        return (...args) => {
-          window.parent.postMessage(
-            {
-              source: 'runjs-preview',
-              payload: args,
-              id: Math.random().toString(36).substring(2, 15),
-              type,
-            },
-            '*',
-          );
+  <!-- Performance -->
+  <script src="/preview/scripts/perf.js"></script>
 
-          originalFunction(...args);
-        };
-      };
+  <!-- Test Runner -->
+  <script src="/preview/scripts/test.js"></script>
 
-      console.log = overwriteFunction(originalLog, 'log');
-      console.warn = overwriteFunction(originalWarn, 'warn');
-      console.error = overwriteFunction(originalError, 'error');
-      console.info = overwriteFunction(originalInfo, 'info');
-
-      window.log = overwriteFunction(originalLog, 'log');
-      window.warn = overwriteFunction(originalWarn, 'warn');
-      window.error = overwriteFunction(originalError, 'error');
-      window.info = overwriteFunction(originalInfo, 'info');
-
-      const perfNow =
-        typeof performance !== 'undefined' && typeof performance.now === 'function'
-          ? performance.now.bind(performance)
-          : Date.now.bind(Date);
-      const getNow = () => perfNow();
-
-      const getHeapUsed = () => {
-        if (typeof performance === 'undefined' || !performance.memory) return null;
-
-        const { usedJSHeapSize } = performance.memory;
-
-        return Number.isFinite(usedJSHeapSize) && usedJSHeapSize > 0 ? usedJSHeapSize : null;
-      };
-
-      const isPromiseLike = (value) => typeof value === 'object' && value !== null && typeof value.then === 'function';
-
-      window.perf = (fn, options = {}, ...args) => {
-        const { label = fn?.name || 'anonymous' } = options;
-
-        console.log('=>[perf] Function name: ', label);
-
-        const reportDuration = (startTime) => {
-          const durationMs = Math.max(0, getNow() - startTime);
-
-          console.log(`duration: ${durationMs.toFixed(2)}ms`);
-        };
-
-        const reportMemory = (startHeapUsed, endHeapUsed) => {
-          if (startHeapUsed == null || endHeapUsed == null) {
-            console.log('memory usage: unavailable in this browser/runtime');
-            return;
-          }
-
-          console.log(`memory usage: ${((endHeapUsed - startHeapUsed) / 1024 / 1024).toFixed(2)} MB`);
-        };
-
-        const startHeapUsed = getHeapUsed();
-        const startTime = getNow();
-        const result = fn(...args);
-
-        if (isPromiseLike(result)) {
-          return result.finally(() => {
-            reportDuration(startTime);
-
-            reportMemory(startHeapUsed, getHeapUsed());
-          });
-        }
-
-        reportDuration(startTime);
-        reportMemory(startHeapUsed, getHeapUsed());
-
-        return result;
-      };
-
-      try {
-        (() => {
-          // your code here
-        })();
-      } catch (error) {
-        console.error(error);
-      }
-    </script>
-  </body>
+  <!-- User code -->
+  <script>
+    try {
+      (() => {
+        // your code here
+      })();
+    } catch (error) {
+      console.error(error);
+    }
+  </script>
 </html>
