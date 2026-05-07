@@ -14,15 +14,14 @@ export function EmptyOutput() {
       <br />
       Measure performance:
       <br />
-      perf(heavyTask); or
-      {' '}
-      {' '}
+      perf(heavyTask);
+      <br />
       {'perf(() => heavyTask(), { label: \'heavyTask\' });'}
       <br />
       <br />
       Run assertions:
       <br />
-      await expect(2 + 2).toBe(4);
+      expect(2 + 2).toBe(4);
       <br />
       {'expect(() => Promise.resolve({ id: 1 })).toEqual({ id: 1 });'}
       <br />
