@@ -20,7 +20,7 @@ export function TooltipContent({
       ref={setTooltipElement}
       role="tooltip"
       className={cn(
-        'pointer-events-none fixed whitespace-nowrap px-2 py-1 text-xs',
+        'pointer-events-none z-1000 fixed whitespace-nowrap px-2 py-1 text-xs',
         'rounded-md border border-gray-500 bg-gray-700',
         !coords && 'invisible',
         contentClassName,
