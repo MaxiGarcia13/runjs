@@ -16,7 +16,7 @@ export function App() {
     <ToastProvider>
       <Header />
       <ResizablePanel
-        className="mx-2 mb-2 min-h-0 flex-1 overflow-hidden rounded-md border border-gray-700 bg-gray-800"
+        className="mx-2 mb-2 min-h-0 flex-1 overflow-hidden rounded-md border-1 border-gray-600 bg-gray-800"
         direction={isMobile() ? 'vertical' : 'horizontal'}
         leftContent={(
           <Suspense fallback={<EditorSkeleton className="p-2" />}>

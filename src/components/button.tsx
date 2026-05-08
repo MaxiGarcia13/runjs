@@ -9,7 +9,13 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   tooltipPosition?: TooltipPosition;
 }
 
-export function Button({ children, className, tooltip, tooltipPosition = 'bottom', ...props }: ButtonProps) {
+export function Button({
+  children,
+  className,
+  tooltip,
+  tooltipPosition = 'bottom',
+  ...props
+}: ButtonProps) {
   if (tooltip) {
     return (
       <Tooltip content={tooltip} position={tooltipPosition}>
@@ -26,9 +32,10 @@ export function BaseButton({ children, className, ...props }: ButtonProps) {
     <button
       className={
         cn(
-          'border border-gray-700 p-2 rounded-md text-sm flex items-center gap-2',
+          'border p-2 rounded-md text-sm flex items-center gap-2',
+          'bg-transparent border-gray-600 hover:bg-gray-600',
           !props.disabled
-            ? 'cursor-pointer hover:bg-gray-700 transition-colors'
+            ? 'cursor-pointer  transition-colors'
             : 'opacity-50 cursor-not-allowed hover:bg-transparent',
           className,
         )

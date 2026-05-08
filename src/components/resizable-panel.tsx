@@ -87,7 +87,7 @@ function getClassNames({ className, direction }: Partial<ResizablePanelProps>) {
       mainClassName: cn(className, 'flex flex-row'),
       containerClassName: 'w-1/2',
       cursorClassName: 'cursor-col-resize',
-      dividerClassName: 'w-px',
+      dividerClassName: 'w-1',
     };
   }
 
@@ -95,6 +95,6 @@ function getClassNames({ className, direction }: Partial<ResizablePanelProps>) {
     mainClassName: cn(className, 'flex flex-col'),
     containerClassName: 'h-1/2',
     cursorClassName: 'cursor-row-resize',
-    dividerClassName: 'h-px',
+    dividerClassName: 'h-2',
   };
 }
