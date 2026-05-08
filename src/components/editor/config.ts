@@ -10,6 +10,8 @@ editor.setTheme(THEME_NAME);
 export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOptions = {
   language: 'javascript',
   theme: THEME_NAME,
+  // Use the native browser context menu so clipboard paste works reliably on web.
+  contextmenu: false,
 
   fontFamily: 'Fira Code, monospace',
   fontLigatures: true,
@@ -21,13 +23,12 @@ export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOp
     enabled: false,
   },
 
-  bracketPairColorization: {
-    enabled: true,
-  },
-
   lineNumbers: 'off',
   glyphMargin: false,
   renderWhitespace: 'all',
+  bracketPairColorization: {
+    enabled: true,
+  },
 
   wordWrap: 'on',
   cursorBlinking: 'expand',
