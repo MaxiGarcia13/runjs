@@ -1,5 +1,6 @@
 import { editor, typescript } from 'monaco-editor';
 import { draculaTheme } from './themes/dracula';
+import './worker';
 
 const THEME_NAME = 'dracula';
 
@@ -10,8 +11,6 @@ editor.setTheme(THEME_NAME);
 export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOptions = {
   language: 'javascript',
   theme: THEME_NAME,
-  // Use the native browser context menu so clipboard paste works reliably on web.
-  contextmenu: false,
 
   fontFamily: 'Fira Code, monospace',
   fontLigatures: true,
