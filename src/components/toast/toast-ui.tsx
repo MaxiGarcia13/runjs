@@ -63,16 +63,17 @@ export function Toast({
         className,
       )}
     >
-      <div className="animate-toast-appear">
-        <Alert variant={variant} className="flex items-center gap-2">
-          <span className="min-w-0 flex-1">{children}</span>
-          {onClose && (
-            <Button onClick={onClose} aria-label="Close">
-              <CloseIcon className="size-4" />
-            </Button>
-          )}
-        </Alert>
-      </div>
+      <Alert
+        variant={variant}
+        className="flex items-center gap-2"
+      >
+        <span className="min-w-0 flex-1">{children}</span>
+        {onClose && (
+          <Button onClick={onClose} aria-label="Close">
+            <CloseIcon className="size-4" />
+          </Button>
+        )}
+      </Alert>
     </div>
   );
 }

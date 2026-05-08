@@ -4,7 +4,7 @@ import { cn } from '@maxigarcia/js-utils';
 export type AlertVariant = 'default';
 
 const variantStyles: Record<AlertVariant, string> = {
-  default: 'border-gray-600 bg-gray-800 text-gray-200',
+  default: 'border-gray-600 bg-gray-700 text-inherit',
 };
 
 export interface AlertProps {
