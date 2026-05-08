@@ -67,7 +67,8 @@ export function Modal({
     <dialog
       ref={dialogRef}
       className={cn(
-        'm-auto w-[calc(100%-2rem)] max-w-xl overflow-hidden rounded-xl border bg-inherit border-gray-700 text-inherit p-0 shadow-2xl outline-none',
+        'm-auto w-[calc(100%-2rem)] max-w-xl overflow-hidden rounded-xl p-0 shadow-2xl outline-none',
+        'border-gray-700 text-inherit border bg-inherit backdrop:bg-gray-800/80 backdrop:backdrop-blur-sm',
         className,
       )}
       onClick={handleBackdropClick}
