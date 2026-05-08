@@ -3,6 +3,7 @@ import { editor } from 'monaco-editor';
 import { useEffect, useRef } from 'react';
 import { useEditorStore } from '@/store/useEditorStore';
 import { EDITOR_CONSTRUCTION_OPTIONS } from './config';
+import { ContextMenu } from './context-menu';
 
 interface EditorProps {
   className?: string;
@@ -22,10 +23,14 @@ export function Editor({ className }: EditorProps) {
 
   useEffect(() => {
     if (editorContainerRef.current) {
-      editorInstanceRef.current = editor.create(editorContainerRef.current, {
-        ...EDITOR_CONSTRUCTION_OPTIONS,
-        value: code,
-      });
+      editorInstanceRef.current = editor.create(
+        editorContainerRef.current,
+        {
+          ...EDITOR_CONSTRUCTION_OPTIONS,
+          contextmenu: false,
+          value: code,
+        },
+      );
 
       editorInstanceRef.current.onDidChangeModelContent(() => {
         const value = editorInstanceRef.current.getValue();
@@ -48,8 +53,11 @@ export function Editor({ className }: EditorProps) {
   }, [code]);
 
   return (
-    <section className={cn('box-border h-full min-h-0 w-full overflow-hidden', className)}>
+    <ContextMenu
+      className={cn('relative box-border h-full min-h-0 w-full overflow-hidden', className)}
+      editor={editorInstanceRef}
+    >
       <div ref={editorContainerRef} className="h-full w-full" />
-    </section>
+    </ContextMenu>
   );
 }
