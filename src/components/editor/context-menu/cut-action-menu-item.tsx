@@ -3,13 +3,16 @@ import { KeyCode, KeyMod } from 'monaco-editor';
 import { useEffect } from 'react';
 import { CutIcon } from '@/assets/icons/cut';
 import { ContextMenuItem } from './context-menu-item';
+import { getEffectiveSelectionRange } from './utils/effective-range';
 
 interface CutActionMenuItemProps {
   editor: editor.IStandaloneCodeEditor;
+  onActionClick: () => void;
 }
 
-export function CutActionMenuItem({ editor }: CutActionMenuItemProps) {
+export function CutActionMenuItem({ editor, onActionClick }: CutActionMenuItemProps) {
   const runCutAction = async () => {
+    onActionClick();
     const cutAction = editor?.getAction('customCut');
     await cutAction?.run();
     editor.focus();
@@ -24,21 +27,21 @@ export function CutActionMenuItem({ editor }: CutActionMenuItemProps) {
         const model = editor?.getModel();
         const selection = editor?.getSelection();
 
-        if (!editor || !model || !selection || selection.isEmpty()) {
+        if (!editor || !model || !selection) {
           return;
         }
 
-        const selectedText = model.getValueInRange(selection);
-
-        await navigator.clipboard.writeText(selectedText);
+        const effectiveRange = getEffectiveSelectionRange(model, selection);
+        const textToCut = model.getValueInRange(effectiveRange);
+        await navigator.clipboard.writeText(textToCut);
 
         editor.executeEdits('cut', [{
-          range: selection,
+          range: effectiveRange,
           text: '',
         }]);
       },
     });
-  }, []);
+  }, [editor]);
 
   return (
     <ContextMenuItem

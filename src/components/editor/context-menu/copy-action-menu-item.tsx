@@ -3,13 +3,16 @@ import { KeyCode, KeyMod } from 'monaco-editor';
 import { useEffect } from 'react';
 import { CopyIcon } from '@/assets/icons/copy';
 import { ContextMenuItem } from './context-menu-item';
+import { getEffectiveSelectionRange } from './utils/effective-range';
 
 interface CopyActionMenuItemProps {
   editor: editor.IStandaloneCodeEditor;
+  onActionClick: () => void;
 }
 
-export function CopyActionMenuItem({ editor }: CopyActionMenuItemProps) {
+export function CopyActionMenuItem({ editor, onActionClick }: CopyActionMenuItemProps) {
   const runCopyAction = async () => {
+    onActionClick();
     const copyAction = editor?.getAction('customCopy');
     await copyAction?.run();
     editor.focus();
@@ -21,11 +24,19 @@ export function CopyActionMenuItem({ editor }: CopyActionMenuItemProps) {
       label: 'Copy',
       keybindings: [KeyMod.CtrlCmd | KeyCode.KeyC],
       run: async () => {
-        const selectedText = editor?.getModel().getValueInRange(editor?.getSelection());
-        navigator.clipboard.writeText(selectedText);
+        const model = editor?.getModel();
+        const selection = editor?.getSelection();
+
+        if (!editor || !model || !selection) {
+          return;
+        }
+
+        const effectiveRange = getEffectiveSelectionRange(model, selection);
+        const textToCopy = model.getValueInRange(effectiveRange);
+        await navigator.clipboard.writeText(textToCopy);
       },
     });
-  }, []);
+  }, [editor]);
 
   return (
     <ContextMenuItem

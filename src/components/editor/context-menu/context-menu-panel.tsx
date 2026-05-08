@@ -7,8 +7,9 @@ interface ContextMenuPanelProps {
   x: number;
   y: number;
   editor: editor.IStandaloneCodeEditor;
+  onActionClick: () => void;
 }
-export function ContextMenuPanel({ x, y, editor }: ContextMenuPanelProps) {
+export function ContextMenuPanel({ x, y, editor, onActionClick }: ContextMenuPanelProps) {
   return (
     <div
       role="menu"
@@ -16,9 +17,9 @@ export function ContextMenuPanel({ x, y, editor }: ContextMenuPanelProps) {
       style={{ left: x, top: y }}
       onPointerDown={(event) => event.stopPropagation()}
     >
-      <PasteActionMenuItem editor={editor} />
-      <CopyActionMenuItem editor={editor} />
-      <CutActionMenuItem editor={editor} />
+      <PasteActionMenuItem editor={editor} onActionClick={onActionClick} />
+      <CopyActionMenuItem editor={editor} onActionClick={onActionClick} />
+      <CutActionMenuItem editor={editor} onActionClick={onActionClick} />
     </div>
   );
 }

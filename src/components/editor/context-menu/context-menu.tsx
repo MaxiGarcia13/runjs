@@ -61,6 +61,7 @@ export function ContextMenu({ children, editor, className }: ContextMenuProps) {
           x={menuPosition.x}
           y={menuPosition.y}
           editor={editor.current}
+          onActionClick={() => setMenuPosition(null)}
         />
       )}
     </>

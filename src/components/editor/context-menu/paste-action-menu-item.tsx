@@ -6,10 +6,12 @@ import { ContextMenuItem } from './context-menu-item';
 
 interface PasteActionMenuItemProps {
   editor: editor.IStandaloneCodeEditor;
+  onActionClick: () => void;
 }
 
-export function PasteActionMenuItem({ editor }: PasteActionMenuItemProps) {
+export function PasteActionMenuItem({ editor, onActionClick }: PasteActionMenuItemProps) {
   const runPasteAction = async () => {
+    onActionClick();
     const pasteAction = editor?.getAction('customPaste');
     await pasteAction?.run();
     editor.focus();
