@@ -3,6 +3,8 @@ import type { MouseEvent, ReactNode, TouchEvent } from 'react';
 import { cn } from '@maxigarcia/js-utils';
 import { useEffect, useRef, useState } from 'react';
 import { ContextMenuPanel } from './context-menu-panel';
+import { getContextMenuPosition } from './utils/menu-position';
+import { hasTouchMovedBeyondThreshold, LONG_PRESS_DURATION_MS } from './utils/touch';
 
 interface ContextMenuProps {
   children: ReactNode;
@@ -10,21 +12,13 @@ interface ContextMenuProps {
   className?: string;
 }
 
-const LONG_PRESS_DURATION_MS = 500;
-const TOUCH_MOVE_THRESHOLD_PX = 10;
-
 export function ContextMenu({ children, editor, className }: ContextMenuProps) {
   const [menuPosition, setMenuPosition] = useState<{ x: number; y: number } | null>(null);
   const longPressTimerRef = useRef<number | null>(null);
   const touchStartPositionRef = useRef<{ x: number; y: number } | null>(null);
 
   const openMenuAt = (clientX: number, clientY: number) => {
-    const menuWidth = 160;
-    const menuHeight = 120;
-    const x = Math.min(clientX, window.innerWidth - menuWidth);
-    const y = Math.min(clientY, window.innerHeight - menuHeight);
-
-    setMenuPosition({ x, y });
+    setMenuPosition(getContextMenuPosition(clientX, clientY));
   };
 
   const clearLongPressTimer = () => {
@@ -64,10 +58,12 @@ export function ContextMenu({ children, editor, className }: ContextMenuProps) {
     }
 
     const touch = event.touches[0];
-    const dx = touch.clientX - touchStartPositionRef.current.x;
-    const dy = touch.clientY - touchStartPositionRef.current.y;
-
-    if (Math.hypot(dx, dy) > TOUCH_MOVE_THRESHOLD_PX) {
+    if (
+      hasTouchMovedBeyondThreshold(
+        touchStartPositionRef.current,
+        { x: touch.clientX, y: touch.clientY },
+      )
+    ) {
       clearLongPressTimer();
     }
   };
