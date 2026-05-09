@@ -1,6 +1,7 @@
 import type { editor } from 'monaco-editor';
 import { KeyCode, KeyMod } from 'monaco-editor';
 import { useEffect } from 'react';
+import { CommandIcon } from '@/assets/icons/command';
 import { CopyIcon } from '@/assets/icons/copy';
 import { ContextMenuItem } from './context-menu-item';
 import { getEffectiveSelectionRange } from './utils/effective-range';
@@ -42,6 +43,7 @@ export function CopyActionMenuItem({ editor, onActionClick }: CopyActionMenuItem
     <ContextMenuItem
       onClick={runCopyAction}
       icon={<CopyIcon className="size-4" />}
+      command={<CommandIcon className="size-4" combination="C" />}
     >
       Copy
     </ContextMenuItem>

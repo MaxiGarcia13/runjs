@@ -1,6 +1,7 @@
 import type { editor } from 'monaco-editor';
 import { KeyCode, KeyMod } from 'monaco-editor';
 import { useEffect } from 'react';
+import { CommandIcon } from '@/assets/icons/command';
 import { CutIcon } from '@/assets/icons/cut';
 import { ContextMenuItem } from './context-menu-item';
 import { getEffectiveSelectionRange } from './utils/effective-range';
@@ -47,6 +48,9 @@ export function CutActionMenuItem({ editor, onActionClick }: CutActionMenuItemPr
     <ContextMenuItem
       onClick={runCutAction}
       icon={<CutIcon className="size-4" />}
+      command={(
+        <CommandIcon className="size-4" combination="X" />
+      )}
     >
       Cut
     </ContextMenuItem>

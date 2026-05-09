@@ -1,6 +1,7 @@
 import type { editor } from 'monaco-editor';
 import { KeyCode, KeyMod } from 'monaco-editor';
 import { useEffect } from 'react';
+import { CommandIcon } from '@/assets/icons/command';
 import { PasteIcon } from '@/assets/icons/paste';
 import { ContextMenuItem } from './context-menu-item';
 
@@ -49,6 +50,7 @@ export function PasteActionMenuItem({ editor, onActionClick }: PasteActionMenuIt
     <ContextMenuItem
       onClick={runPasteAction}
       icon={<PasteIcon className="size-4" />}
+      command={<CommandIcon className="size-4" combination="V" />}
     >
       Paste
     </ContextMenuItem>

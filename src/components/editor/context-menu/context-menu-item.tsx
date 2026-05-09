@@ -1,3 +1,5 @@
+import { cn } from '@maxigarcia/js-utils';
+
 interface ContextMenuItemProps {
   onClick: () => void;
   children: React.ReactNode;
@@ -10,7 +12,11 @@ export function ContextMenuItem({ onClick, children, icon, command }: ContextMen
     <button
       type="button"
       role="menuitem"
-      className="flex w-full cursor-pointer items-center gap-2 px-2 py-2 text-left text-sm text-inherit transition-colors hover:bg-zinc-800"
+      className={cn(
+        'flex w-full cursor-pointer items-center gap-2 p-2',
+        'text-left text-sm text-inherit',
+        'hover:bg-gray-600 transition-colors',
+      )}
       onClick={onClick}
     >
       {
