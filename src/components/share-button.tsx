@@ -1,8 +1,11 @@
+import type { ComponentProps } from 'react';
 import { LinkIcon } from '@/assets/icons/link';
 import { useToast } from '@/components/toast';
 import { Button } from './button';
 
-export function ShareButton() {
+type ShareButtonProps = Omit<ComponentProps<typeof Button>, 'onClick' | 'disabled' | 'tooltip' | 'children'>;
+
+export function ShareButton(props: ShareButtonProps) {
   const { showToast } = useToast();
 
   const handleShare = () => {
@@ -13,7 +16,7 @@ export function ShareButton() {
   };
 
   return (
-    <Button onClick={handleShare}>
+    <Button onClick={handleShare} {...props}>
       <LinkIcon className="size-5" />
 
       <span>Copy link</span>
