@@ -2,12 +2,11 @@ import {
   debounce,
   decodeText,
   encodeText,
-  getUrlParam,
-  removeUrlParam,
-  setUrlParams,
+  getParamFromUrl,
 } from '@maxigarcia/js-utils';
 import { create } from 'zustand';
 import { CODE_URL_PARAM } from '@/constants/url';
+import { removeUrlParam, setUrlParam } from '@/utils/url';
 
 interface EditorStore {
   code: string;
@@ -17,18 +16,20 @@ interface EditorStore {
 const DEBOUNCE_TIME = 500;
 
 export const useEditorStore = create<EditorStore>((set) => {
+  const paramCode = getParamFromUrl(CODE_URL_PARAM);
+
   const setCode = (code: string) => {
     set({ code });
 
     if (code) {
-      setUrlParams({ [CODE_URL_PARAM]: encodeText(code) });
+      setUrlParam(CODE_URL_PARAM, encodeText(code));
     } else {
       removeUrlParam(CODE_URL_PARAM);
     }
   };
 
   return ({
-    code: getUrlParam(CODE_URL_PARAM) ? decodeText(getUrlParam(CODE_URL_PARAM)) : '',
+    code: paramCode ? decodeText(paramCode) : '',
     setCode,
     debounceSetCode: debounce(setCode, DEBOUNCE_TIME),
   });

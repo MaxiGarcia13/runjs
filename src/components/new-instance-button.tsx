@@ -1,5 +1,5 @@
 import type { ComponentProps } from 'react';
-import { getUrlParam } from '@maxigarcia/js-utils';
+import { getParamFromUrl } from '@maxigarcia/js-utils';
 import { PlusIcon } from '@/assets/icons/plus';
 import { CODE_URL_PARAM } from '@/constants/url';
 import { useEditorStore } from '@/store/useEditorStore';
@@ -14,7 +14,7 @@ export function NewInstanceButton(props: NewInstanceButtonProps) {
   const addHistory = useHistory((state) => state.addHistory);
 
   const handleNewInstance = () => {
-    addHistory(getUrlParam(CODE_URL_PARAM));
+    addHistory(getParamFromUrl(CODE_URL_PARAM));
 
     setCode('');
   };
