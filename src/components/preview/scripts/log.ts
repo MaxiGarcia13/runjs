@@ -1,24 +1,29 @@
 import type { Variant } from '../types';
 import { isObject } from '@/utils/data-type';
+import { getCallSite } from '../call-site.utils';
 
 const originalLog = console.log.bind(console);
 const originalWarn = console.warn.bind(console);
 const originalError = console.error.bind(console);
 const originalInfo = console.info.bind(console);
 
-function overwriteFunction(originalFunction: (...args: any[]) => void, type: Variant) {
+function overwriteFunction(_originalFunction: (...args: any[]) => void, type: Variant) {
   return (...args: any[]) => {
+    const callSite = getCallSite();
+
     window.parent.postMessage(
       {
         source: 'runjs-preview',
         payload: args,
         id: crypto.randomUUID(),
         type,
+        callSite,
       },
       '*',
     );
 
-    originalFunction(...args);
+    // TODO: Uncomment this when we have a way to run the code locally
+    // originalFunction(...args);
   };
 }
 
@@ -34,8 +39,8 @@ declare global {
   }
 }
 
-console.perfLog = overwriteFunction(originalInfo, 'perf-log');
-console.testLog = overwriteFunction(originalInfo, 'test-log');
+console.perfLog = overwriteFunction(originalLog, 'perf-log');
+console.testLog = overwriteFunction(originalLog, 'test-log');
 
 declare global {
   interface Window {

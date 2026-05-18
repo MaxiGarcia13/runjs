@@ -1,6 +1,6 @@
 import { deepEqual } from '@maxigarcia/js-utils';
 import { isObject, isPrimitive, isRegExp, isString } from '@/utils/data-type';
-import { getCallSite } from '../call-site';
+import { getCallSite } from '../call-site.utils';
 
 function formatValue(value: any) {
   return JSON.stringify(value, null, 2);
