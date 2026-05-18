@@ -13,7 +13,12 @@ export function Editor({ className }: EditorProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const editorInstanceRef = useRef<editor.IStandaloneCodeEditor>(null);
 
-  const { code, debounceSetCode } = useEditorStore();
+  const {
+    code,
+    debounceSetCode,
+    revealLine,
+    clearRevealLine,
+  } = useEditorStore();
 
   const focusEditor = () => {
     if (window === window.parent) {
@@ -51,6 +56,19 @@ export function Editor({ className }: EditorProps) {
       focusEditor();
     }
   }, [code]);
+
+  useEffect(() => {
+    if (revealLine == null || !editorInstanceRef.current)
+      return;
+
+    editorInstanceRef.current.revealLineInCenter(revealLine);
+    editorInstanceRef.current.setPosition({
+      lineNumber: revealLine,
+      column: 1,
+    });
+    focusEditor();
+    clearRevealLine();
+  }, [revealLine, clearRevealLine]);
 
   return (
     <ContextMenu

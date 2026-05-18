@@ -11,8 +11,11 @@ import { DEFAULT_VALUE } from './default-value.const';
 
 interface EditorStore {
   code: string;
+  revealLine: number | null;
   setCode: (code: string) => void;
   debounceSetCode: (code: string) => void;
+  requestRevealLine: (line: number) => void;
+  clearRevealLine: () => void;
 }
 const DEBOUNCE_TIME = 500;
 
@@ -31,7 +34,10 @@ export const useEditorStore = create<EditorStore>((set) => {
 
   return ({
     code: paramCode ? decodeText(paramCode) : DEFAULT_VALUE,
+    revealLine: null,
     setCode,
     debounceSetCode: debounce(setCode, DEBOUNCE_TIME),
+    requestRevealLine: (line) => set({ revealLine: line }),
+    clearRevealLine: () => set({ revealLine: null }),
   });
 });
