@@ -1,0 +1,39 @@
+import type { Output } from '../types';
+import { cn } from '@maxigarcia/js-utils';
+import { CallSiteLink } from './call-site-link';
+import { LogLineContent } from './log-line-content';
+import { LogLineWrapper } from './log-line-wrapper';
+
+export function DefaultLogLine(
+  {
+    content,
+    title,
+    callSite,
+    type,
+  }: Output & { title: string },
+) {
+  return (
+    <LogLineWrapper
+      className={
+        cn(
+          'flex flex-col gap-2 p-2',
+          type === 'log' && 'text-gray-300 bg-gray-700/30',
+          type === 'warn' && 'text-amber-300 bg-amber-900/30',
+          type === 'error' && 'text-red-400 bg-red-900/30',
+          type === 'info' && 'text-cyan-300 bg-cyan-900/30',
+          type === 'perf-log' && 'text-blue-300 bg-blue-900/30',
+        )
+      }
+      callSite={callSite}
+    >
+      {callSite && (
+        <CallSiteLink callSite={callSite} />
+      )}
+
+      <span>{`${title}: `}</span>
+      <span>
+        <LogLineContent content={content} />
+      </span>
+    </LogLineWrapper>
+  );
+}
