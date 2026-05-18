@@ -51,7 +51,7 @@ export function Preview({ className }: PreviewProps) {
         content: Array.isArray(data.payload) ? data.payload.join('\n') : data.payload,
       };
     } else if (data.type === 'test-log' && Array.isArray(data.payload)) {
-      const [location, isPassed, actual, expected] = data.payload;
+      const [location, isPassed, expected, received] = data.payload;
 
       return {
         ...base,
@@ -61,7 +61,7 @@ export function Preview({ className }: PreviewProps) {
         },
         content: {
           isPassed: Boolean(isPassed),
-          actual,
+          received,
           expected,
         },
       };
@@ -116,7 +116,7 @@ export function Preview({ className }: PreviewProps) {
   return (
     <div
       ref={scrollRef}
-      className={cn('h-full overflow-auto flex flex-col gap-2 text-sm!', className)}
+      className={cn('h-full overflow-auto flex flex-col gap-2', className)}
     >
       <iframe
         srcDoc={html}
