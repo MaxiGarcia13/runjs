@@ -11,5 +11,5 @@ export function LogLineContent({ content }: { content: any }) {
     );
   }
 
-  return <span>{content}</span>;
+  return <pre className="w-full whitespace-pre-wrap">{content}</pre>;
 }
