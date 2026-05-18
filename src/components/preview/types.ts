@@ -22,6 +22,6 @@ export type OutputContent = string | OutputTestContent;
 
 export interface OutputTestContent {
   expected: string;
-  actual: string;
+  received: string;
   isPassed: boolean;
 }
