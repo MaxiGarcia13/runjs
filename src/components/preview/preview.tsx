@@ -100,7 +100,7 @@ export function Preview({ className }: PreviewProps) {
   return (
     <div
       ref={scrollRef}
-      className={cn('h-full overflow-auto overflow-anchor-none flex flex-col gap-2', className)}
+      className={cn('h-full overflow-auto flex flex-col gap-2', className)}
     >
       <iframe
         srcDoc={html}
@@ -110,23 +110,17 @@ export function Preview({ className }: PreviewProps) {
       />
 
       {
-        output.length > 0
-          ? (
-              <>
-                {output
-                  .map((item) => {
-                    return (
-                      <LogLine
-                        key={item.id}
-                        {...item}
-                        content={item.content}
-                        type={item.type}
-                      />
-                    );
-                  })}
-              </>
-            )
-          : null
+        output
+          .map((item) => {
+            return (
+              <LogLine
+                key={item.id}
+                {...item}
+                content={item.content}
+                type={item.type}
+              />
+            );
+          })
       }
     </div>
   );
