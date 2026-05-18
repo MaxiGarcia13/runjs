@@ -1,6 +1,6 @@
 import type { Output, Variant } from './types';
-import { cn } from '@maxigarcia/js-utils';
-import { useEffect, useState } from 'react';
+import { cn, debounce } from '@maxigarcia/js-utils';
+import { useEffect, useRef, useState } from 'react';
 import { useEditorStore } from '@/store/useEditorStore';
 import { LogLine } from './log-line';
 import previewHtml from './preview.html?raw';
@@ -20,6 +20,7 @@ export function Preview({ className }: PreviewProps) {
   const { code } = useEditorStore();
 
   const [output, setOutput] = useState<Output[]>([]);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const html = previewHtml.replace('// your code here', code);
 
@@ -30,40 +31,64 @@ export function Preview({ className }: PreviewProps) {
     return content;
   };
 
+  const mapOutput = (data: Message) => {
+    const base = {
+      id: data.id,
+      type: data.type as Variant,
+    };
+
+    if (data.type === 'error') {
+      return {
+        ...base,
+        content: Array.isArray(data.payload) ? data.payload.join('\n') : data.payload,
+      };
+    } else if (data.type === 'test-log') {
+      const [isPassed, expected, actual] = data.payload;
+      return {
+        ...base,
+        content: {
+          isPassed,
+          expected,
+          actual,
+        },
+      };
+    }
+
+    return {
+      ...base,
+      content: Array.isArray(data.payload)
+        ? data.payload.map(formatOutput).join('\n')
+        : formatOutput(data.payload),
+    };
+  };
+
+  const scrollToLastPosition = debounce((position: number) => {
+    scrollRef.current?.scrollTo?.(0, position);
+  }, 100);
+
   useEffect(() => {
+    const lastPosition = scrollRef.current?.scrollTop ?? 0;
+
+    setOutput([]);
+
     const onMessage = (event: MessageEvent) => {
       const data: Message = event.data;
 
       if (data.source !== 'runjs-preview')
         return;
-      const base = {
-        id: data.id,
-        type: data.type as Variant,
-      };
-      if (data.type === 'error') {
-        setOutput([{
-          ...base,
-          content: Array.isArray(data.payload) ? data.payload.join('\n') : data.payload,
-        }]);
-      } else if (data.type === 'test-log') {
-        const [isPassed, expected, actual] = data.payload;
 
-        setOutput((prev) => [...prev, {
-          ...base,
-          content: {
-            isPassed,
-            expected,
-            actual,
-          },
-        }]);
-      } else {
-        setOutput((prev) => [...prev, {
-          ...base,
-          content: Array.isArray(data.payload)
-            ? data.payload.map(formatOutput).join('\n')
-            : formatOutput(data.payload),
-        }]);
-      }
+      setOutput(
+        (prev) => {
+          const existingItem = prev.find((item) => item.id === data.id);
+          if (existingItem) {
+            return prev.map((item) => item.id === data.id ? mapOutput(data) : item);
+          }
+
+          return [...prev, mapOutput(data)];
+        },
+      );
+
+      scrollToLastPosition(lastPosition);
     };
 
     window.removeEventListener('message', onMessage);
@@ -73,7 +98,10 @@ export function Preview({ className }: PreviewProps) {
   }, [code]);
 
   return (
-    <div className={cn('h-full overflow-auto flex flex-col gap-2', className)}>
+    <div
+      ref={scrollRef}
+      className={cn('h-full overflow-auto overflow-anchor-none flex flex-col gap-2', className)}
+    >
       <iframe
         srcDoc={html}
         className="hidden"
