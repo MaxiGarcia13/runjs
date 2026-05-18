@@ -12,7 +12,7 @@ function overwriteFunction(originalFunction: (...args: any[]) => void, type: Var
       {
         source: 'runjs-preview',
         payload: args,
-        id: args.join('-'),
+        id: crypto.randomUUID(),
         type,
       },
       '*',
