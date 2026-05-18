@@ -34,14 +34,14 @@ function expect<T>(value: T) {
 
     const isPassed = result === expected;
 
-    console.testLog(callSite, isPassed, formatValue(result), formatValue(expected));
+    console.testLog(callSite, isPassed, formatValue(expected), formatValue(result));
   }
 
   async function toEqual(expected: boolean | number | string | null | undefined | object | Array<any>) {
     const result = await getValue();
     const isPassed = deepEqual(result, expected);
 
-    console.testLog(callSite, isPassed, formatValue(result), formatValue(expected));
+    console.testLog(callSite, isPassed, formatValue(expected), formatValue(result));
   }
 
   async function stringMatching(expected: string | RegExp) {
@@ -63,7 +63,7 @@ function expect<T>(value: T) {
         ? resultString.includes(expected)
         : expected.test(resultString);
 
-    console.testLog(callSite, isPassed, formatValue(result), formatValue(expected));
+    console.testLog(callSite, isPassed, formatValue(expected), formatValue(result));
   }
 
   async function objectContaining(expected: object) {
@@ -86,7 +86,7 @@ function expect<T>(value: T) {
       return key in typedResult && deepEqual(typedResult[key], typedExpected[key]);
     });
 
-    console.testLog(callSite, isPassed, formatValue(result), formatValue(expected));
+    console.testLog(callSite, isPassed, formatValue(expected), formatValue(result));
   }
 
   async function arrayContaining(expected: Array<any>) {
@@ -106,7 +106,7 @@ function expect<T>(value: T) {
       result.some((resultItem) => deepEqual(resultItem, expectedItem)),
     );
 
-    console.testLog(callSite, isPassed, formatValue(result), formatValue(expected));
+    console.testLog(callSite, isPassed, formatValue(expected), formatValue(result));
   }
 
   return {
