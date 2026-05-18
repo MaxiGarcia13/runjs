@@ -67,7 +67,7 @@ export function ResizablePanel({
         {leftContent}
       </div>
       <div
-        className={cn(dividerClassName, 'bg-gray-700', cursorClassName)}
+        className={cn(dividerClassName, 'bg-gray-700 hover:bg-yellow-600', cursorClassName)}
         onMouseDown={handleMouseDown}
       >
       </div>
