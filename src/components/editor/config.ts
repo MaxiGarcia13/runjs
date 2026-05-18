@@ -22,7 +22,7 @@ export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOp
     enabled: false,
   },
 
-  lineNumbers: 'off',
+  lineNumbers: 'on',
   glyphMargin: false,
   renderWhitespace: 'all',
   bracketPairColorization: {
@@ -42,6 +42,9 @@ export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOp
   padding: {
     top: 16,
   },
+
+  lineDecorationsWidth: 0,
+  lineNumbersMinChars: 3,
 };
 
 export const RUNJS_RUNTIME_GLOBALS = `

@@ -20,7 +20,7 @@ export function App() {
         direction={isMobile() ? 'vertical' : 'horizontal'}
         leftContent={(
           <Suspense fallback={<EditorSkeleton className="p-2" />}>
-            <LazyEditor className="py-2 pr-2" />
+            <LazyEditor className="py-2 pr-2 pl-0" />
           </Suspense>
         )}
         rightContent={<Preview className="pt-4 pr-2 pb-2 pl-4" />}
