@@ -13,10 +13,15 @@ export function TestLogLine({
   const { expected, received, isPassed } = content;
 
   const className = isPassed ? 'text-green-300 bg-green-900/30' : 'text-red-400 bg-red-900/30';
+  const testTitle = isPassed ? `${title} PASSED` : `${title} FAILED`;
 
   if (!received) {
     return (
-      <LogLineWrapper callSite={callSite} className={className} title={title}>
+      <LogLineWrapper
+        callSite={callSite}
+        className={className}
+        title={testTitle}
+      >
         <span>Expected:</span>
         <LogLineContent content={expected} />
       </LogLineWrapper>
@@ -24,7 +29,11 @@ export function TestLogLine({
   }
 
   return (
-    <LogLineWrapper callSite={callSite} className={className} title={title}>
+    <LogLineWrapper
+      callSite={callSite}
+      className={className}
+      title={testTitle}
+    >
       <span>Expected:</span>
       <LogLineContent content={expected} />
       <span>Received:</span>
