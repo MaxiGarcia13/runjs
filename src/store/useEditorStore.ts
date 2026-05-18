@@ -7,6 +7,7 @@ import {
 import { create } from 'zustand';
 import { CODE_URL_PARAM } from '@/constants/url';
 import { removeUrlParam, setUrlParam } from '@/utils/url';
+import { DEFAULT_VALUE } from './default-value.const';
 
 interface EditorStore {
   code: string;
@@ -29,7 +30,7 @@ export const useEditorStore = create<EditorStore>((set) => {
   };
 
   return ({
-    code: paramCode ? decodeText(paramCode) : '',
+    code: paramCode ? decodeText(paramCode) : DEFAULT_VALUE,
     setCode,
     debounceSetCode: debounce(setCode, DEBOUNCE_TIME),
   });

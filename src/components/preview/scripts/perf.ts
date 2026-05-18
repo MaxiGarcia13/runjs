@@ -23,21 +23,19 @@ interface PerfOptions {
 function perf(fn: any, options: PerfOptions = {}, ...args: any[]) {
   const { label = fn?.name || 'anonymous' } = options;
 
-  console.log(`=>[perf] Function name: ${label}`);
-
-  const reportDuration = (startTime) => {
+  const reportDuration = (startTime: number) => {
     const durationMs = Math.max(0, getNow() - startTime);
 
-    console.log(`duration: ${durationMs.toFixed(2)}ms`);
+    return `Duration: ${durationMs.toFixed(2)}ms`;
   };
 
-  const reportMemory = (startHeapUsed, endHeapUsed) => {
+  const reportMemory = (startHeapUsed: number | null, endHeapUsed: number | null) => {
     if (startHeapUsed == null || endHeapUsed == null) {
-      console.log('memory usage: unavailable in this browser/runtime');
+      console.perfLog('memory usage: unavailable in this browser/runtime');
       return;
     }
 
-    console.log(`memory usage: ${((endHeapUsed - startHeapUsed) / 1024 / 1024).toFixed(2)} MB`);
+    return `Memory usage: ${((endHeapUsed - startHeapUsed) / 1024 / 1024).toFixed(2)} MB`;
   };
 
   const startHeapUsed = getHeapUsed();
@@ -46,14 +44,11 @@ function perf(fn: any, options: PerfOptions = {}, ...args: any[]) {
 
   if (isThenable(result)) {
     return result.finally(() => {
-      reportDuration(startTime);
-
-      reportMemory(startHeapUsed, getHeapUsed());
+      console.perfLog(`Function name: ${label} \n${reportDuration(startTime)} \n${reportMemory(startHeapUsed, getHeapUsed())}`);
     });
   }
 
-  reportDuration(startTime);
-  reportMemory(startHeapUsed, getHeapUsed());
+  console.perfLog(`Function name: ${label} \n${reportDuration(startTime)}\n${reportMemory(startHeapUsed, getHeapUsed())}`);
 
   return result;
 };

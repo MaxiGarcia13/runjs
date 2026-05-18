@@ -5,12 +5,8 @@ function formatValue(value: any) {
   return JSON.stringify(value, null, 2);
 }
 
-function print(isPassed: boolean, message: string) {
-  if (isPassed) {
-    console.log(`✅ ${message}`);
-  } else {
-    console.warn(`❌ ${message}`);
-  }
+function print(isPassed: boolean, ...args: any[]) {
+  console.testLog(isPassed, ...args);
 }
 
 function expect<T>(value: T) {
@@ -37,14 +33,14 @@ function expect<T>(value: T) {
 
     const isPassed = result === expected;
 
-    print(isPassed, `Expected ${formatValue(result)} to be ${formatValue(expected)}`);
+    print(isPassed, formatValue(result), formatValue(expected));
   }
 
   async function toEqual(expected: boolean | number | string | null | undefined | object | Array<any>) {
     const result = await getValue();
     const isPassed = deepEqual(result, expected);
 
-    print(isPassed, `Expected ${formatValue(result)} to equal ${formatValue(expected)}`);
+    print(isPassed, formatValue(result), formatValue(expected));
   }
 
   async function stringMatching(expected: string | RegExp) {
@@ -66,7 +62,7 @@ function expect<T>(value: T) {
         ? resultString.includes(expected)
         : expected.test(resultString);
 
-    print(isPassed, `Expected ${formatValue(result)} to match ${formatValue(expected)}`);
+    print(isPassed, formatValue(result), formatValue(expected));
   }
 
   async function objectContaining(expected: object) {
@@ -89,7 +85,7 @@ function expect<T>(value: T) {
       return key in typedResult && deepEqual(typedResult[key], typedExpected[key]);
     });
 
-    print(isPassed, `Expected ${formatValue(result)} to object contain ${formatValue(expected)}`);
+    print(isPassed, formatValue(result), formatValue(expected));
   }
 
   async function arrayContaining(expected: Array<any>) {
@@ -109,7 +105,7 @@ function expect<T>(value: T) {
       result.some((resultItem) => deepEqual(resultItem, expectedItem)),
     );
 
-    print(isPassed, `Expected ${formatValue(result)} to array contain ${formatValue(expected)}`);
+    print(isPassed, formatValue(result), formatValue(expected));
   }
 
   return {
