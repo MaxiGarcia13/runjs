@@ -1,4 +1,4 @@
-import type { Output, Variant } from './types';
+import type { CallSite, Output, Variant } from './types';
 import { cn, debounce } from '@maxigarcia/js-utils';
 import { useEffect, useRef, useState } from 'react';
 import { useEditorStore } from '@/store/useEditorStore';
@@ -14,6 +14,7 @@ interface Message {
   payload?: any[];
   type?: string;
   id: string;
+  callSite?: CallSite;
 }
 
 export function Preview({ className }: PreviewProps) {
@@ -31,10 +32,17 @@ export function Preview({ className }: PreviewProps) {
     return content;
   };
 
-  const mapOutput = (data: Message) => {
+  const mapOutput = (data: Message, offset: number) => {
+    const line = (data.callSite?.line ?? 0) - offset;
+    const column = data.callSite?.column;
+
     const base = {
       id: data.id,
       type: data.type as Variant,
+      callSite: {
+        line,
+        column,
+      },
     };
 
     if (data.type === 'error') {
@@ -42,14 +50,19 @@ export function Preview({ className }: PreviewProps) {
         ...base,
         content: Array.isArray(data.payload) ? data.payload.join('\n') : data.payload,
       };
-    } else if (data.type === 'test-log') {
-      const [isPassed, expected, actual] = data.payload;
+    } else if (data.type === 'test-log' && Array.isArray(data.payload)) {
+      const [location, isPassed, actual, expected] = data.payload;
+
       return {
         ...base,
+        callSite: {
+          line: location.line - offset,
+          column: location.column,
+        },
         content: {
-          isPassed,
-          expected,
+          isPassed: Boolean(isPassed),
           actual,
+          expected,
         },
       };
     }
@@ -76,15 +89,18 @@ export function Preview({ className }: PreviewProps) {
 
       if (data.source !== 'runjs-preview')
         return;
+      // Hardcoded offset for the try/catch block
+      // TODO: Implement a more dynamic way to get the offset
+      const offset = 14;
 
       setOutput(
         (prev) => {
           const existingItem = prev.find((item) => item.id === data.id);
           if (existingItem) {
-            return prev.map((item) => item.id === data.id ? mapOutput(data) : item);
+            return prev.map((item) => item.id === data.id ? mapOutput(data, offset) : item);
           }
 
-          return [...prev, mapOutput(data)];
+          return [...prev, mapOutput(data, offset)];
         },
       );
 
@@ -100,7 +116,7 @@ export function Preview({ className }: PreviewProps) {
   return (
     <div
       ref={scrollRef}
-      className={cn('h-full overflow-auto flex flex-col gap-2', className)}
+      className={cn('h-full overflow-auto flex flex-col gap-2 text-sm!', className)}
     >
       <iframe
         srcDoc={html}
@@ -113,12 +129,7 @@ export function Preview({ className }: PreviewProps) {
         output
           .map((item) => {
             return (
-              <LogLine
-                key={item.id}
-                {...item}
-                content={item.content}
-                type={item.type}
-              />
+              <LogLine key={item.id} {...item} />
             );
           })
       }
