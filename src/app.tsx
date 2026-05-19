@@ -14,9 +14,9 @@ const LazyEditor = lazy(() =>
 export function App() {
   return (
     <ToastProvider>
-      <Header />
+      <Header className="border-b border-gray-600 px-4" />
       <ResizablePanel
-        className="mx-2 mb-2 min-h-0 flex-1 overflow-hidden rounded-md border border-gray-600 bg-gray-800"
+        className="mr-4 min-h-0 flex-1 overflow-hidden"
         direction={isMobile() ? 'vertical' : 'horizontal'}
         leftContent={(
           <Suspense fallback={<EditorSkeleton className="p-2" />}>

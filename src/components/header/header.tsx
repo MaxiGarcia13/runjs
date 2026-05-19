@@ -1,12 +1,13 @@
+import { cn } from '@maxigarcia/js-utils';
 import { GithubLink } from '../github-link';
 import { HistoryButton } from '../history';
 import { NewInstanceButton } from '../new-instance-button';
 import { OpenAiButton } from '../openai-button';
 import { ShareButton } from '../share-button';
 
-export function Header() {
+export function Header({ className }: { className?: string }) {
   return (
-    <header className="flex items-center justify-between gap-2 p-2 sm:flex-row">
+    <header className={cn('flex items-center justify-between gap-2 p-2 sm:flex-row', className)}>
       <div className="flex shrink-0 flex-col items-center sm:flex-row sm:gap-2">
         <div className="flex items-center gap-2">
           <img src="/favicon.png" alt="RunJS" className="size-6" />
