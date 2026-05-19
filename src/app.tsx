@@ -1,15 +1,10 @@
-import { lazy, Suspense } from 'react';
+import { LazyEditor } from '@/components/editor';
 import { Header } from '@/components/header';
 import { Preview } from '@/components/preview';
 import { ResizablePanel } from '@/components/resizable-panel';
-import { EditorSkeleton } from '@/components/skeleton';
 import { ToastProvider } from '@/components/toast';
 import { isMobile } from '@/utils/device';
 import { Footer } from './components/footer';
-
-const LazyEditor = lazy(() =>
-  import('@/components/editor').then((mod) => ({ default: mod.Editor })),
-);
 
 export function App() {
   return (
@@ -18,11 +13,7 @@ export function App() {
       <ResizablePanel
         className="min-h-0 flex-1 overflow-hidden"
         direction={isMobile() ? 'vertical' : 'horizontal'}
-        leftContent={(
-          <Suspense fallback={<EditorSkeleton className="p-2" />}>
-            <LazyEditor className="py-2 pr-2 pl-0" />
-          </Suspense>
-        )}
+        leftContent={<LazyEditor className="py-2 pr-2 pl-0" />}
         rightContent={<Preview className="pt-4 pr-4 pb-2 pl-4" />}
       />
       <Footer />

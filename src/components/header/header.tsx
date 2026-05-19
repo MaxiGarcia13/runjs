@@ -1,4 +1,5 @@
 import { cn } from '@maxigarcia/js-utils';
+import { CodeSnapshotButton } from '../code-snapshot-button';
 import { GithubLink } from '../github-link';
 import { HistoryButton } from '../history';
 import { NewInstanceButton } from '../new-instance-button';
@@ -21,6 +22,7 @@ export function Header({ className }: { className?: string }) {
       </div>
 
       <nav className="flex items-center gap-2" aria-label="App actions">
+        <CodeSnapshotButton />
         <OpenAiButton />
         <HistoryButton />
         <NewInstanceButton />
