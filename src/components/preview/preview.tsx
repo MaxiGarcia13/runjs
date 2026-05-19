@@ -18,7 +18,7 @@ interface Message {
 }
 
 export function Preview({ className }: PreviewProps) {
-  const { trimmedCode, code } = useEditorStore();
+  const { code } = useEditorStore();
 
   const scrollRef = useRef<HTMLElement>(null);
 
@@ -49,7 +49,10 @@ export function Preview({ className }: PreviewProps) {
     if (data.type === 'error') {
       return {
         ...base,
-        content: Array.isArray(data.payload) ? data.payload.join('\n') : data.payload,
+        content:
+        Array.isArray(data.payload)
+          ? data.payload.join('\n')
+          : data.payload,
       };
     } else if (data.type === 'test-log' && Array.isArray(data.payload)) {
       const [location, isPassed, expected, received] = data.payload;
@@ -107,7 +110,6 @@ export function Preview({ className }: PreviewProps) {
   useEffect(() => {
     const lastPosition = scrollRef.current?.scrollTop ?? 0;
     const handler = onMessage(lastPosition);
-
     setOutput([]);
 
     window.removeEventListener('message', handler);
@@ -115,7 +117,7 @@ export function Preview({ className }: PreviewProps) {
     return () => {
       window.removeEventListener('message', handler);
     };
-  }, [trimmedCode]);
+  }, [code]);
 
   return (
     <section
