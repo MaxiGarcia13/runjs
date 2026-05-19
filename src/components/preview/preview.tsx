@@ -3,7 +3,7 @@ import { cn, debounce } from '@maxigarcia/js-utils';
 import { useEffect, useRef, useState } from 'react';
 import { useEditorStore } from '@/store/useEditorStore';
 import { Iframe } from './iframe';
-import { OutputList } from './output-list';
+import { Outputs } from './outputs';
 
 interface PreviewProps {
   className?: string;
@@ -22,7 +22,7 @@ export function Preview({ className }: PreviewProps) {
 
   const scrollRef = useRef<HTMLElement>(null);
 
-  const [output, setOutput] = useState<Output[]>([]);
+  const [outputs, setOutputs] = useState<Output[]>([]);
 
   const formatOutput = (content: string) => {
     if (typeof content === 'object' || Array.isArray(content))
@@ -91,7 +91,7 @@ export function Preview({ className }: PreviewProps) {
     // TODO: Implement a more dynamic way to get the offset
     const offset = 14;
 
-    setOutput(
+    setOutputs(
       (prev) => {
         const existingItem = prev.find((item) => item.id === data.id);
         if (existingItem) {
@@ -108,7 +108,7 @@ export function Preview({ className }: PreviewProps) {
   useEffect(() => {
     const lastPosition = scrollRef.current?.scrollTop ?? 0;
     const handler = onMessage(lastPosition);
-    setOutput([]);
+    setOutputs([]);
 
     window.removeEventListener('message', handler);
     window.addEventListener('message', handler);
@@ -127,7 +127,7 @@ export function Preview({ className }: PreviewProps) {
       aria-relevant="additions"
     >
       <Iframe code={code} />
-      <OutputList output={output} />
+      <Outputs outputs={outputs} />
     </section>
   );
 }

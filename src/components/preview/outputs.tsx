@@ -1,12 +1,12 @@
 import type { Output } from './types';
 import { LogLine } from './log-line';
 
-interface OutputListProps {
-  output: Output[];
+interface OutputsProps {
+  outputs: Output[];
 }
 
-export function OutputList({ output }: OutputListProps) {
-  return output
+export function Outputs({ outputs }: OutputsProps) {
+  return outputs
     .map((item) => {
       return (
         <LogLine key={item.id} id={item.id} {...item} />
