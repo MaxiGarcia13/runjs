@@ -15,7 +15,7 @@ export function ContextMenuItem({ onClick, children, icon, command }: ContextMen
       className={cn(
         'flex w-full cursor-pointer items-center gap-2 p-2',
         'text-left text-sm text-inherit',
-        'hover:bg-gray-600 transition-colors',
+        'hover:bg-surface transition-colors',
       )}
       onClick={onClick}
     >

@@ -11,7 +11,7 @@ export function CallSiteLink({ callSite, className }: { callSite: CallSite; clas
     <button
       type="button"
       className={cn(
-        'cursor-pointer self-start text-gray-400 underline-offset-2 hover:text-gray-200 hover:underline',
+        'cursor-pointer self-start text-muted underline-offset-2 hover:text-foreground hover:underline',
         className,
       )}
       onClick={() => requestRevealLine(line)}

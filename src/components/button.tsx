@@ -30,8 +30,8 @@ export function Button({
 
 export function BaseButton({ children, className, variant = 'default', ...props }: ButtonProps) {
   const variantStyles = {
-    default: 'bg-transparent border-gray-600 hover:bg-gray-600',
-    success: 'border-green-500 bg-green-500! text-inherit',
+    default: 'bg-transparent border-border hover:bg-surface',
+    success: 'border-success bg-success! text-inherit',
   };
 
   const variantStyle = variantStyles[variant];

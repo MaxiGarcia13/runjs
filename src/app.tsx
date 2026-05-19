@@ -14,7 +14,7 @@ const LazyEditor = lazy(() =>
 export function App() {
   return (
     <ToastProvider>
-      <Header className="border-b border-gray-600 px-4" />
+      <Header className="border-b border-border px-4" />
       <ResizablePanel
         className="mr-4 min-h-0 flex-1 overflow-hidden"
         direction={isMobile() ? 'vertical' : 'horizontal'}

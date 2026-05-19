@@ -12,7 +12,7 @@ export function TestLogLine({
 }) {
   const { expected, received, isPassed } = content;
 
-  const className = isPassed ? 'text-green-300 bg-green-900/30' : 'text-red-400 bg-red-900/30';
+  const className = isPassed ? 'text-success bg-success/15' : 'text-danger bg-danger/15';
   const testTitle = isPassed ? `${title} PASSED` : `${title} FAILED`;
 
   if (!received) {

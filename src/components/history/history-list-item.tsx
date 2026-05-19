@@ -34,7 +34,7 @@ export function HistoryListItem({ history, onNavigateToHistory }: HistoryListIte
   return (
     <li
       key={history.createdAt}
-      className="flex items-center justify-between gap-2 rounded-md border border-gray-600 p-2"
+      className="flex items-center justify-between gap-2 rounded-md border border-border p-2"
     >
       <div className="flex flex-col gap-2 truncate">
         <Tooltip content="Edit history label" position="top">
@@ -46,7 +46,7 @@ export function HistoryListItem({ history, onNavigateToHistory }: HistoryListIte
             {history.label ?? 'Untitled'}
           </h3>
         </Tooltip>
-        <span className="text-xs text-gray-400">
+        <span className="text-xs text-muted">
           <span>
             Created at:
             {' '}

@@ -17,11 +17,11 @@ export function DefaultLogLine(
       title={title}
       className={
         cn(
-          type === 'log' && 'text-gray-300 bg-gray-700/30',
-          type === 'warn' && 'text-amber-300 bg-amber-900/30',
-          type === 'error' && 'text-red-400 bg-red-900/30',
-          type === 'info' && 'text-cyan-300 bg-cyan-900/30',
-          type === 'perf-log' && 'text-blue-300 bg-blue-900/30',
+          type === 'log' && 'text-foreground bg-surface/30',
+          type === 'warn' && 'text-accent bg-accent/15',
+          type === 'error' && 'text-danger bg-danger/15',
+          type === 'info' && 'text-info bg-info/15',
+          type === 'perf-log' && 'text-purple bg-purple/15',
         )
       }
     >

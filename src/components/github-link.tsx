@@ -9,7 +9,7 @@ export function GithubLink({ className }: { className?: string }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="View repository on GitHub"
-      className={cn('flex items-center text-gray-400 transition-colors hover:text-gray-300', className)}
+      className={cn('flex items-center text-muted transition-colors hover:text-foreground', className)}
     >
       <GithubIcon className="size-4" />
 

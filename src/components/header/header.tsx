@@ -10,10 +10,10 @@ export function Header({ className }: { className?: string }) {
     <header className={cn('flex items-center justify-between gap-2 p-2 sm:flex-row', className)}>
       <div className="flex shrink-0 flex-col items-center sm:flex-row sm:gap-2">
         <div className="flex items-center gap-2">
-          <img src="/favicon.png" alt="RunJS" className="size-6" />
+          <img src="/favicon.webp" alt="RunJS" className="size-6" />
           <h1 className="mt-1 text-xl font-bold sm:text-2xl">
             Run
-            <span className="text-amber-300">JS</span>
+            <span className="text-accent">JS</span>
           </h1>
         </div>
 
