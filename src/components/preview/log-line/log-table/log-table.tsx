@@ -8,7 +8,7 @@ export function LogTable({ columns, rows }: LogTableProps) {
     <div className="w-full overflow-x-auto rounded-md bg-surface/30">
       <table className="w-full border-collapse text-foreground">
         <thead>
-          <tr className="border-b border-border">
+          <tr className="border-b border-line">
             {columns.map((column) => (
               <th
                 key={column}
@@ -24,7 +24,7 @@ export function LogTable({ columns, rows }: LogTableProps) {
           {rows.map((row, rowIndex) => (
             <tr
               key={rowIndex}
-              className="border-b border-border/50 last:border-b-0"
+              className="border-b border-line/50 last:border-b-0"
             >
               {row.map((cell, cellIndex) => (
                 <td

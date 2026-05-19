@@ -35,7 +35,7 @@ export function HistoryListItem({ history, onNavigateToHistory }: HistoryListIte
   return (
     <li
       key={history.createdAt}
-      className="flex items-center justify-between gap-2 rounded-md border border-border p-2"
+      className="flex items-center justify-between gap-2 rounded-md border border-line p-2"
     >
       <div className="flex flex-col gap-2 truncate">
         <Tooltip

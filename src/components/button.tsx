@@ -33,7 +33,7 @@ export function Button({
 
 export function BaseButton({ children, className, variant = 'default', ...props }: ButtonProps) {
   const variantStyles = {
-    default: 'bg-transparent border-border hover:bg-surface',
+    default: 'bg-transparent border-line hover:bg-surface',
     success: 'border-success bg-success! text-inherit',
   };
 

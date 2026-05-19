@@ -4,7 +4,7 @@ import { cn } from '@maxigarcia/js-utils';
 export type AlertVariant = 'default';
 
 const variantStyles: Record<AlertVariant, string> = {
-  default: 'border-border bg-surface text-inherit',
+  default: 'border-line bg-surface text-inherit',
 };
 
 export interface AlertProps {

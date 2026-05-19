@@ -22,7 +22,7 @@ export function TooltipContent({
       className={cn(
         'pointer-events-none z-50 fixed max-w-[min(20rem,calc(100vw-16px))] px-2 py-1 text-xs',
         'wrap-break-word rounded-md border',
-        'bg-surface border-border',
+        'bg-surface border-gray-600 shadow-xl',
         !coords && 'invisible',
         className,
       )}

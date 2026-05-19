@@ -9,7 +9,7 @@ import { Footer } from './components/footer';
 export function App() {
   return (
     <ToastProvider>
-      <Header className="border-b border-border px-4" />
+      <Header className="border-b border-line px-4" />
       <ResizablePanel
         className="min-h-0 flex-1 overflow-hidden"
         direction={isMobile() ? 'vertical' : 'horizontal'}

@@ -3,7 +3,7 @@
 :root {
   --background: #282a36;
   --foreground: #f8f8f2;
-  --border: #44475a;
+  --line: #44475a;
   --surface: #44475a;
   --muted: #6272a4;
   --subtle: #3b3a32;
@@ -17,7 +17,7 @@
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-border: var(--border);
+  --color-line: var(--line);
   --color-surface: var(--surface);
   --color-muted: var(--muted);
   --color-subtle: var(--subtle);

@@ -71,7 +71,7 @@ export function Modal({
       aria-modal="true"
       className={cn(
         'm-auto w-[calc(100%-2rem)] max-w-xl overflow-hidden rounded-xl p-0 shadow-2xl outline-none',
-        'border-border text-inherit border bg-surface backdrop:bg-background/80 backdrop:backdrop-blur-sm',
+        'border-line text-inherit border bg-surface backdrop:bg-background/80 backdrop:backdrop-blur-sm',
         className,
       )}
       onClick={handleBackdropClick}
@@ -80,7 +80,7 @@ export function Modal({
     >
       <div className={cn('flex max-h-[85vh] flex-col gap-4 p-5', contentClassName)}>
         {(title || showCloseButton) && (
-          <div className="flex items-center justify-between gap-4 border-b border-border pb-4">
+          <div className="flex items-center justify-between gap-4 border-b border-line pb-4">
             {title && <h2 id={titleId} className="text-lg font-semibold text-foreground">{title}</h2>}
             {showCloseButton && (
               <Button
