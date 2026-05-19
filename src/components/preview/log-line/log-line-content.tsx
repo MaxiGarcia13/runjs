@@ -5,7 +5,7 @@ export function LogLineContent({ content }: { content: any }) {
 
   if (isRecord(parsedValue) || Array.isArray(parsedValue)) {
     return (
-      <pre className="w-full rounded-md bg-subtle/30 p-2">
+      <pre className="w-full rounded-md bg-surface/30 p-2 text-foreground">
         {JSON.stringify(parsedValue, null, 2)}
       </pre>
     );
