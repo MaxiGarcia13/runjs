@@ -3,7 +3,7 @@ import { Tooltip } from './tooltip';
 
 export function CodeSnapshotButton() {
   const url = `${window.location.hostname}/snapshot${window.location.search}`;
-  const apiUrl = `https://snap-website-api.vercel.app/website-to-blob-img?url=${url}`;
+  const apiUrl = `https://snap-website-api.vercel.app/website-to-blob-img?url=${encodeURIComponent(url)}`;
 
   return (
     <Tooltip content="Take a snapshot of the code" placement="bottom">
