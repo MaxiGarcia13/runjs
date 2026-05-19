@@ -15,7 +15,7 @@ function overwriteFunction(_originalFunction: (...args: any[]) => void, type: Va
       {
         source: 'runjs-preview',
         payload: args,
-        id: crypto.randomUUID(),
+        id: `${type}-line-${callSite.line}-col-${callSite.column}`,
         type,
         callSite,
       },
