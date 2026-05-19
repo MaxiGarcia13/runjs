@@ -1,14 +1,17 @@
 import type { ReactNode } from 'react';
-import type { TooltipPosition } from './types';
+import type { TooltipPlacement } from './types';
 import { cn } from '@maxigarcia/js-utils';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useDismiss } from '@/hooks/use-dismiss';
+import { useFloatingPosition } from '@/hooks/use-floating-position';
 import { TooltipContent } from './tooltip-content';
-import { useTooltipPosition } from './use-tooltip-position';
+import { getTooltipComputePlacement } from './tooltip-position';
 
 export interface TooltipProps {
   content: ReactNode;
   children: ReactNode;
-  position?: TooltipPosition;
+  placement?: TooltipPlacement;
   className?: string;
   contentClassName?: string;
   disabled?: boolean;
@@ -17,20 +20,21 @@ export interface TooltipProps {
 export function Tooltip({
   content,
   children,
-  position = 'top',
+  placement = 'top',
   className,
   contentClassName,
   disabled,
 }: TooltipProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [triggerElement, setTriggerElement] = useState<HTMLDivElement | null>(null);
-  const [tooltipElement, setTooltipElement] = useState<HTMLSpanElement | null>(null);
 
-  const coords = useTooltipPosition({
+  const triggerElementRef = useRef<HTMLDivElement>(null);
+  const tooltipElementRef = useRef<HTMLSpanElement>(null);
+
+  const coords = useFloatingPosition({
     isOpen,
-    position,
-    triggerElement,
-    tooltipElement,
+    anchorElement: triggerElementRef,
+    floatingElement: tooltipElementRef,
+    computePosition: getTooltipComputePlacement(placement),
   });
 
   const handleOpen = () => {
@@ -41,9 +45,11 @@ export function Tooltip({
 
   const handleClose = () => setIsOpen(false);
 
+  useDismiss(handleClose, triggerElementRef, isOpen);
+
   return (
     <div
-      ref={setTriggerElement}
+      ref={triggerElementRef}
       className={cn('relative inline-flex', className)}
       onMouseEnter={handleOpen}
       onMouseLeave={handleClose}
@@ -52,12 +58,15 @@ export function Tooltip({
     >
       {children}
       {!disabled && isOpen && (
-        <TooltipContent
-          content={content}
-          coords={coords}
-          contentClassName={contentClassName}
-          setTooltipElement={setTooltipElement}
-        />
+        createPortal(
+          <TooltipContent
+            ref={tooltipElementRef}
+            children={content}
+            coords={coords}
+            className={cn(contentClassName)}
+          />,
+          document.body,
+        )
       )}
     </div>
   );
