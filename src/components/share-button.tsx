@@ -1,25 +1,39 @@
 import type { ComponentProps } from 'react';
+import { useState } from 'react';
+import { CheckIcon } from '@/assets/icons/check';
 import { LinkIcon } from '@/assets/icons/link';
-import { useToast } from '@/components/toast';
 import { Button } from './button';
 
 type ShareButtonProps = Omit<ComponentProps<typeof Button>, 'onClick' | 'disabled' | 'tooltip' | 'children'>;
 
 export function ShareButton(props: ShareButtonProps) {
-  const { showToast } = useToast();
+  const [isCopied, setIsCopied] = useState(false);
 
   const handleShare = () => {
-    const url = window.location.href;
-    navigator.clipboard.writeText(url);
-
-    showToast('Link copied to clipboard');
+    try {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url);
+      setIsCopied(true);
+    } finally {
+      setTimeout(setIsCopied, 1000, false);
+    }
   };
 
-  return (
-    <Button onClick={handleShare} {...props}>
-      <LinkIcon className="size-5" />
+  if (isCopied) {
+    return (
+      <Button
+        {...props}
+        tooltip="Link copied to clipboard"
+        variant="success"
+      >
+        <CheckIcon className="size-4" />
+      </Button>
+    );
+  }
 
-      <span>Copy link</span>
+  return (
+    <Button {...props} onClick={handleShare} tooltip="Copy link">
+      <LinkIcon className="size-4" />
     </Button>
   );
 }

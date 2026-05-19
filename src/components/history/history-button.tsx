@@ -21,7 +21,7 @@ export function HistoryButton(props: HistoryButtonProps) {
         onClick={() => setOpenHistoryModal(true)}
         {...props}
       >
-        <HistoryIcon className="size-5" />
+        <HistoryIcon className="size-4" />
       </Button>
       {
         openHistoryModal && (

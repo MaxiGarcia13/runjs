@@ -1,4 +1,4 @@
-import type { TooltipPosition } from './tooltip';
+import type { TooltipPlacement } from './tooltip/types';
 import { cn } from '@maxigarcia/js-utils';
 import { Tooltip } from './tooltip';
 
@@ -6,7 +6,8 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   children: React.ReactNode;
   className?: string;
   tooltip?: string;
-  tooltipPosition?: TooltipPosition;
+  tooltipPosition?: TooltipPlacement;
+  variant?: 'default' | 'success';
 }
 
 export function Button({
@@ -18,7 +19,7 @@ export function Button({
 }: ButtonProps) {
   if (tooltip) {
     return (
-      <Tooltip content={tooltip} position={tooltipPosition}>
+      <Tooltip content={tooltip} placement={tooltipPosition}>
         <BaseButton className={className} {...props}>{children}</BaseButton>
       </Tooltip>
     );
@@ -27,13 +28,20 @@ export function Button({
   return <BaseButton className={className} {...props}>{children}</BaseButton>;
 }
 
-export function BaseButton({ children, className, ...props }: ButtonProps) {
+export function BaseButton({ children, className, variant = 'default', ...props }: ButtonProps) {
+  const variantStyles = {
+    default: 'bg-transparent border-gray-600 hover:bg-gray-600',
+    success: 'border-green-500 bg-green-500! text-inherit',
+  };
+
+  const variantStyle = variantStyles[variant];
+
   return (
     <button
       className={
         cn(
           'border p-2 rounded-md text-sm flex items-center gap-2',
-          'bg-transparent border-gray-600 hover:bg-gray-600',
+          variantStyle,
           !props.disabled
             ? 'cursor-pointer  transition-colors'
             : 'opacity-50 cursor-not-allowed hover:bg-transparent',

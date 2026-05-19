@@ -26,7 +26,7 @@ export function NewInstanceButton(props: NewInstanceButtonProps) {
       onClick={handleNewInstance}
       {...props}
     >
-      <PlusIcon className="size-5" />
+      <PlusIcon className="size-4" />
     </Button>
   );
 }

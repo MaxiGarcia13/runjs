@@ -20,7 +20,7 @@ export function OpenAiButton(props: OpenAiButtonProps) {
 
   return (
     <Button type="button" onClick={openChatGptWithCode} disabled={!code} tooltip="Open in ChatGPT" {...props}>
-      <OpenIAIcon className="size-5" />
+      <OpenIAIcon className="size-4" />
     </Button>
   );
 }
