@@ -1,4 +1,4 @@
-import { editor, typescript } from 'monaco-editor';
+import { editor, languages, typescript } from 'monaco-editor';
 import { draculaTheme } from './themes/dracula';
 import './worker';
 
@@ -93,3 +93,51 @@ declare function expect<T>(value: T | (() => T | Promise<T>)): ExpectMatcher;
 `;
 
 typescript.javascriptDefaults.addExtraLib(RUNJS_RUNTIME_GLOBALS, 'runjs-runtime.d.ts');
+
+const LOOP_SNIPPETS: Omit<languages.CompletionItem, 'range'>[] = [
+  {
+    label: 'for',
+    kind: languages.CompletionItemKind.Snippet,
+    // eslint-disable-next-line no-template-curly-in-string
+    insertText: 'for (let ${1:i} = 0; ${1:i} < ${2:array}.length; ${1:i}++) {\n\t$0\n}',
+    insertTextRules: languages.CompletionItemInsertTextRule.InsertAsSnippet,
+    documentation: 'For loop',
+    detail: 'for (let i = 0; i < array.length; i++)',
+  },
+  {
+    label: 'forof',
+    filterText: 'for of forof',
+    kind: languages.CompletionItemKind.Snippet,
+    // eslint-disable-next-line no-template-curly-in-string
+    insertText: 'for (const ${1:item} of ${2:iterable}) {\n\t$0\n}',
+    insertTextRules: languages.CompletionItemInsertTextRule.InsertAsSnippet,
+    documentation: 'For-of loop',
+    detail: 'for (const item of iterable)',
+  },
+  {
+    label: 'forin',
+    filterText: 'for in forin',
+    kind: languages.CompletionItemKind.Snippet,
+    // eslint-disable-next-line no-template-curly-in-string
+    insertText: 'for (const ${1:key} in ${2:object}) {\n\t$0\n}',
+    insertTextRules: languages.CompletionItemInsertTextRule.InsertAsSnippet,
+    documentation: 'For-in loop',
+    detail: 'for (const key in object)',
+  },
+];
+
+languages.registerCompletionItemProvider('javascript', {
+  provideCompletionItems: (model, position) => {
+    const word = model.getWordUntilPosition(position);
+    const range = {
+      startLineNumber: position.lineNumber,
+      endLineNumber: position.lineNumber,
+      startColumn: word.startColumn,
+      endColumn: word.endColumn,
+    };
+
+    return {
+      suggestions: LOOP_SNIPPETS.map((snippet) => ({ ...snippet, range })),
+    };
+  },
+});
