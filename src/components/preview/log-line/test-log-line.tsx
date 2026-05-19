@@ -34,10 +34,10 @@ export function TestLogLine({
       className={className}
       title={testTitle}
     >
-      <span>Expected:</span>
-      <LogLineContent content={expected} />
       <span>Received:</span>
       <LogLineContent content={received} />
+      <span>Expected:</span>
+      <LogLineContent content={expected} />
     </LogLineWrapper>
   );
 }
