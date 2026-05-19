@@ -11,6 +11,7 @@ import { DEFAULT_VALUE } from './default-value.const';
 
 interface EditorStore {
   code: string;
+  trimmedCode: string;
   revealLine: number | null;
   setCode: (code: string) => void;
   debounceSetCode: (code: string) => void;
@@ -22,9 +23,12 @@ const DEBOUNCE_TIME = 500;
 export const useEditorStore = create<EditorStore>((set) => {
   const paramCode = getParamFromUrl(CODE_URL_PARAM);
 
-  const setCode = (code: string) => {
-    set({ code });
+  const trimCode = (code: string) => {
+    return code.trim().split('\n').filter((line) => line.trim() !== '').join('\n');
+  };
 
+  const setCode = (code: string) => {
+    set({ code, trimmedCode: trimCode(code) });
     if (code) {
       setUrlParam(CODE_URL_PARAM, encodeText(code));
     } else {
@@ -32,8 +36,11 @@ export const useEditorStore = create<EditorStore>((set) => {
     }
   };
 
+  const code = paramCode ? decodeText(paramCode) : DEFAULT_VALUE;
+
   return ({
-    code: paramCode ? decodeText(paramCode) : DEFAULT_VALUE,
+    code,
+    trimmedCode: trimCode(code),
     revealLine: null,
     setCode,
     debounceSetCode: debounce(setCode, DEBOUNCE_TIME),

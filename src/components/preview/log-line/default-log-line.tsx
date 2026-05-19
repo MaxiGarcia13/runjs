@@ -9,6 +9,7 @@ export function DefaultLogLine(
     title,
     callSite,
     type,
+    ...props
   }: Output & { title: string },
 ) {
   return (
@@ -24,6 +25,7 @@ export function DefaultLogLine(
           type === 'perf-log' && 'border-purple',
         )
       }
+      {...props}
     >
       <LogLineContent content={content} />
     </LogLineWrapper>

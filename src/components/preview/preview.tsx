@@ -18,10 +18,11 @@ interface Message {
 }
 
 export function Preview({ className }: PreviewProps) {
-  const { code } = useEditorStore();
+  const { trimmedCode, code } = useEditorStore();
+
+  const scrollRef = useRef<HTMLElement>(null);
 
   const [output, setOutput] = useState<Output[]>([]);
-  const scrollRef = useRef<HTMLElement>(null);
 
   const html = previewHtml.replace('// your code here', code);
 
@@ -79,39 +80,42 @@ export function Preview({ className }: PreviewProps) {
     scrollRef.current?.scrollTo?.(0, position);
   }, 100);
 
+  const onMessage = (lastPosition: number) => (event: MessageEvent) => {
+    const data: Message = event.data;
+
+    if (data.source !== 'runjs-preview')
+      return;
+
+    // Hardcoded offset for the try/catch block
+    // TODO: Implement a more dynamic way to get the offset
+    const offset = 14;
+
+    setOutput(
+      (prev) => {
+        const existingItem = prev.find((item) => item.id === data.id);
+        if (existingItem) {
+          return prev.map((item) => item.id === data.id ? mapOutput(data, offset) : item);
+        }
+
+        return [...prev, mapOutput(data, offset)];
+      },
+    );
+
+    scrollToLastPosition(lastPosition);
+  };
+
   useEffect(() => {
     const lastPosition = scrollRef.current?.scrollTop ?? 0;
+    const handler = onMessage(lastPosition);
 
     setOutput([]);
 
-    const onMessage = (event: MessageEvent) => {
-      const data: Message = event.data;
-
-      if (data.source !== 'runjs-preview')
-        return;
-      // Hardcoded offset for the try/catch block
-      // TODO: Implement a more dynamic way to get the offset
-      const offset = 14;
-
-      setOutput(
-        (prev) => {
-          const existingItem = prev.find((item) => item.id === data.id);
-          if (existingItem) {
-            return prev.map((item) => item.id === data.id ? mapOutput(data, offset) : item);
-          }
-
-          return [...prev, mapOutput(data, offset)];
-        },
-      );
-
-      scrollToLastPosition(lastPosition);
+    window.removeEventListener('message', handler);
+    window.addEventListener('message', handler);
+    return () => {
+      window.removeEventListener('message', handler);
     };
-
-    window.removeEventListener('message', onMessage);
-    window.addEventListener('message', onMessage);
-
-    return () => window.removeEventListener('message', onMessage);
-  }, [code]);
+  }, [trimmedCode]);
 
   return (
     <section
@@ -134,7 +138,7 @@ export function Preview({ className }: PreviewProps) {
         output
           .map((item) => {
             return (
-              <LogLine key={item.id} {...item} />
+              <LogLine key={item.id} id={item.id} {...item} />
             );
           })
       }
