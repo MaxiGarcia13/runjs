@@ -71,11 +71,11 @@ The editor is Monaco configured in `src/components/editor/config.ts`.
 
 Type a prefix and pick the snippet from autocomplete (or press Tab/Enter to accept):
 
-| Prefix | Inserts |
-|--------|---------|
-| `for` | Indexed `for` loop |
+| Prefix  | Inserts                                                |
+| ------- | ------------------------------------------------------ |
+| `for`   | Indexed `for` loop                                     |
 | `forof` | `for (const item of iterable)` — also matches “for of” |
-| `forin` | `for (const key in object)` — also matches “for in” |
+| `forin` | `for (const key in object)` — also matches “for in”    |
 
 Snippets expand with tab stops for the index/item/key, collection, and loop body.
 
@@ -113,7 +113,7 @@ perf(
       // do something
     }
   },
-  { label: 'loop' },
+  { label: "loop" },
 );
 ```
 
@@ -124,7 +124,7 @@ await perf(
   async () => {
     await new Promise((resolve) => setTimeout(resolve, 250));
   },
-  { label: 'fetch simulation' },
+  { label: "fetch simulation" },
 );
 ```
 
@@ -148,11 +148,13 @@ Examples:
 
 ```js
 expect(2 + 2).toBe(4);
-expect({ id: 1, tags: ['a'] }).toEqual({ id: 1, tags: ['a'] });
+expect({ id: 1, tags: ["a"] }).toEqual({ id: 1, tags: ["a"] });
 expect(() => Promise.resolve({ id: 1 })).toEqual({ id: 1 });
-expect('Hello World').stringMatching('World');
-expect('Version v1.2.3').stringMatching(/v\d+\.\d+\.\d+/);
-expect({ id: 1, user: { name: 'Max' } }).objectContaining({ user: { name: 'Max' } });
+expect("Hello World").stringMatching("World");
+expect("Version v1.2.3").stringMatching(/v\d+\.\d+\.\d+/);
+expect({ id: 1, user: { name: "Max" } }).objectContaining({
+  user: { name: "Max" },
+});
 expect([{ id: 1 }, { id: 2 }]).arrayContaining([{ id: 2 }]);
 ```
 
