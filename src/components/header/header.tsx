@@ -1,4 +1,4 @@
-import { version } from '../../../package.json';
+import { GithubLink } from '../github-link';
 import { HistoryButton } from '../history';
 import { NewInstanceButton } from '../new-instance-button';
 import { OpenAiButton } from '../openai-button';
@@ -15,10 +15,8 @@ export function Header() {
             <span className="text-amber-300">JS</span>
           </h1>
         </div>
-        <span className="text-xs text-gray-400 sm:mt-1">
-          v
-          {version}
-        </span>
+
+        <GithubLink className="hidden shrink-0 sm:flex" />
       </div>
 
       <div className="flex items-center gap-2">
