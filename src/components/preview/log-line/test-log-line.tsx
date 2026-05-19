@@ -1,4 +1,5 @@
 import type { Output, OutputTestContent } from '../types';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/collapsible';
 import { LogLineContent } from './log-line-content';
 import { LogLineWrapper } from './log-line-wrapper';
 
@@ -34,10 +35,24 @@ export function TestLogLine({
       className={className}
       title={testTitle}
     >
-      <span className="font-bold text-muted">Received:</span>
-      <LogLineContent content={received} />
-      <span className="font-bold text-muted">Expected:</span>
-      <LogLineContent content={expected} />
+      <Collapsible defaultOpen>
+        <CollapsibleTrigger className="text-muted">
+          <span className="font-bold text-muted">Received:</span>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <LogLineContent content={received} />
+        </CollapsibleContent>
+      </Collapsible>
+
+      <Collapsible defaultOpen>
+        <CollapsibleTrigger className="text-muted">
+          <span className="font-bold text-muted">Expected:</span>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <LogLineContent content={expected} />
+        </CollapsibleContent>
+      </Collapsible>
+
     </LogLineWrapper>
   );
 }

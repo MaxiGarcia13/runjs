@@ -1,5 +1,6 @@
 import type { CallSite } from '../types';
 import { cn } from '@maxigarcia/js-utils';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/collapsible';
 import { useEditorStore } from '@/store/useEditorStore';
 import { CallSiteLink } from './call-site-link';
 
@@ -24,26 +25,29 @@ export function LogLineWrapper({ children, className, callSite, title, ...props 
     : title;
 
   return (
-    <div
+    <Collapsible
       role={callSite ? 'button' : 'group'}
       tabIndex={callSite ? 0 : undefined}
       aria-label={ariaLabel}
       className={cn('flex flex-col gap-2 w-full rounded-md justify-between p-2 text-foreground bg-surface/30 cursor-pointer border-l-4', className)}
       onMouseEnter={handleRevealLine}
       onClick={handleRevealLine}
+      defaultOpen
       {...props}
     >
-      <span className="shrink-0 text-xs text-muted" aria-hidden>{title}</span>
+      <CollapsibleTrigger className="text-muted">
+        <span className="shrink-0 text-xs" aria-hidden>{title}</span>
+      </CollapsibleTrigger>
 
-      <div className="flex flex-1 flex-col gap-2">
+      <CollapsibleContent className="flex flex-1 flex-col gap-2">
         {children}
-      </div>
-
+      </CollapsibleContent>
       {callSite && (
         <div className="flex justify-end">
           <CallSiteLink callSite={callSite} className="shrink-0 text-xs" />
         </div>
       )}
-    </div>
+
+    </Collapsible>
   );
 }
