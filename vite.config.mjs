@@ -17,7 +17,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: fileURLToPath(new URL('./index.html', import.meta.url)),
-        snapshot: fileURLToPath(new URL('./snapshot.html', import.meta.url)),
+        snapshot: fileURLToPath(new URL('./snapshot/index.html', import.meta.url)),
       },
     },
   },
