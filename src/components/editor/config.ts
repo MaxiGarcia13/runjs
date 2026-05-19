@@ -54,6 +54,8 @@ declare function log(...args: unknown[]): void;
 declare function warn(...args: unknown[]): void;
 /** Same as \`console.error\`, but output is also sent to the RunJS preview panel (and mirrored to the browser console). */
 declare function error(...args: unknown[]): void;
+/** Same as \`console.table\`, but output is rendered as a table in the RunJS preview panel. */
+declare function logTable(...args: unknown[]): void;
 
 interface PerfOptions {
   /** Label printed in perf logs; defaults to \`fn.name\` or \`"anonymous"\`. */

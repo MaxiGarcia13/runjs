@@ -4,7 +4,8 @@ export type Variant
     | 'error'
     | 'info'
     | 'perf-log'
-    | 'test-log';
+    | 'test-log'
+    | 'log-table';
 
 export interface CallSite {
   line: number;

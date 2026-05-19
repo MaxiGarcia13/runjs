@@ -31,16 +31,19 @@ console.log = overwriteFunction(originalLog, 'log');
 console.warn = overwriteFunction(originalWarn, 'warn');
 console.error = overwriteFunction(originalError, 'error');
 console.info = overwriteFunction(originalInfo, 'info');
+console.logTable = overwriteFunction(console.logTable, 'log-table');
 
 declare global {
   interface Console {
     perfLog: (...args: any[]) => void;
     testLog: (...args: any[]) => void;
+    logTable: (...args: any[]) => void;
   }
 }
 
 console.perfLog = overwriteFunction(originalLog, 'perf-log');
 console.testLog = overwriteFunction(originalLog, 'test-log');
+console.logTable = overwriteFunction(originalLog, 'log-table');
 
 declare global {
   interface Window {
@@ -48,6 +51,7 @@ declare global {
     warn: typeof console.warn;
     error: typeof console.error;
     info: typeof console.info;
+    logTable: typeof console.logTable;
   }
 }
 
@@ -56,4 +60,5 @@ if (isObject(window)) {
   window.warn = overwriteFunction(originalWarn, 'warn');
   window.error = overwriteFunction(originalError, 'error');
   window.info = overwriteFunction(originalInfo, 'info');
+  window.logTable = overwriteFunction(originalLog, 'log-table');
 }
