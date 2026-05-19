@@ -10,7 +10,7 @@ export function HistoryList({ onNavigateToHistory }: HistoryListProps) {
   const histories = useHistory((state) => state.histories);
 
   return (
-    <ul className="flex flex-col gap-2 overflow-auto">
+    <ul className="flex flex-col gap-2 overflow-auto" aria-label="Saved sessions">
       {
         histories.length > 0
           ? (
@@ -21,7 +21,7 @@ export function HistoryList({ onNavigateToHistory }: HistoryListProps) {
                   onNavigateToHistory={onNavigateToHistory}
                 />
               )))
-          : (<p className="text-center text-sm text-muted">No history found</p>)
+          : (<p className="text-center text-sm text-muted" role="status">No history found</p>)
       }
     </ul>
   );

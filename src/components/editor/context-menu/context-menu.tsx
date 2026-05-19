@@ -106,6 +106,7 @@ export function ContextMenu({ children, editor, className }: ContextMenuProps) {
   return (
     <section
       className={cn('h-full w-full', className)}
+      aria-label="Code editor"
       onContextMenu={openContextMenu}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}

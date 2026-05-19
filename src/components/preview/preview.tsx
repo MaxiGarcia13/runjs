@@ -21,7 +21,7 @@ export function Preview({ className }: PreviewProps) {
   const { code } = useEditorStore();
 
   const [output, setOutput] = useState<Output[]>([]);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLElement>(null);
 
   const html = previewHtml.replace('// your code here', code);
 
@@ -114,15 +114,20 @@ export function Preview({ className }: PreviewProps) {
   }, [code]);
 
   return (
-    <div
+    <section
       ref={scrollRef}
       className={cn('h-full overflow-auto flex flex-col gap-2', className)}
+      aria-label="Console output"
+      role="log"
+      aria-live="polite"
+      aria-relevant="additions"
     >
       <iframe
         srcDoc={html}
         className="hidden"
-        title="preview-runtime"
+        title="JavaScript execution sandbox"
         sandbox="allow-scripts"
+        aria-hidden
       />
 
       {
@@ -133,6 +138,6 @@ export function Preview({ className }: PreviewProps) {
             );
           })
       }
-    </div>
+    </section>
   );
 }

@@ -22,7 +22,7 @@ export function TestLogLine({
         className={className}
         title={testTitle}
       >
-        <span>Expected:</span>
+        <span className="font-bold text-muted">Expected:</span>
         <LogLineContent content={expected} />
       </LogLineWrapper>
     );

@@ -20,12 +20,12 @@ export function Header({ className }: { className?: string }) {
         <GithubLink className="hidden shrink-0 sm:flex" />
       </div>
 
-      <div className="flex items-center gap-2">
+      <nav className="flex items-center gap-2" aria-label="App actions">
         <OpenAiButton />
         <HistoryButton />
         <NewInstanceButton />
         <ShareButton />
-      </div>
+      </nav>
     </header>
   );
 }

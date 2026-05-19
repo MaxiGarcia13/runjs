@@ -21,7 +21,7 @@ export function ContextMenuItem({ onClick, children, icon, command }: ContextMen
     >
       {
         icon && (
-          <span className="shrink-0">
+          <span className="shrink-0" aria-hidden>
             {icon}
           </span>
         )
@@ -31,7 +31,7 @@ export function ContextMenuItem({ onClick, children, icon, command }: ContextMen
       </span>
       {
         command && (
-          <span className="shrink-0">
+          <span className="shrink-0" aria-hidden>
             {command}
           </span>
         )

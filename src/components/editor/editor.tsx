@@ -75,7 +75,12 @@ export function Editor({ className }: EditorProps) {
       className={cn('relative box-border h-full min-h-0 w-full overflow-hidden', className)}
       editor={editorInstanceRef}
     >
-      <div ref={editorContainerRef} className="h-full w-full" />
+      <div
+        ref={editorContainerRef}
+        className="h-full w-full"
+        role="region"
+        aria-label="JavaScript code editor"
+      />
     </ContextMenu>
   );
 }

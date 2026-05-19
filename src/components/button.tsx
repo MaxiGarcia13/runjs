@@ -15,17 +15,20 @@ export function Button({
   className,
   tooltip,
   tooltipPosition = 'bottom',
+  'aria-label': ariaLabel,
   ...props
 }: ButtonProps) {
+  const accessibleName = ariaLabel ?? (typeof tooltip === 'string' ? tooltip : undefined);
+
   if (tooltip) {
     return (
       <Tooltip content={tooltip} placement={tooltipPosition}>
-        <BaseButton className={className} {...props}>{children}</BaseButton>
+        <BaseButton className={className} aria-label={accessibleName} {...props}>{children}</BaseButton>
       </Tooltip>
     );
   }
 
-  return <BaseButton className={className} {...props}>{children}</BaseButton>;
+  return <BaseButton className={className} aria-label={accessibleName} {...props}>{children}</BaseButton>;
 }
 
 export function BaseButton({ children, className, variant = 'default', ...props }: ButtonProps) {

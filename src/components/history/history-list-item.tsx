@@ -12,7 +12,8 @@ interface HistoryListItemProps {
 }
 
 export function HistoryListItem({ history, onNavigateToHistory }: HistoryListItemProps) {
-  const createdAt = new Date(history.createdAt).toLocaleString();
+  const createdAtDate = new Date(history.createdAt);
+  const createdAt = createdAtDate.toLocaleString();
 
   const remove = useHistory((state) => state.remove);
   const editHistory = useHistory((state) => state.editHistory);
@@ -37,9 +38,15 @@ export function HistoryListItem({ history, onNavigateToHistory }: HistoryListIte
       className="flex items-center justify-between gap-2 rounded-md border border-border p-2"
     >
       <div className="flex flex-col gap-2 truncate">
-        <Tooltip content="Edit history label" position="top">
+        <Tooltip
+          content="Edit history label"
+          placement="top"
+        >
           <h3
             className="truncate text-sm font-medium"
+            role="textbox"
+            aria-label="Session label"
+            aria-multiline={false}
             onBlur={(e) => handleInputCapture(e.currentTarget.textContent || undefined)}
             contentEditable="plaintext-only"
           >
@@ -52,7 +59,7 @@ export function HistoryListItem({ history, onNavigateToHistory }: HistoryListIte
             {' '}
           </span>
 
-          <time dateTime={createdAt}>
+          <time dateTime={createdAtDate.toISOString()}>
             {createdAt}
           </time>
         </span>
@@ -63,11 +70,11 @@ export function HistoryListItem({ history, onNavigateToHistory }: HistoryListIte
           onClick={() => remove(history.createdAt)}
           tooltip="Delete session"
         >
-          <BinIcon className="size-4" />
+          <BinIcon className="size-4" aria-hidden />
         </Button>
 
-        <Button onClick={navigateToHistory}>
-          <EyeIcon className="size-4" />
+        <Button onClick={navigateToHistory} aria-label="Open session">
+          <EyeIcon className="size-4" aria-hidden />
           <span className="hidden md:block">Open session</span>
         </Button>
       </div>

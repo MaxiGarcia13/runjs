@@ -10,6 +10,7 @@ export function CallSiteLink({ callSite, className }: { callSite: CallSite; clas
   return (
     <button
       type="button"
+      aria-label={`Go to line ${line}, column 1`}
       className={cn(
         'cursor-pointer self-start text-muted underline-offset-2 hover:text-foreground hover:underline',
         className,

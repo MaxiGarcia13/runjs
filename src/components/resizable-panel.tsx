@@ -20,6 +20,7 @@ export function ResizablePanel({
   const [leftHeight, setLeftHeight] = useState(undefined);
 
   const { mainClassName, containerClassName, cursorClassName, dividerClassName } = getClassNames({ className, direction });
+  const separatorOrientation = direction === 'horizontal' ? 'vertical' : 'horizontal';
 
   function onResize(event: MouseEvent) {
     if (direction === 'horizontal') {
@@ -59,14 +60,19 @@ export function ResizablePanel({
   }
 
   return (
-    <section className={mainClassName}>
+    <section className={mainClassName} aria-label="Editor and output workspace">
       <div
         className={containerClassName}
         style={{ width: leftWidth, height: leftHeight }}
+        aria-label="Code editor panel"
       >
         {leftContent}
       </div>
       <div
+        role="separator"
+        aria-orientation={separatorOrientation}
+        aria-label="Resize editor and output panels"
+        tabIndex={0}
         className={cn(dividerClassName, 'bg-surface hover:bg-accent', cursorClassName)}
         onMouseDown={handleMouseDown}
       >
@@ -74,6 +80,7 @@ export function ResizablePanel({
       <div
         className={containerClassName}
         style={{ width: `calc(100% - ${leftWidth}px)`, height: `calc(100% - ${leftHeight}px)` }}
+        aria-label="Output panel"
       >
         {rightContent}
       </div>
