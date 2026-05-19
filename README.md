@@ -5,9 +5,10 @@ Write code in Monaco, run it in a sandboxed preview runtime, and share snippets 
 
 ## Features
 
-- Monaco editor with a custom Dracula-based theme and ligatures.
+- Monaco editor with a custom Dracula-based theme, ligatures, and loop snippets (`for`, `forof`, `forin`).
+- IntelliSense for preview runtime globals (`log`, `warn`, `error`, `logTable`, `perf`, `expect`).
 - Live execution in an isolated iframe runtime (`sandbox="allow-scripts"`).
-- Captured output for `console.log`, `console.warn`, `console.error`, and `console.info`.
+- Captured output for `console.log`, `console.warn`, `console.error`, `console.info`, and tabular data via `console.table` / `logTable`.
 - URL-synced code state (debounced), so snippets can be shared as a link.
 - One-click "Copy link" action in the header.
 - Session history stored in `localStorage`, with rename, reopen, and delete actions.
@@ -62,6 +63,26 @@ Open the URL shown in the terminal (typically `http://localhost:5173`).
 5. Output is rendered in the preview panel with type-aware styling.
 6. Starting a new session stores the previous snippet in session history (deduped by payload) for later retrieval.
 
+## Editor
+
+The editor is Monaco configured in `src/components/editor/config.ts`.
+
+### Loop snippets
+
+Type a prefix and pick the snippet from autocomplete (or press Tab/Enter to accept):
+
+| Prefix | Inserts |
+|--------|---------|
+| `for` | Indexed `for` loop |
+| `forof` | `for (const item of iterable)` — also matches “for of” |
+| `forin` | `for (const key in object)` — also matches “for in” |
+
+Snippets expand with tab stops for the index/item/key, collection, and loop body.
+
+### Runtime IntelliSense
+
+The same config registers TypeScript extra libs so autocomplete and hovers work for preview-only globals (`log`, `warn`, `error`, `logTable`, `perf`, `expect` and their matcher methods).
+
 ## Runtime Helpers
 
 Inside the preview runtime, a few global helper functions are available in addition to `console.*`:
@@ -70,6 +91,7 @@ Inside the preview runtime, a few global helper functions are available in addit
 - `warn(...args)` - same behavior as `console.warn(...)`.
 - `error(...args)` - same behavior as `console.error(...)`.
 - `info(...args)` - same behavior as `console.info(...)`.
+- `logTable(...args)` - same behavior as `console.table(...)`, rendered as a table in the preview panel.
 - `expect(value)` - creates async assertions with `toBe(...)` (strict equality) and `toEqual(...)` (deep equality).
 
 ### `perf` helper
