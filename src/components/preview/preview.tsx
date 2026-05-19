@@ -2,8 +2,8 @@ import type { CallSite, Output, Variant } from './types';
 import { cn, debounce } from '@maxigarcia/js-utils';
 import { useEffect, useRef, useState } from 'react';
 import { useEditorStore } from '@/store/useEditorStore';
-import { LogLine } from './log-line';
-import previewHtml from './preview.html?raw';
+import { Iframe } from './iframe';
+import { OutputList } from './output-list';
 
 interface PreviewProps {
   className?: string;
@@ -23,8 +23,6 @@ export function Preview({ className }: PreviewProps) {
   const scrollRef = useRef<HTMLElement>(null);
 
   const [output, setOutput] = useState<Output[]>([]);
-
-  const html = previewHtml.replace('// your code here', code);
 
   const formatOutput = (content: string) => {
     if (typeof content === 'object' || Array.isArray(content))
@@ -128,22 +126,8 @@ export function Preview({ className }: PreviewProps) {
       aria-live="polite"
       aria-relevant="additions"
     >
-      <iframe
-        srcDoc={html}
-        className="hidden"
-        title="JavaScript execution sandbox"
-        sandbox="allow-scripts"
-        aria-hidden
-      />
-
-      {
-        output
-          .map((item) => {
-            return (
-              <LogLine key={item.id} id={item.id} {...item} />
-            );
-          })
-      }
+      <Iframe code={code} />
+      <OutputList output={output} />
     </section>
   );
 }
