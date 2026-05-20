@@ -24,16 +24,17 @@ export function ShareButton(props: ShareButtonProps) {
       <Button
         {...props}
         tooltip="Link copied to clipboard"
+        aria-label="Link copied to clipboard"
         variant="success"
       >
-        <CheckIcon className="size-4" />
+        <span aria-hidden><CheckIcon className="size-4" /></span>
       </Button>
     );
   }
 
   return (
-    <Button {...props} onClick={handleShare} tooltip="Copy link">
-      <LinkIcon className="size-4" />
+    <Button {...props} onClick={handleShare} tooltip="Copy link" aria-label="Copy link">
+      <span aria-hidden><LinkIcon className="size-4" /></span>
     </Button>
   );
 }

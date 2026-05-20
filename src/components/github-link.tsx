@@ -11,7 +11,7 @@ export function GithubLink({ className }: { className?: string }) {
       aria-label="View repository on GitHub"
       className={cn('flex items-center text-muted transition-colors hover:text-foreground', className)}
     >
-      <GithubIcon className="size-4" />
+      <span aria-hidden><GithubIcon className="size-4" /></span>
 
       <span className="mt-1 text-sm">
         v

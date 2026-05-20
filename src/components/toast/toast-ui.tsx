@@ -56,6 +56,7 @@ export function Toast({
   return (
     <div
       role="status"
+      aria-label="Notification"
       aria-live="polite"
       className={cn(
         'min-w-[280px] max-w-md rounded-md shadow-lg z-1000',
@@ -70,7 +71,7 @@ export function Toast({
         <span className="min-w-0 flex-1">{children}</span>
         {onClose && (
           <Button onClick={onClose} aria-label="Close">
-            <CloseIcon className="size-4" />
+            <span aria-hidden><CloseIcon className="size-4" /></span>
           </Button>
         )}
       </Alert>

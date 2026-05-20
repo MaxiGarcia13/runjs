@@ -9,16 +9,17 @@ import { computeAtPointPosition, computeBottomEndPosition } from './menu-positio
 export type MenuPlacement = 'bottom-end' | 'at-point';
 
 interface MenuProps extends HTMLAttributes<HTMLDivElement> {
-  ref?: RefObject<HTMLDivElement | null>;
-  id?: string;
-  className?: string;
-  style?: CSSProperties;
-  children: ReactNode;
-  menuRef?: RefObject<HTMLDivElement | null>;
-  anchorRef?: RefObject<HTMLElement | null>;
-  placement?: MenuPlacement;
-  coords?: Coords;
-  onClose: () => void;
+  'ref'?: RefObject<HTMLDivElement | null>;
+  'id'?: string;
+  'className'?: string;
+  'style'?: CSSProperties;
+  'children': ReactNode;
+  'menuRef'?: RefObject<HTMLDivElement | null>;
+  'anchorRef'?: RefObject<HTMLElement | null>;
+  'placement'?: MenuPlacement;
+  'coords'?: Coords;
+  'onClose': () => void;
+  'aria-label'?: string;
 }
 
 const placementComputePosition = {
@@ -37,6 +38,7 @@ export function Menu({
   placement = 'bottom-end',
   coords: anchorCoords,
   onClose,
+  'aria-label': ariaLabel,
   ...props
 }: MenuProps) {
   const internalRef = useRef<HTMLDivElement | null>(null);
@@ -59,6 +61,7 @@ export function Menu({
       id={id}
       ref={dismissRef}
       role="menu"
+      aria-label={ariaLabel}
       className={cn(
         'z-50 min-w-[160px] rounded-md border border-gray-600 bg-surface py-2 text-inherit shadow-xl',
         usesFloatingPosition && 'fixed',

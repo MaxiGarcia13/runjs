@@ -9,13 +9,13 @@ interface ContextMenuItemProps extends ComponentProps<typeof MenuItem> {
 export function ContextMenuItem({ children, icon, command, ...props }: ContextMenuItemProps) {
   return (
     <MenuItem {...props}>
-      <span className="shrink-0">
+      <span className="shrink-0" aria-hidden>
         {icon}
       </span>
       <span className="mt-1 flex-1">
         {children}
       </span>
-      <span className="mt-1 shrink-0 text-muted">
+      <span className="mt-1 shrink-0 text-muted" aria-hidden>
         {command}
       </span>
     </MenuItem>

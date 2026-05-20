@@ -8,7 +8,11 @@ import { ShareButton } from '../share-button';
 
 export function Header({ className }: { className?: string }) {
   return (
-    <header className={cn('flex items-center justify-between gap-2 p-2 sm:flex-row', className)}>
+    <header
+      role="banner"
+      className={cn('flex items-center justify-between gap-2 p-2 sm:flex-row', className)}
+      aria-label="RunJS header"
+    >
       <div className="flex shrink-0 flex-col items-center sm:flex-row sm:gap-2">
         <div className="flex items-center gap-2">
           <img src="/favicon.webp" alt="RunJS" className="size-6" />
@@ -21,7 +25,7 @@ export function Header({ className }: { className?: string }) {
         <GithubLink className="hidden shrink-0 sm:flex" />
       </div>
 
-      <nav className="flex items-center gap-2" aria-label="App actions">
+      <nav className="flex items-center gap-2" role="toolbar" aria-label="App actions">
         <CodeSnapshotButton />
         <OpenAiButton />
         <HistoryButton />

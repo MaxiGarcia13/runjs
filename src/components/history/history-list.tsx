@@ -21,7 +21,11 @@ export function HistoryList({ onNavigateToHistory }: HistoryListProps) {
                   onNavigateToHistory={onNavigateToHistory}
                 />
               )))
-          : (<p className="text-center text-sm text-muted" role="status">No history found</p>)
+          : (
+              <li className="list-none text-center text-sm text-muted">
+                No history found
+              </li>
+            )
       }
     </ul>
   );

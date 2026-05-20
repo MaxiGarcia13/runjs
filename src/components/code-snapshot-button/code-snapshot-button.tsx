@@ -38,13 +38,16 @@ export function CodeSnapshotButton() {
   return (
     <Button
       tooltip="Take a snapshot of the code"
+      aria-label={error ? 'Snapshot failed' : isLoading ? 'Taking snapshot' : 'Take a snapshot of the code'}
       onClick={handleSnapshot}
     >
-      {error
-        ? <CaptureOffIcon className="size-4 text-red-500" />
-        : isLoading
-          ? <LoaderIcon className="size-4 animate-spin" />
-          : <CaptureIcon className="size-4" />}
+      <span aria-hidden>
+        {error
+          ? <CaptureOffIcon className="size-4 text-red-500" />
+          : isLoading
+            ? <LoaderIcon className="size-4 animate-spin" />
+            : <CaptureIcon className="size-4" />}
+      </span>
     </Button>
   );
 }

@@ -6,10 +6,15 @@ interface OutputsProps {
 }
 
 export function Outputs({ outputs }: OutputsProps) {
-  return outputs
-    .map((item) => {
-      return (
+  if (outputs.length === 0) {
+    return null;
+  }
+
+  return (
+    <div role="list" aria-label="Console messages">
+      {outputs.map((item) => (
         <LogLine key={item.id} id={item.id} {...item} />
-      );
-    });
+      ))}
+    </div>
+  );
 }

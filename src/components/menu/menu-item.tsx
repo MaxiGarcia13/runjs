@@ -15,6 +15,7 @@ export function MenuItem({ onClick, children, disabled, selected, className, ...
       type="button"
       role="menuitem"
       disabled={disabled}
+      aria-disabled={disabled || undefined}
       aria-selected={selected}
       tabIndex={disabled ? -1 : 0}
       className={cn(

@@ -11,6 +11,7 @@ export function CollapsibleContent({
   return (
     <div
       id={contentId}
+      role="region"
       hidden={!open}
       className={className}
       {...props}

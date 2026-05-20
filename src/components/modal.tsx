@@ -67,6 +67,7 @@ export function Modal({
   return createPortal(
     <dialog
       ref={dialogRef}
+      role="dialog"
       aria-labelledby={title ? titleId : undefined}
       aria-modal="true"
       className={cn(
@@ -87,7 +88,7 @@ export function Modal({
                 aria-label={closeLabel}
                 onClick={onClose}
               >
-                <CloseIcon className="size-4" />
+                <span aria-hidden><CloseIcon className="size-4" /></span>
               </Button>
             )}
           </div>

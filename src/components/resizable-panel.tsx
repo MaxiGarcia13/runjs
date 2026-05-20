@@ -60,8 +60,13 @@ export function ResizablePanel({
   }
 
   return (
-    <section className={mainClassName} aria-label="Editor and output workspace">
+    <section
+      className={mainClassName}
+      role="region"
+      aria-label="Editor and output workspace"
+    >
       <div
+        role="region"
         className={containerClassName}
         style={{ width: leftWidth, height: leftHeight }}
         aria-label="Code editor panel"
@@ -78,6 +83,7 @@ export function ResizablePanel({
       >
       </div>
       <div
+        role="region"
         className={containerClassName}
         style={{ width: `calc(100% - ${leftWidth}px)`, height: `calc(100% - ${leftHeight}px)` }}
         aria-label="Output panel"

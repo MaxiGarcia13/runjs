@@ -19,8 +19,15 @@ export function OpenAiButton(props: OpenAiButtonProps) {
   };
 
   return (
-    <Button type="button" onClick={openChatGptWithCode} disabled={!code} tooltip="Open in ChatGPT" {...props}>
-      <OpenIAIcon className="size-4" />
+    <Button
+      type="button"
+      onClick={openChatGptWithCode}
+      disabled={!code}
+      tooltip="Open in ChatGPT"
+      aria-label="Open in ChatGPT"
+      {...props}
+    >
+      <span aria-hidden><OpenIAIcon className="size-4" /></span>
     </Button>
   );
 }

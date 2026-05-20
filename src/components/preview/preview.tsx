@@ -120,9 +120,9 @@ export function Preview({ className }: PreviewProps) {
   return (
     <section
       ref={scrollRef}
+      role="log"
       className={cn('h-full overflow-auto flex flex-col gap-2', className)}
       aria-label="Console output"
-      role="log"
       aria-live="polite"
       aria-relevant="additions"
     >

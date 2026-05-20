@@ -22,11 +22,12 @@ export function NewInstanceButton(props: NewInstanceButtonProps) {
   return (
     <Button
       tooltip="Start a new session"
+      aria-label="Start a new session"
       disabled={!code}
       onClick={handleNewInstance}
       {...props}
     >
-      <PlusIcon className="size-4" />
+      <span aria-hidden><PlusIcon className="size-4" /></span>
     </Button>
   );
 }

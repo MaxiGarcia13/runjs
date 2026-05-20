@@ -26,17 +26,18 @@ export function LogLineWrapper({ children, className, callSite, title, ...props 
 
   return (
     <Collapsible
-      role={callSite ? 'button' : 'group'}
-      tabIndex={callSite ? 0 : undefined}
+      role="listitem"
       aria-label={ariaLabel}
-      className={cn('flex flex-col gap-2 w-full rounded-md justify-between p-2 text-foreground bg-surface/30 cursor-pointer border-l-4', className)}
-      onMouseEnter={handleRevealLine}
-      onClick={handleRevealLine}
+      className={cn('flex flex-col gap-2 w-full rounded-md justify-between p-2 text-foreground bg-surface/30 border-l-4', callSite && 'cursor-pointer', className)}
+      onMouseEnter={callSite ? handleRevealLine : undefined}
       defaultOpen
       {...props}
     >
-      <CollapsibleTrigger className="text-muted">
-        <span className="shrink-0 text-xs" aria-hidden>{title}</span>
+      <CollapsibleTrigger
+        className="text-muted"
+        aria-label={`Toggle ${title}`}
+      >
+        <span className="shrink-0 text-xs">{title}</span>
       </CollapsibleTrigger>
 
       <CollapsibleContent className="flex flex-1 flex-col gap-2">

@@ -20,6 +20,7 @@ interface EditorSkeletonProps {
 export function EditorSkeleton({ className }: EditorSkeletonProps) {
   return (
     <section
+      role="status"
       aria-busy
       aria-label="Loading editor"
       className={cn(

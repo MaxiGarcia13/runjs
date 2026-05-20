@@ -21,6 +21,7 @@ export function ContextMenuPanel({ x, y, editor, onActionClick, menuRef }: Conte
       placement="at-point"
       coords={{ top: y, left: x }}
       onClose={onActionClick}
+      aria-label="Editor context menu"
     >
       <PasteActionMenuItem editor={editor} onActionClick={onActionClick} />
       <CopyActionMenuItem editor={editor} onActionClick={onActionClick} />

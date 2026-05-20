@@ -18,10 +18,11 @@ export function HistoryButton(props: HistoryButtonProps) {
     <>
       <Button
         tooltip="Open session history"
+        aria-label="Open session history"
         onClick={() => setOpenHistoryModal(true)}
         {...props}
       >
-        <HistoryIcon className="size-4" />
+        <span aria-hidden><HistoryIcon className="size-4" /></span>
       </Button>
       {
         openHistoryModal && (

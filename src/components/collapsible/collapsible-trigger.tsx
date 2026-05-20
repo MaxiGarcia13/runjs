@@ -26,6 +26,7 @@ export function CollapsibleTrigger({
       {...props}
     >
       <ChevronDownIcon
+        aria-hidden
         className={cn(
           'size-4 shrink-0 transition-transform mb-1',
           open && 'rotate-180',
