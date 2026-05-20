@@ -1,5 +1,5 @@
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
-import TypeScriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+import TypeScriptWorker from './ts.worker?worker';
 
 type MonacoWorkerFactory = (workerId: string, label: string) => Worker;
 

@@ -1,123 +1,222 @@
 import type { editor } from 'monaco-editor';
 
+/** Aligned with CSS variables in `src/app.css` (`:root`). */
+const THEME = {
+  background: '282a36',
+  foreground: 'f8f8f2',
+  muted: '6272a4',
+  subtle: '3b3a32',
+  accent: 'ffb86c',
+  success: '50fa7b',
+  info: '8be9fd',
+  purple: 'bd93f9',
+  pink: 'ff79c6',
+  yellow: 'f1fa8c',
+  line: '44475a',
+} as const;
+
 export const draculaTheme: editor.IStandaloneThemeData = {
   base: 'vs-dark',
   inherit: true,
   rules: [
     {
-      background: '282a36',
+      background: THEME.background,
       token: '',
     },
     {
-      foreground: '6272a4',
+      foreground: THEME.muted,
       token: 'comment',
     },
     {
-      foreground: 'f1fa8c',
+      foreground: THEME.yellow,
       token: 'string',
     },
     {
-      foreground: 'bd93f9',
+      foreground: THEME.purple,
       token: 'constant.numeric',
     },
     {
-      foreground: 'bd93f9',
+      foreground: THEME.purple,
       token: 'constant.language',
     },
     {
-      foreground: 'bd93f9',
+      foreground: THEME.purple,
       token: 'constant.character',
     },
     {
-      foreground: 'bd93f9',
+      foreground: THEME.purple,
       token: 'constant.other',
     },
     {
-      foreground: 'ffb86c',
-      token: 'variable.other.readwrite.instance',
-    },
-    {
-      foreground: 'ff79c6',
+      foreground: THEME.pink,
       token: 'constant.character.escaped',
     },
     {
-      foreground: 'ff79c6',
+      foreground: THEME.pink,
       token: 'constant.character.escape',
     },
     {
-      foreground: 'ff79c6',
+      foreground: THEME.pink,
       token: 'string source',
     },
     {
-      foreground: 'ff79c6',
+      foreground: THEME.pink,
       token: 'string source.ruby',
     },
     {
-      foreground: 'ff79c6',
+      foreground: THEME.pink,
       token: 'keyword',
     },
     {
-      foreground: 'ff79c6',
+      foreground: THEME.pink,
       token: 'storage',
     },
     {
-      foreground: '8be9fd',
+      foreground: THEME.purple,
       fontStyle: 'italic',
       token: 'storage.type',
     },
     {
-      foreground: '50fa7b',
+      foreground: THEME.info,
       fontStyle: 'underline',
       token: 'entity.name.class',
     },
     {
-      foreground: '50fa7b',
+      foreground: THEME.info,
       fontStyle: 'italic underline',
       token: 'entity.other.inherited-class',
     },
     {
-      foreground: '50fa7b',
+      foreground: THEME.info,
+      token: 'type.class',
+    },
+    {
+      foreground: THEME.purple,
+      token: 'type.class.readonly',
+    },
+    {
+      foreground: THEME.purple,
+      token: 'type.class.declaration.readonly',
+    },
+    {
+      foreground: THEME.info,
+      token: 'type.interface',
+    },
+    {
+      foreground: THEME.purple,
+      token: 'type.interface.readonly',
+    },
+    {
+      foreground: THEME.purple,
+      token: 'type.interface.declaration.readonly',
+    },
+    {
+      foreground: THEME.info,
+      token: 'type.namespace',
+    },
+    {
+      foreground: THEME.info,
+      token: 'type',
+    },
+    {
+      foreground: THEME.purple,
+      token: 'type.enum',
+    },
+    {
+      foreground: THEME.success,
       token: 'entity.name.function',
     },
     {
-      foreground: 'ffb86c',
+      foreground: THEME.success,
+      token: 'variable.function',
+    },
+    {
+      foreground: THEME.success,
+      token: 'variable.function.declaration',
+    },
+    {
+      foreground: THEME.success,
+      token: 'variable.function.defaultLibrary',
+    },
+    {
+      foreground: THEME.success,
+      token: 'member',
+    },
+    {
+      foreground: THEME.success,
+      token: 'member.declaration',
+    },
+    {
+      foreground: THEME.success,
+      token: 'member.defaultLibrary',
+    },
+    {
+      foreground: THEME.success,
+      token: 'support.function',
+    },
+    {
+      foreground: THEME.accent,
       fontStyle: 'italic',
       token: 'variable.parameter',
     },
     {
-      foreground: 'ff79c6',
+      foreground: THEME.accent,
+      token: 'type.parameters',
+    },
+    {
+      foreground: THEME.purple,
+      token: 'variable.readonly',
+    },
+    {
+      foreground: THEME.purple,
+      token: 'variable.declaration.readonly',
+    },
+    {
+      foreground: THEME.purple,
+      token: 'variable.declaration.readonly.defaultLibrary',
+    },
+    {
+      foreground: THEME.purple,
+      token: 'type.readonly',
+    },
+    {
+      foreground: THEME.purple,
+      token: 'type.declaration.readonly',
+    },
+    {
+      foreground: THEME.purple,
+      token: 'variable.enummember',
+    },
+    {
+      foreground: THEME.purple,
+      token: 'property.readonly',
+    },
+    {
+      foreground: THEME.pink,
       token: 'entity.name.tag',
     },
     {
-      foreground: '50fa7b',
-      token: 'entity.other.attribute-name',
-    },
-    {
-      foreground: '8be9fd',
-      token: 'support.function',
-    },
-    {
-      foreground: '6be5fd',
+      foreground: THEME.purple,
       token: 'support.constant',
     },
     {
-      foreground: '66d9ef',
-      fontStyle: ' italic',
+      foreground: THEME.info,
+      fontStyle: 'italic',
       token: 'support.type',
     },
     {
-      foreground: '66d9ef',
-      fontStyle: ' italic',
+      foreground: THEME.info,
+      fontStyle: 'italic',
       token: 'support.class',
     },
     {
-      foreground: 'f8f8f0',
-      background: 'ff79c6',
+      foreground: THEME.foreground,
+      background: THEME.pink,
       token: 'invalid',
     },
     {
-      foreground: 'f8f8f0',
-      background: 'bd93f9',
+      foreground: THEME.foreground,
+      background: THEME.purple,
       token: 'invalid.deprecated',
     },
     {
@@ -125,19 +224,19 @@ export const draculaTheme: editor.IStandaloneThemeData = {
       token: 'meta.structure.dictionary.json string.quoted.double.json',
     },
     {
-      foreground: '6272a4',
+      foreground: THEME.muted,
       token: 'meta.diff',
     },
     {
-      foreground: '6272a4',
+      foreground: THEME.muted,
       token: 'meta.diff.header',
     },
     {
-      foreground: 'ff79c6',
+      foreground: THEME.pink,
       token: 'markup.deleted',
     },
     {
-      foreground: '50fa7b',
+      foreground: THEME.success,
       token: 'markup.inserted',
     },
     {
@@ -145,7 +244,7 @@ export const draculaTheme: editor.IStandaloneThemeData = {
       token: 'markup.changed',
     },
     {
-      foreground: 'bd93f9',
+      foreground: THEME.purple,
       token: 'constant.numeric.line-number.find-in-files - match',
     },
     {
@@ -165,45 +264,21 @@ export const draculaTheme: editor.IStandaloneThemeData = {
       token: 'punctuation.definition.string.end.json - meta.structure.dictionary.value.json',
     },
     {
-      foreground: '8be9fd',
+      foreground: THEME.info,
       token: 'meta.structure.dictionary.json string.quoted.double.json',
     },
     {
-      foreground: 'f1fa8c',
+      foreground: THEME.yellow,
       token: 'meta.structure.dictionary.value.json string.quoted.double.json',
-    },
-    {
-      foreground: '50fa7b',
-      token: 'meta meta meta meta meta meta meta.structure.dictionary.value string',
-    },
-    {
-      foreground: 'ffb86c',
-      token: 'meta meta meta meta meta meta.structure.dictionary.value string',
-    },
-    {
-      foreground: 'ff79c6',
-      token: 'meta meta meta meta meta.structure.dictionary.value string',
-    },
-    {
-      foreground: 'bd93f9',
-      token: 'meta meta meta meta.structure.dictionary.value string',
-    },
-    {
-      foreground: '50fa7b',
-      token: 'meta meta meta.structure.dictionary.value string',
-    },
-    {
-      foreground: 'ffb86c',
-      token: 'meta meta.structure.dictionary.value string',
     },
   ],
   colors: {
-    'editor.foreground': '#f8f8f2',
-    'editor.background': '#282a36',
-    'editor.selectionBackground': '#44475a',
-    'editor.lineHighlightBackground': '#44475a',
+    'editor.foreground': `#${THEME.foreground}`,
+    'editor.background': `#${THEME.background}`,
+    'editor.selectionBackground': `#${THEME.line}`,
+    'editor.lineHighlightBackground': `#${THEME.line}`,
     'editorCursor.foreground': '#f8f8f0',
-    'editorWhitespace.foreground': '#3B3A32',
+    'editorWhitespace.foreground': `#${THEME.subtle}`,
     'editorIndentGuide.activeBackground': '#9D550FB0',
     'editor.selectionHighlightBorder': '#222218',
   },

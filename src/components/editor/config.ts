@@ -1,50 +1,55 @@
 import { editor, languages, typescript } from 'monaco-editor';
+import { registerJavaScriptSemanticTokensProvider } from './semantic-tokens';
 import { draculaTheme } from './themes/dracula';
 import './worker';
 
 const THEME_NAME = 'dracula';
+
+registerJavaScriptSemanticTokensProvider();
 
 editor.defineTheme(THEME_NAME, draculaTheme);
 
 editor.setTheme(THEME_NAME);
 
 export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOptions = {
-  language: 'javascript',
-  theme: THEME_NAME,
+  'language': 'javascript',
+  'theme': THEME_NAME,
 
-  fontFamily: 'Fira Code, monospace',
-  fontLigatures: true,
-  fontSize: 16,
+  'fontFamily': 'Fira Code, monospace',
+  'fontLigatures': true,
+  'fontSize': 16,
 
-  tabSize: 2,
+  'tabSize': 2,
 
-  minimap: {
+  'minimap': {
     enabled: false,
   },
 
-  lineNumbers: 'on',
-  glyphMargin: false,
-  renderWhitespace: 'all',
-  bracketPairColorization: {
+  'lineNumbers': 'on',
+  'glyphMargin': false,
+  'renderWhitespace': 'all',
+  'bracketPairColorization': {
     enabled: true,
   },
 
-  wordWrap: 'on',
-  cursorBlinking: 'expand',
+  'semanticHighlighting.enabled': true,
 
-  formatOnPaste: true,
+  'wordWrap': 'on',
+  'cursorBlinking': 'expand',
 
-  automaticLayout: true,
-  fixedOverflowWidgets: true,
-  scrollBeyondLastLine: false,
-  roundedSelection: false,
+  'formatOnPaste': true,
 
-  padding: {
+  'automaticLayout': true,
+  'fixedOverflowWidgets': true,
+  'scrollBeyondLastLine': false,
+  'roundedSelection': false,
+
+  'padding': {
     top: 16,
   },
 
-  lineDecorationsWidth: 0,
-  lineNumbersMinChars: 3,
+  'lineDecorationsWidth': 0,
+  'lineNumbersMinChars': 3,
 };
 
 export const RUNJS_RUNTIME_GLOBALS = `
