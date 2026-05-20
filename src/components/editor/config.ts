@@ -62,6 +62,18 @@ interface PerfOptions {
   label?: string;
 }
 
+interface SpyMock {
+  calls: unknown[][];
+  results: Array<{ type: 'return' | 'throw'; value: unknown }>;
+}
+
+interface SpyFn {
+  (...args: unknown[]): unknown;
+  mock: SpyMock;
+  /** Restores the original method on the spied object. */
+  mockRestore(): void;
+}
+
 interface ExpectMatcher {
   /** Checks strict equality (\`===\`) and prints a pass/fail message in the preview output. */
   toBe(expected: boolean | number | string | null | undefined): Promise<void>;
@@ -73,6 +85,12 @@ interface ExpectMatcher {
   objectContaining(expected: object): Promise<void>;
   /** Checks that every expected item exists in the received array (deep equality). */
   arrayContaining(expected: unknown[]): Promise<void>;
+  /** Checks that a spy was called at least once. */
+  toHaveBeenCalled(): Promise<void>;
+  /** Checks that a spy was called an exact number of times. */
+  toHaveBeenCalledTimes(expected: number): Promise<void>;
+  /** Checks that a spy was called with the given arguments (deep equality, any call). */
+  toHaveBeenCalledWith(...expected: unknown[]): Promise<void>;
 }
 
 /**
@@ -90,6 +108,11 @@ declare function perf<TResult, TArgs extends unknown[] = []>(
  * If a function is provided, it is awaited before running each matcher.
  */
 declare function expect<T>(value: T | (() => T | Promise<T>)): ExpectMatcher;
+/**
+ * Wraps an object method to record calls while still invoking the original implementation.
+ * Use \`mockRestore()\` on the returned spy to put the method back.
+ */
+declare function spyOn<T extends object>(object: T, methodName: keyof T & string): SpyFn;
 `;
 
 typescript.javascriptDefaults.addExtraLib(RUNJS_RUNTIME_GLOBALS, 'runjs-runtime.d.ts');
