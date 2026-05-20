@@ -1,27 +1,16 @@
 import { deepEqual } from '@maxigarcia/js-utils';
 import { isObject, isPrimitive, isRegExp, isString } from '@/utils/data-type';
 import { getCallSite } from '../../call-site.utils';
-import { formatSpyCallCount, formatSpyCalls, isSpy } from './spy';
-import { formatValue } from './utils';
+import { expectSpy } from './spy';
+import { formatValue, getValue } from './utils';
 
 export function expect<T>(value: T) {
   const callSite = (() => {
     return getCallSite?.();
   })();
 
-  async function getValue() {
-    if (isSpy(value))
-      return value;
-
-    if (typeof value === 'function') {
-      return await (value as () => unknown)();
-    }
-
-    return value;
-  }
-
   async function toBe(expected: boolean | number | string | null | undefined): Promise<void> {
-    const result = await getValue();
+    const result = await getValue(value);
 
     if (!isPrimitive(result)) {
       console.testLog(callSite, false, `Received value must be a primitive, but got ${typeof result}`);
@@ -39,14 +28,14 @@ export function expect<T>(value: T) {
   }
 
   async function toEqual(expected: boolean | number | string | null | undefined | object | Array<unknown>) {
-    const result = await getValue();
+    const result = await getValue(value);
     const isPassed = deepEqual(result, expected);
 
     console.testLog(callSite, isPassed, formatValue(expected), formatValue(result));
   }
 
   async function stringMatching(expected: string | RegExp) {
-    const result = await getValue();
+    const result = await getValue(value);
 
     if (!isString(result)) {
       console.testLog(callSite, false, `Received value must be a string, but got ${typeof result}`);
@@ -68,7 +57,7 @@ export function expect<T>(value: T) {
   }
 
   async function objectContaining(expected: object) {
-    const result = await getValue();
+    const result = await getValue(value);
 
     if (!isObject(result)) {
       console.testLog(callSite, false, `Received value must be an object, but got ${typeof result}`);
@@ -91,7 +80,7 @@ export function expect<T>(value: T) {
   }
 
   async function arrayContaining(expected: Array<unknown>) {
-    const result = await getValue();
+    const result = await getValue(value);
 
     if (!Array.isArray(result)) {
       console.testLog(callSite, false, `Received value must be an array, but got ${typeof result}`);
@@ -110,68 +99,12 @@ export function expect<T>(value: T) {
     console.testLog(callSite, isPassed, formatValue(expected), formatValue(result));
   }
 
-  async function toHaveBeenCalled(): Promise<void> {
-    const result = await getValue();
-
-    if (!isSpy(result)) {
-      console.testLog(callSite, false, 'Received value must be a spy created with spyOn()');
-      return;
-    }
-
-    const isPassed = result.mock.calls.length > 0;
-
-    console.testLog(
-      callSite,
-      isPassed,
-      'called at least once',
-      formatSpyCallCount(result.mock.calls),
-    );
-  }
-
-  async function toHaveBeenCalledTimes(expected: number): Promise<void> {
-    const result = await getValue();
-
-    if (!isSpy(result)) {
-      console.testLog(callSite, false, 'Received value must be a spy created with spyOn()');
-      return;
-    }
-
-    const isPassed = result.mock.calls.length === expected;
-
-    console.testLog(
-      callSite,
-      isPassed,
-      formatValue(expected),
-      String(result.mock.calls.length),
-    );
-  }
-
-  async function toHaveBeenCalledWith(...expected: unknown[]): Promise<void> {
-    const result = await getValue();
-
-    if (!isSpy(result)) {
-      console.testLog(callSite, false, 'Received value must be a spy created with spyOn()');
-      return;
-    }
-
-    const isPassed = result.mock.calls.some((call) => deepEqual(call, expected));
-
-    console.testLog(
-      callSite,
-      isPassed,
-      formatValue(expected),
-      formatSpyCalls(result.mock.calls),
-    );
-  }
-
   return {
+    ...expectSpy(value, callSite),
     toBe,
     toEqual,
     stringMatching,
     objectContaining,
     arrayContaining,
-    toHaveBeenCalled,
-    toHaveBeenCalledTimes,
-    toHaveBeenCalledWith,
   };
 }

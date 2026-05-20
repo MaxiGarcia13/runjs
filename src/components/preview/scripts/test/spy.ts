@@ -1,4 +1,6 @@
-import { formatValue } from './utils';
+import type { CallSite } from '../../types';
+import { deepEqual } from '@maxigarcia/js-utils';
+import { formatValue, getValue } from './utils';
 
 export interface SpyMock {
   calls: unknown[][];
@@ -76,4 +78,66 @@ export function spyOn<T extends object>(object: T, methodName: keyof T & string)
   (object as Record<string, unknown>)[methodName] = spy;
 
   return spy;
+}
+
+export function expectSpy<T>(value: T, callSite: CallSite) {
+  async function toHaveBeenCalled(): Promise<void> {
+    const result = await getValue(value);
+
+    if (!isSpy(result)) {
+      console.testLog(callSite, false, 'Received value must be a spy created with spyOn()');
+      return;
+    }
+
+    const isPassed = result.mock.calls.length > 0;
+
+    console.testLog(
+      callSite,
+      isPassed,
+      'called at least once',
+      formatSpyCallCount(result.mock.calls),
+    );
+  }
+
+  async function toHaveBeenCalledTimes(expected: number): Promise<void> {
+    const result = await getValue(value);
+
+    if (!isSpy(result)) {
+      console.testLog(callSite, false, 'Received value must be a spy created with spyOn()');
+      return;
+    }
+
+    const isPassed = result.mock.calls.length === expected;
+
+    console.testLog(
+      callSite,
+      isPassed,
+      formatValue(expected),
+      String(result.mock.calls.length),
+    );
+  }
+
+  async function toHaveBeenCalledWith(...expected: unknown[]): Promise<void> {
+    const result = await getValue(value);
+
+    if (!isSpy(result)) {
+      console.testLog(callSite, false, 'Received value must be a spy created with spyOn()');
+      return;
+    }
+
+    const isPassed = result.mock.calls.some((call) => deepEqual(call, expected));
+
+    console.testLog(
+      callSite,
+      isPassed,
+      formatValue(expected),
+      formatSpyCalls(result.mock.calls),
+    );
+  }
+
+  return {
+    toHaveBeenCalled,
+    toHaveBeenCalledTimes,
+    toHaveBeenCalledWith,
+  };
 }
