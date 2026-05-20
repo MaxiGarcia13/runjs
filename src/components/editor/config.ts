@@ -117,7 +117,26 @@ declare function spyOn<T extends object>(object: T, methodName: keyof T & string
 
 typescript.javascriptDefaults.addExtraLib(RUNJS_RUNTIME_GLOBALS, 'runjs-runtime.d.ts');
 
-const LOOP_SNIPPETS: Omit<languages.CompletionItem, 'range'>[] = [
+const EDITOR_SNIPPETS: Omit<languages.CompletionItem, 'range'>[] = [
+  {
+    label: 'if',
+    kind: languages.CompletionItemKind.Snippet,
+    // eslint-disable-next-line no-template-curly-in-string
+    insertText: 'if (${1:condition}) {\n\t$0\n}',
+    insertTextRules: languages.CompletionItemInsertTextRule.InsertAsSnippet,
+    documentation: 'If statement',
+    detail: 'if (condition)',
+  },
+  {
+    label: 'try',
+    filterText: 'try catch trycatch',
+    kind: languages.CompletionItemKind.Snippet,
+    // eslint-disable-next-line no-template-curly-in-string
+    insertText: 'try {\n\t$0\n} catch (${1:error}) {\n\t${2}\n}',
+    insertTextRules: languages.CompletionItemInsertTextRule.InsertAsSnippet,
+    documentation: 'Try/catch',
+    detail: 'try { } catch (error) { }',
+  },
   {
     label: 'for',
     kind: languages.CompletionItemKind.Snippet,
@@ -160,7 +179,7 @@ languages.registerCompletionItemProvider('javascript', {
     };
 
     return {
-      suggestions: LOOP_SNIPPETS.map((snippet) => ({ ...snippet, range })),
+      suggestions: EDITOR_SNIPPETS.map((snippet) => ({ ...snippet, range })),
     };
   },
 });
