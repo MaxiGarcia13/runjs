@@ -1,19 +1,20 @@
 import { deepEqual } from '@maxigarcia/js-utils';
 import { isObject, isPrimitive, isRegExp, isString } from '@/utils/data-type';
-import { getCallSite } from '../call-site.utils';
+import { getCallSite } from '../../call-site.utils';
+import { formatSpyCallCount, formatSpyCalls, isSpy } from './spy';
+import { formatValue } from './utils';
 
-function formatValue(value: any) {
-  return JSON.stringify(value, null, 2);
-}
-
-function expect<T>(value: T) {
+export function expect<T>(value: T) {
   const callSite = (() => {
     return getCallSite?.();
   })();
 
   async function getValue() {
+    if (isSpy(value))
+      return value;
+
     if (typeof value === 'function') {
-      return await value();
+      return await (value as () => unknown)();
     }
 
     return value;
@@ -37,7 +38,7 @@ function expect<T>(value: T) {
     console.testLog(callSite, isPassed, formatValue(expected), formatValue(result));
   }
 
-  async function toEqual(expected: boolean | number | string | null | undefined | object | Array<any>) {
+  async function toEqual(expected: boolean | number | string | null | undefined | object | Array<unknown>) {
     const result = await getValue();
     const isPassed = deepEqual(result, expected);
 
@@ -81,15 +82,15 @@ function expect<T>(value: T) {
 
     const expectedKeys = Object.keys(expected);
     const isPassed = expectedKeys.every((key) => {
-      const typedResult = result as Record<string, any>;
-      const typedExpected = expected as Record<string, any>;
+      const typedResult = result as Record<string, unknown>;
+      const typedExpected = expected as Record<string, unknown>;
       return key in typedResult && deepEqual(typedResult[key], typedExpected[key]);
     });
 
     console.testLog(callSite, isPassed, formatValue(expected), formatValue(result));
   }
 
-  async function arrayContaining(expected: Array<any>) {
+  async function arrayContaining(expected: Array<unknown>) {
     const result = await getValue();
 
     if (!Array.isArray(result)) {
@@ -109,19 +110,68 @@ function expect<T>(value: T) {
     console.testLog(callSite, isPassed, formatValue(expected), formatValue(result));
   }
 
+  async function toHaveBeenCalled(): Promise<void> {
+    const result = await getValue();
+
+    if (!isSpy(result)) {
+      console.testLog(callSite, false, 'Received value must be a spy created with spyOn()');
+      return;
+    }
+
+    const isPassed = result.mock.calls.length > 0;
+
+    console.testLog(
+      callSite,
+      isPassed,
+      'called at least once',
+      formatSpyCallCount(result.mock.calls),
+    );
+  }
+
+  async function toHaveBeenCalledTimes(expected: number): Promise<void> {
+    const result = await getValue();
+
+    if (!isSpy(result)) {
+      console.testLog(callSite, false, 'Received value must be a spy created with spyOn()');
+      return;
+    }
+
+    const isPassed = result.mock.calls.length === expected;
+
+    console.testLog(
+      callSite,
+      isPassed,
+      formatValue(expected),
+      String(result.mock.calls.length),
+    );
+  }
+
+  async function toHaveBeenCalledWith(...expected: unknown[]): Promise<void> {
+    const result = await getValue();
+
+    if (!isSpy(result)) {
+      console.testLog(callSite, false, 'Received value must be a spy created with spyOn()');
+      return;
+    }
+
+    const isPassed = result.mock.calls.some((call) => deepEqual(call, expected));
+
+    console.testLog(
+      callSite,
+      isPassed,
+      formatValue(expected),
+      formatSpyCalls(result.mock.calls),
+    );
+  }
+
   return {
     toBe,
     toEqual,
     stringMatching,
     objectContaining,
     arrayContaining,
+    toHaveBeenCalled,
+    toHaveBeenCalledTimes,
+    toHaveBeenCalledWith,
   };
 }
-
-declare global {
-  interface Window {
-    expect: typeof expect;
-  }
-}
-
-window.expect = expect;
