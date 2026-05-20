@@ -27,4 +27,13 @@ expect({ id: 1, user: { name: "Max" } }).objectContaining({ user: { name: "Max" 
 
 // array assertions
 expect([{ id: 1 }, { id: 2 }]).arrayContaining([{ id: 2 }]);
+
+// spy assertions
+const counter = { value: 0, increment() { this.value += 1; } };
+const incrementSpy = spyOn(counter, 'increment');
+counter.increment();
+counter.increment();
+expect(incrementSpy).toHaveBeenCalled();
+expect(incrementSpy).toHaveBeenCalledTimes(2);
+incrementSpy.mockRestore();
 `.trim();
