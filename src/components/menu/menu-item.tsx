@@ -11,7 +11,6 @@ interface MenuItemProps
 
 export function MenuItem({ onClick, children, disabled, selected, className, ...props }: MenuItemProps) {
   return (
-
     <button
       type="button"
       role="menuitem"
