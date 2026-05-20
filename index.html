@@ -6,31 +6,63 @@
     <link rel="preload" href="/assets/fonts/FiraCode-Bold.woff2" as="font" type="font/woff2" crossorigin />
 
     <link rel="icon" type="image/png" href="/icons/android/mipmap-xxxhdpi/ic_launcher.png" />
+    <link rel="apple-touch-icon" href="/icons/playstore.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="canonical" href="https://runjs-playground.vercel.app/" />
 
     <meta name="theme-color" content="#1F2937" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=overlays-content" />
+    <meta name="robots" content="index, follow" />
+    <meta name="application-name" content="RunJS" />
+    <meta name="author" content="Maximiliano Garcia Mortigliengo" />
+    <meta name="apple-mobile-web-app-title" content="RunJS" />
 
-    <title>Online JavaScript Playground</title>
-    <meta name="description" content="Online JavaScript Playground" />
+    <title>RunJS — Online JavaScript Playground</title>
     <meta
-      name="keywords"
-      content="JavaScript, Playground, Online, Code, Editor, Run, Execute, Share, Snippet, Shareable, URL, Link, Copy, Paste, Code Snippet, Code Editor, Code Runner, Code Execution, Code Sharing, Code Snippet Sharing, Code Snippet URL, Code Snippet Link, Code Snippet Copy, Code Snippet Paste, Code Snippet Run, Code Snippet Execute, Code Snippet Share, Code Snippet Shareable, Code Snippet Shareable URL, Code Snippet Shareable Link, Code Snippet Shareable Copy, Code Snippet Shareable Paste, Code Snippet Shareable Run, Code Snippet Shareable Execute, Code Snippet Shareable Share"
+      name="description"
+      content="RunJS is a free online JavaScript playground. Write code in Monaco, run it in a sandboxed preview, and share snippets via URL."
     />
 
-    <meta name="og:title" content="Online JavaScript Playground" />
-    <meta name="og:description" content="Online JavaScript Playground" />
-    <meta name="og:image" content="https://runjs-playground.vercel.app/icons/android/mipmap-xxxhdpi/ic_launcher.png" />
-    <meta name="og:url" content="https://runjs-playground.vercel.app" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="RunJS" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="RunJS — Online JavaScript Playground" />
+    <meta
+      property="og:description"
+      content="Write JavaScript in the browser, run it in a sandboxed preview, and share snippets via URL. Monaco editor, console output, and lightweight test helpers."
+    />
+    <meta property="og:url" content="https://runjs-playground.vercel.app/" />
+    <meta property="og:image" content="https://runjs-playground.vercel.app/icons/playstore.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="RunJS app icon" />
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Online JavaScript Playground" />
-    <meta name="twitter:description" content="Online JavaScript Playground" />
+    <meta name="twitter:title" content="RunJS — Online JavaScript Playground" />
     <meta
-      name="twitter:image"
-      content="https://runjs-playground.vercel.app/icons/android/mipmap-xxxhdpi/ic_launcher.png"
+      name="twitter:description"
+      content="Write JavaScript in the browser, run it in a sandboxed preview, and share snippets via URL."
     />
-    <meta name="twitter:url" content="https://runjs-playground.vercel.app" />
+    <meta name="twitter:image" content="https://runjs-playground.vercel.app/icons/playstore.png" />
+    <meta name="twitter:image:alt" content="RunJS app icon" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "RunJS",
+        "url": "https://runjs-playground.vercel.app/",
+        "description": "Free online JavaScript playground with Monaco editor, sandboxed execution, console output, and shareable snippet URLs.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "author": {
+          "@type": "Person",
+          "name": "Maximiliano Garcia Mortigliengo"
+        },
+        "codeRepository": "https://github.com/MaxiGarcia13/runjs"
+      }
+    </script>
   </head>
   <body class="h-screen w-screen overflow-hidden">
     <main id="root" class="h-screen w-screen flex flex-col overflow-hidden"></main>
