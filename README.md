@@ -5,12 +5,15 @@ Write code in Monaco, run it in a sandboxed preview runtime, and share snippets 
 
 ## Features
 
-- Monaco editor with a custom Dracula-based theme, ligatures, and loop snippets (`for`, `forof`, `forin`).
-- IntelliSense for preview runtime globals (`log`, `warn`, `error`, `logTable`, `perf`, `expect`).
+- Monaco editor with a custom Dracula-based theme, Fira Code ligatures, bracket pair colorization, and TypeScript-powered semantic highlighting.
+- Built-in snippets (`if`, `try`, `for`, `forof`, `forin`) with tab stops.
+- IntelliSense for preview runtime globals (`log`, `warn`, `error`, `logTable`, `perf`, `expect`, `spyOn`).
+- Editor context menu (copy, cut, paste, select all) via right-click or long-press on touch devices.
 - Live execution in an isolated iframe runtime (`sandbox="allow-scripts"`).
 - Captured output for `console.log`, `console.warn`, `console.error`, `console.info`, and tabular data via `console.table` / `logTable`.
+- Lightweight test helpers: `expect` matchers and `spyOn` for call tracking.
 - URL-synced code state (debounced), so snippets can be shared as a link.
-- One-click "Copy link" action in the header.
+- Header actions: copy link, session history, new instance, code snapshot (PNG), and open in ChatGPT.
 - Session history stored in `localStorage`, with rename, reopen, and delete actions.
 - Resizable editor/preview layout (horizontal on desktop, vertical on mobile).
 - Web app manifest and platform icons for installable/mobile-friendly behavior.
@@ -23,7 +26,7 @@ Write code in Monaco, run it in a sandboxed preview runtime, and share snippets 
 - Tailwind CSS 4
 - Monaco Editor
 - Zustand
-- ESLint
+- ESLint (with pre-commit lint-staged via simple-git-hooks)
 
 ## Getting Started
 
@@ -53,6 +56,7 @@ Open the URL shown in the terminal (typically `http://localhost:5173`).
 - `npm run preview` - preview production build locally
 - `npm run lint` - run ESLint checks
 - `npm run lint:fix` - run ESLint and auto-fix issues
+- `npm run phoenix` - clean `dist` and `node_modules`, reinstall, and build
 
 ## How It Works
 
@@ -65,23 +69,25 @@ Open the URL shown in the terminal (typically `http://localhost:5173`).
 
 ## Editor
 
-The editor is Monaco configured in `src/components/editor/config.ts`.
+The editor is Monaco configured in `src/components/editor/config.ts`. A custom TypeScript worker (`ts.worker.ts`) exposes semantic classifications to a document-range semantic tokens provider (`semantic-tokens.ts`), so variables, parameters, types, and members are highlighted beyond plain syntax coloring.
 
-### Loop snippets
+### Snippets
 
 Type a prefix and pick the snippet from autocomplete (or press Tab/Enter to accept):
 
 | Prefix  | Inserts                                                |
 | ------- | ------------------------------------------------------ |
+| `if`    | `if (condition) { }`                                   |
+| `try`   | `try { } catch (error) { }` — also matches “try catch” |
 | `for`   | Indexed `for` loop                                     |
 | `forof` | `for (const item of iterable)` — also matches “for of” |
 | `forin` | `for (const key in object)` — also matches “for in”    |
 
-Snippets expand with tab stops for the index/item/key, collection, and loop body.
+Snippets expand with tab stops for conditions, bindings, collections, and loop bodies.
 
 ### Runtime IntelliSense
 
-The same config registers TypeScript extra libs so autocomplete and hovers work for preview-only globals (`log`, `warn`, `error`, `logTable`, `perf`, `expect` and their matcher methods).
+The same config registers TypeScript extra libs so autocomplete and hovers work for preview-only globals (`log`, `warn`, `error`, `logTable`, `perf`, `expect`, `spyOn`, and their matcher methods).
 
 ## Runtime Helpers
 
@@ -92,7 +98,8 @@ Inside the preview runtime, a few global helper functions are available in addit
 - `error(...args)` - same behavior as `console.error(...)`.
 - `info(...args)` - same behavior as `console.info(...)`.
 - `logTable(...args)` - same behavior as `console.table(...)`, rendered as a table in the preview panel.
-- `expect(value)` - creates async assertions with `toBe(...)` (strict equality) and `toEqual(...)` (deep equality).
+- `expect(value)` - creates async assertions with matchers (see below).
+- `spyOn(object, methodName)` - wraps a method to record calls while still invoking the original implementation.
 
 ### `perf` helper
 
@@ -143,6 +150,9 @@ Available matchers:
 - `expect(value).stringMatching(expected)` - checks that a string contains `expected` (when `expected` is a string) or matches it (when `expected` is a RegExp).
 - `expect(value).objectContaining(expectedObject)` - checks that all expected keys exist in the received object and their values are deep-equal.
 - `expect(value).arrayContaining(expectedArray)` - checks that each expected item exists in the received array using deep equality.
+- `expect(spy).toHaveBeenCalled()` - checks that a spy created with `spyOn` was called at least once.
+- `expect(spy).toHaveBeenCalledTimes(n)` - checks an exact call count.
+- `expect(spy).toHaveBeenCalledWith(...args)` - checks that at least one call used the given arguments (deep equality).
 
 Examples:
 
@@ -158,8 +168,32 @@ expect({ id: 1, user: { name: 'Max' } }).objectContaining({
 expect([{ id: 1 }, { id: 2 }]).arrayContaining([{ id: 2 }]);
 ```
 
+### `spyOn` helper
+
+`spyOn` replaces an object method with a wrapper that records every call (arguments and return/throw results) while still running the original implementation.
+
+- `spy.mock.calls` - array of argument lists, one per call.
+- `spy.mock.results` - array of `{ type: 'return' | 'throw', value }` per call.
+- `spy.mockRestore()` - restores the original method on the object.
+
+Example:
+
+```js
+const counter = { value: 0, increment() { this.value += 1; } };
+const incrementSpy = spyOn(counter, 'increment');
+
+counter.increment();
+counter.increment();
+
+expect(incrementSpy).toHaveBeenCalled();
+expect(incrementSpy).toHaveBeenCalledTimes(2);
+expect(incrementSpy).toHaveBeenCalledWith();
+
+incrementSpy.mockRestore();
+```
+
 ## Contributing
 
 1. Create a branch for your change.
-2. Run `npm run lint` before opening a PR.
+2. Run `npm run lint` before opening a PR (pre-commit hooks also run `lint:fix` on staged files).
 3. Keep changes focused and include a clear PR description.
