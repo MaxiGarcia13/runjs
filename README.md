@@ -120,7 +120,7 @@ perf(
       // do something
     }
   },
-  { label: "loop" },
+  { label: 'loop' },
 );
 ```
 
@@ -131,7 +131,7 @@ await perf(
   async () => {
     await new Promise((resolve) => setTimeout(resolve, 250));
   },
-  { label: "fetch simulation" },
+  { label: 'fetch simulation' },
 );
 ```
 
@@ -158,12 +158,12 @@ Examples:
 
 ```js
 expect(2 + 2).toBe(4);
-expect({ id: 1, tags: ["a"] }).toEqual({ id: 1, tags: ["a"] });
+expect({ id: 1, tags: ['a'] }).toEqual({ id: 1, tags: ['a'] });
 expect(() => Promise.resolve({ id: 1 })).toEqual({ id: 1 });
-expect("Hello World").stringMatching("World");
-expect("Version v1.2.3").stringMatching(/v\d+\.\d+\.\d+/);
-expect({ id: 1, user: { name: "Max" } }).objectContaining({
-  user: { name: "Max" },
+expect('Hello World').stringMatching('World');
+expect('Version v1.2.3').stringMatching(/v\d+\.\d+\.\d+/);
+expect({ id: 1, user: { name: 'Max' } }).objectContaining({
+  user: { name: 'Max' },
 });
 expect([{ id: 1 }, { id: 2 }]).arrayContaining([{ id: 2 }]);
 ```
@@ -185,7 +185,7 @@ const counter = {
     this.value += 1;
   },
 };
-const incrementSpy = spyOn(counter, "increment");
+const incrementSpy = spyOn(counter, 'increment');
 
 counter.increment();
 counter.increment();
