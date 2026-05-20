@@ -1,5 +1,5 @@
 import type { editor } from 'monaco-editor';
-import { KeyCode, KeyMod } from 'monaco-editor';
+import { KeyCode, KeyMod, Range } from 'monaco-editor';
 import { useEffect } from 'react';
 import { CommandIcon } from '@/assets/icons/command';
 import { PasteIcon } from '@/assets/icons/paste';
@@ -26,25 +26,30 @@ export function PasteActionMenuItem({ editor, onActionClick }: PasteActionMenuIt
       run: async () => {
         const model = editor?.getModel();
         const position = editor?.getPosition();
+        const selection = editor?.getSelection();
 
         if (!editor || !model || !position) {
           return;
         }
 
+        const pasteRange = selection && !selection.isEmpty()
+          ? selection
+          : new Range(
+              position.lineNumber,
+              position.column,
+              position.lineNumber,
+              position.column,
+            );
+
         const clipboardData = await navigator.clipboard.readText();
 
         editor.executeEdits('paste', [{
-          range: {
-            startLineNumber: position.lineNumber,
-            startColumn: 1,
-            endLineNumber: position.lineNumber,
-            endColumn: 1,
-          },
+          range: pasteRange,
           text: clipboardData,
         }]);
       },
     });
-  }, []);
+  }, [editor]);
 
   return (
     <ContextMenuItem
