@@ -1,11 +1,27 @@
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
-import { basename, extname, join, resolve } from 'node:path';
+import { dirname, extname, join, relative, resolve } from 'node:path';
 import process from 'node:process';
 import { build } from 'esbuild';
 
 export function previewScriptsPlugin() {
   const scriptsDir = resolve(process.cwd(), 'src/components/preview/scripts');
   let outDir = resolve(process.cwd(), 'dist');
+
+  const collectTsFiles = (dir) => {
+    const files = [];
+
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const entryPath = join(dir, entry.name);
+
+      if (entry.isDirectory()) {
+        files.push(...collectTsFiles(entryPath));
+      } else if (extname(entry.name) === '.ts') {
+        files.push(entryPath);
+      }
+    }
+
+    return files;
+  };
 
   const bundleScript = async (entryFilePath) => {
     const result = await build({
@@ -64,13 +80,16 @@ export function previewScriptsPlugin() {
         return;
 
       const outputDir = join(outDir, 'preview/scripts');
-      const scriptFiles = readdirSync(scriptsDir).filter((fileName) => extname(fileName) === '.ts');
+      const scriptFiles = collectTsFiles(scriptsDir);
 
       mkdirSync(outputDir, { recursive: true });
 
-      for (const scriptFile of scriptFiles) {
-        const sourceFilePath = join(scriptsDir, scriptFile);
-        const outputFilePath = join(outputDir, `${basename(scriptFile, '.ts')}.js`);
+      for (const sourceFilePath of scriptFiles) {
+        const relativeJsPath = relative(scriptsDir, sourceFilePath).replace(/\.ts$/, '.js');
+        const outputFilePath = join(outputDir, relativeJsPath);
+
+        mkdirSync(dirname(outputFilePath), { recursive: true });
+
         const content = await bundleScript(sourceFilePath);
 
         writeFileSync(outputFilePath, content);
