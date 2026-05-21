@@ -1,0 +1,16 @@
+@import 'tailwindcss';
+@import './fira-code-font.css';
+@import './themes/dracula/style.css';
+@import './scroll-bar.css';
+
+body,
+pre {
+  font-family: 'Fira Code';
+  font-size: 14px;
+  font-variant-ligatures: contextual;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}

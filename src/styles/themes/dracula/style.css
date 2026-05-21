@@ -1,0 +1,27 @@
+[data-theme='dracula'] {
+  --background: #282a36;
+  --foreground: #f8f8f2;
+  --line: #44475a;
+  --surface: #44475a;
+  --muted: #6272a4;
+  --subtle: #3b3a32;
+  --accent: #ffb86c;
+  --success: #50fa7b;
+  --danger: #ff5555;
+  --info: #8be9fd;
+  --highlight: #bd93f9;
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  --color-highlight: var(--highlight);
+}

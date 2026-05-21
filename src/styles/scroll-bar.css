@@ -1,0 +1,21 @@
+/* Width of the scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/* Track (the background) */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle (the part you grab) */
+::-webkit-scrollbar-thumb {
+  background: var(--surface);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--surface);
+}
