@@ -39,7 +39,7 @@ export function TestLogLine({
         <CollapsibleTrigger className="text-muted" aria-label="Toggle received output">
           <span className="font-bold text-muted">Received:</span>
         </CollapsibleTrigger>
-        <CollapsibleContent>
+        <CollapsibleContent className="relative min-h-[30px]">
           <LogLineContent content={received} />
         </CollapsibleContent>
       </Collapsible>
@@ -48,7 +48,7 @@ export function TestLogLine({
         <CollapsibleTrigger className="text-muted" aria-label="Toggle expected output">
           <span className="font-bold text-muted">Expected:</span>
         </CollapsibleTrigger>
-        <CollapsibleContent>
+        <CollapsibleContent className="relative min-h-[30px]">
           <LogLineContent content={expected} />
         </CollapsibleContent>
       </Collapsible>

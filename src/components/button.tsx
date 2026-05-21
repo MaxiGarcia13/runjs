@@ -22,7 +22,7 @@ export function Button({
 
   if (tooltip) {
     return (
-      <Tooltip content={tooltip} placement={tooltipPosition}>
+      <Tooltip content={tooltip} placement={tooltipPosition} className={className}>
         <BaseButton className={className} aria-label={accessibleName} {...props}>{children}</BaseButton>
       </Tooltip>
     );
