@@ -11,6 +11,7 @@ export function Collapsible({
   ...props
 }: CollapsibleProps) {
   const contentId = useId();
+  const triggerId = useId();
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
   const isControlled = openProp !== undefined;
   const open = isControlled ? openProp : uncontrolledOpen;
@@ -26,7 +27,7 @@ export function Collapsible({
   };
 
   return (
-    <CollapsibleContext value={{ open, toggle, contentId }}>
+    <CollapsibleContext value={{ open, toggle, contentId, triggerId }}>
       <div className={className} {...props}>
         {children}
       </div>

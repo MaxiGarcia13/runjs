@@ -6,12 +6,13 @@ export function CollapsibleContent({
   className,
   ...props
 }: CollapsibleContentProps) {
-  const { open, contentId } = useCollapsible();
+  const { open, contentId, triggerId } = useCollapsible();
 
   return (
     <div
       id={contentId}
       role="region"
+      aria-labelledby={triggerId}
       hidden={!open}
       className={className}
       {...props}

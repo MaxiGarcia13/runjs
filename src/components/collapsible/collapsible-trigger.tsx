@@ -9,10 +9,11 @@ export function CollapsibleTrigger({
   onClick,
   ...props
 }: CollapsibleTriggerProps) {
-  const { open, toggle, contentId } = useCollapsible();
+  const { open, toggle, contentId, triggerId } = useCollapsible();
 
   return (
     <button
+      id={triggerId}
       type="button"
       aria-expanded={open}
       aria-controls={contentId}

@@ -61,7 +61,7 @@ export function Menu({
       id={id}
       ref={dismissRef}
       role="menu"
-      aria-label={ariaLabel}
+      aria-label={ariaLabel ?? 'Menu'}
       className={cn(
         'z-50 min-w-[160px] rounded-md border border-gray-600 bg-surface py-2 text-inherit shadow-xl',
         usesFloatingPosition && 'fixed',

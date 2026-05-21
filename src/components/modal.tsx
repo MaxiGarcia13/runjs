@@ -69,6 +69,7 @@ export function Modal({
       ref={dialogRef}
       role="dialog"
       aria-labelledby={title ? titleId : undefined}
+      aria-label={title ? undefined : closeLabel}
       aria-modal="true"
       className={cn(
         'm-auto w-[calc(100%-2rem)] max-w-xl overflow-hidden rounded-xl p-0 shadow-2xl outline-none',

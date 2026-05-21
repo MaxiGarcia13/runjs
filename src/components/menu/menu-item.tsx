@@ -16,7 +16,6 @@ export function MenuItem({ onClick, children, disabled, selected, className, ...
       role="menuitem"
       disabled={disabled}
       aria-disabled={disabled || undefined}
-      aria-selected={selected}
       tabIndex={disabled ? -1 : 0}
       className={cn(
         'flex w-full cursor-pointer items-center gap-2 p-2 text-left text-sm text-inherit transition-colors hover:bg-background disabled:cursor-not-allowed disabled:opacity-50',

@@ -35,7 +35,7 @@ export function TestLogLine({
       className={className}
       title={testTitle}
     >
-      <Collapsible role="group" defaultOpen>
+      <Collapsible role="group" aria-label="Received output" defaultOpen>
         <CollapsibleTrigger className="text-muted" aria-label="Toggle received output">
           <span className="font-bold text-muted">Received:</span>
         </CollapsibleTrigger>
@@ -44,7 +44,7 @@ export function TestLogLine({
         </CollapsibleContent>
       </Collapsible>
 
-      <Collapsible role="group" defaultOpen>
+      <Collapsible role="group" aria-label="Expected output" defaultOpen>
         <CollapsibleTrigger className="text-muted" aria-label="Toggle expected output">
           <span className="font-bold text-muted">Expected:</span>
         </CollapsibleTrigger>

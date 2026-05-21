@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import type { TooltipPlacement } from './types';
 import { cn } from '@maxigarcia/js-utils';
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useDismiss } from '@/hooks/use-dismiss';
 import { useFloatingPosition } from '@/hooks/use-floating-position';
@@ -26,6 +26,7 @@ export function Tooltip({
   disabled,
 }: TooltipProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const tooltipId = useId();
 
   const triggerElementRef = useRef<HTMLDivElement>(null);
   const tooltipElementRef = useRef<HTMLSpanElement>(null);
@@ -51,6 +52,7 @@ export function Tooltip({
     <div
       ref={triggerElementRef}
       className={cn('relative inline-flex', className)}
+      aria-describedby={isOpen ? tooltipId : undefined}
       onMouseEnter={handleOpen}
       onMouseLeave={handleClose}
       onFocus={handleOpen}
@@ -60,6 +62,7 @@ export function Tooltip({
       {!disabled && isOpen && (
         createPortal(
           <TooltipContent
+            id={tooltipId}
             ref={tooltipElementRef}
             children={content}
             coords={coords}

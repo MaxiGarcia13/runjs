@@ -51,6 +51,7 @@ export function HistoryListItem({ history, onNavigateToHistory }: HistoryListIte
             role="textbox"
             aria-label="Session label"
             aria-multiline={false}
+            aria-readonly={false}
             onBlur={(e) => handleInputCapture(e.currentTarget.textContent || undefined)}
             contentEditable="plaintext-only"
           >

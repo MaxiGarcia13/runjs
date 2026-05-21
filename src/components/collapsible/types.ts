@@ -4,6 +4,7 @@ export interface CollapsibleContextValue {
   open: boolean;
   toggle: () => void;
   contentId: string;
+  triggerId: string;
 }
 
 export interface CollapsibleProps extends HTMLAttributes<HTMLDivElement> {
