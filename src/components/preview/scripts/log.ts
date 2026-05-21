@@ -1,26 +1,48 @@
 import type { Variant } from '../types';
+import type { CallSite } from '../utils/call-site';
 import { isObject } from '@/utils/data-type';
-import { getCallSite } from '../call-site.utils';
+import { getCallSite } from '../utils/call-site';
+import {
+  buildLogPayload,
+  createLogPayloadState,
+  subscribeToThenables,
+} from '../utils/serialize-log-args';
 
 const originalLog = console.log.bind(console);
 const originalWarn = console.warn.bind(console);
 const originalError = console.error.bind(console);
 const originalInfo = console.info.bind(console);
 
+function postLogMessage(
+  payload: unknown[],
+  id: string,
+  type: Variant,
+  callSite: CallSite | null,
+) {
+  window.parent.postMessage(
+    {
+      source: 'runjs-preview',
+      payload,
+      id,
+      type,
+      callSite,
+    },
+    '*',
+  );
+}
+
 function overwriteFunction(_originalFunction: (...args: any[]) => void, type: Variant) {
   return (...args: any[]) => {
     const callSite = getCallSite();
+    const id = crypto.randomUUID();
+    const { values, states } = createLogPayloadState(args);
 
-    window.parent.postMessage(
-      {
-        source: 'runjs-preview',
-        payload: args,
-        id: crypto.randomUUID(),
-        type,
-        callSite,
-      },
-      '*',
-    );
+    const publish = () => {
+      postLogMessage(buildLogPayload(args, values, states), id, type, callSite);
+    };
+
+    publish();
+    subscribeToThenables(args, values, states, publish);
 
     // TODO: Uncomment this when we have a way to run the code locally
     // originalFunction(...args);

@@ -1,6 +1,6 @@
 import { deepEqual } from '@maxigarcia/js-utils';
 import { isObject, isPrimitive, isRegExp, isString } from '@/utils/data-type';
-import { getCallSite } from '../../call-site.utils';
+import { getCallSite } from '../../utils/call-site';
 import { expectSpy } from './spy';
 import { formatValue, getValue } from './utils';
 
