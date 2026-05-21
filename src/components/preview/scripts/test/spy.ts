@@ -1,6 +1,6 @@
 import type { CallSite } from '../../types';
 import { deepEqual } from '@maxigarcia/js-utils';
-import { indentStringValue } from '@/utils/value';
+import { indentValue } from '@/utils/value';
 import { getValue } from './utils';
 
 export interface SpyMock {
@@ -18,7 +18,7 @@ function formatCallArgs(args: unknown[]) {
   if (args.length === 0)
     return '(no arguments)';
 
-  return indentStringValue(args);
+  return indentValue(args);
 }
 
 export function formatSpyCalls(calls: unknown[][]) {
@@ -113,7 +113,7 @@ export function expectSpy<T>(value: T, callSite: CallSite) {
     console.testLog(
       callSite,
       isPassed,
-      indentStringValue(expected),
+      indentValue(expected),
       String(result.mock.calls.length),
     );
   }
@@ -131,7 +131,7 @@ export function expectSpy<T>(value: T, callSite: CallSite) {
     console.testLog(
       callSite,
       isPassed,
-      indentStringValue(expected),
+      indentValue(expected),
       formatSpyCalls(result.mock.calls),
     );
   }

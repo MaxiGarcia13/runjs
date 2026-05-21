@@ -1,6 +1,6 @@
 import { deepEqual } from '@maxigarcia/js-utils';
 import { isObject, isPrimitive, isRegExp, isString } from '@/utils/data-type';
-import { indentStringValue } from '@/utils/value';
+import { indentValue } from '@/utils/value';
 import { getCallSite } from '../../utils/call-site';
 import { expectSpy } from './spy';
 import { getValue } from './utils';
@@ -25,14 +25,14 @@ export function expect<T>(value: T) {
 
     const isPassed = result === expected;
 
-    console.testLog(callSite, isPassed, indentStringValue(expected), indentStringValue(result));
+    console.testLog(callSite, isPassed, indentValue(expected), indentValue(result));
   }
 
   async function toEqual(expected: boolean | number | string | null | undefined | object | Array<unknown>) {
     const result = await getValue(value);
     const isPassed = deepEqual(result, expected);
 
-    console.testLog(callSite, isPassed, indentStringValue(expected), indentStringValue(result));
+    console.testLog(callSite, isPassed, indentValue(expected), indentValue(result));
   }
 
   async function stringMatching(expected: string | RegExp) {
@@ -54,7 +54,7 @@ export function expect<T>(value: T) {
         ? resultString.includes(expected)
         : expected.test(resultString);
 
-    console.testLog(callSite, isPassed, indentStringValue(expected), indentStringValue(result));
+    console.testLog(callSite, isPassed, indentValue(expected), indentValue(result));
   }
 
   async function objectContaining(expected: object) {
@@ -77,7 +77,7 @@ export function expect<T>(value: T) {
       return key in typedResult && deepEqual(typedResult[key], typedExpected[key]);
     });
 
-    console.testLog(callSite, isPassed, indentStringValue(expected), indentStringValue(result));
+    console.testLog(callSite, isPassed, indentValue(expected), indentValue(result));
   }
 
   async function arrayContaining(expected: Array<unknown>) {
@@ -97,7 +97,7 @@ export function expect<T>(value: T) {
       result.some((resultItem) => deepEqual(resultItem, expectedItem)),
     );
 
-    console.testLog(callSite, isPassed, indentStringValue(expected), indentStringValue(result));
+    console.testLog(callSite, isPassed, indentValue(expected), indentValue(result));
   }
 
   return {

@@ -3,7 +3,7 @@ import { CheckIcon } from '@/assets/icons/check';
 import { CopyIcon } from '@/assets/icons/copy';
 import { Button } from '@/components/button';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
-import { indentStringValue } from '@/utils/value';
+import { indentValue } from '@/utils/value';
 
 interface LogLineCopyButtonProps {
   content: unknown;
@@ -15,7 +15,7 @@ export function LogLineCopyButton({ content, className }: LogLineCopyButtonProps
 
   const handleCopy = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    copyToClipboard(() => indentStringValue(content));
+    copyToClipboard(() => indentValue(content));
   };
 
   const data: Partial<ComponentProps<typeof Button>> = isCopied

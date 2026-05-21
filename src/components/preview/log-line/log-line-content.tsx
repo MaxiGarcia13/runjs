@@ -1,10 +1,10 @@
 import { cn, isRecord, tryParseJson } from '@maxigarcia/js-utils';
-import { indentStringValue } from '@/utils/value';
+import { indentValue } from '@/utils/value';
 import { LogLineCopyButton } from './log-line-copy-button';
 
 export function LogLineContent({ content }: { content: any }) {
   const parsedValue = tryParseJson(content);
-  const formatted = indentStringValue(content);
+  const formatted = indentValue(content);
 
   return (
     <>

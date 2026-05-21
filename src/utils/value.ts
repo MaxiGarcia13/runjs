@@ -1,8 +1,12 @@
 import { isRecord, tryParseJson } from '@maxigarcia/js-utils';
 
-export function indentStringValue(value: unknown, indent: number = 2) {
+export function indentValue(value: unknown, indent: number = 2) {
   if (value == null) {
     return '';
+  }
+
+  if (isRecord(value) || Array.isArray(value)) {
+    return JSON.stringify(value, null, indent);
   }
 
   const parsedValue = tryParseJson(String(value));
