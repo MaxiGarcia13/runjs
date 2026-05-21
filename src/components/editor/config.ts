@@ -40,8 +40,6 @@ export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOp
   'wordWrap': 'on',
   'cursorBlinking': 'expand',
 
-  'formatOnPaste': true,
-
   'automaticLayout': true,
   'fixedOverflowWidgets': true,
   'scrollBeyondLastLine': false,
