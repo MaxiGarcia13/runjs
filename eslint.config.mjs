@@ -10,10 +10,6 @@ export default eslintConfig(
     typescript: true,
     jsx: true,
     tailwindcss: true,
-
-    formatters: {
-      css: true,
-    },
   },
   {
     settings: {

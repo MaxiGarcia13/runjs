@@ -11,8 +11,12 @@ interface HistoryListItemProps {
   onNavigateToHistory: () => void;
 }
 
+function formatDate(date: number | string) {
+  return new Date(date);
+}
+
 export function HistoryListItem({ history, onNavigateToHistory }: HistoryListItemProps) {
-  const createdAtDate = new Date(history.createdAt);
+  const createdAtDate = formatDate(history.createdAt);
   const createdAt = createdAtDate.toLocaleString();
 
   const remove = useHistory((state) => state.remove);
