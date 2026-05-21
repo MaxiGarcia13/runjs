@@ -11,7 +11,7 @@ export function Outputs({ outputs }: OutputsProps) {
   }
 
   return (
-    <div role="list" aria-label="Console messages">
+    <div role="list" aria-label="Console messages" className="flex flex-col gap-2">
       {outputs.map((item) => (
         <LogLine key={item.id} id={item.id} {...item} />
       ))}
