@@ -12,6 +12,7 @@ const originalLog = console.log.bind(console);
 const originalWarn = console.warn.bind(console);
 const originalError = console.error.bind(console);
 const originalInfo = console.info.bind(console);
+const originalTable = console.table.bind(console);
 
 function postLogMessage(
   payload: unknown[],
@@ -53,19 +54,18 @@ console.log = overwriteFunction(originalLog, 'log');
 console.warn = overwriteFunction(originalWarn, 'warn');
 console.error = overwriteFunction(originalError, 'error');
 console.info = overwriteFunction(originalInfo, 'info');
-console.logTable = overwriteFunction(console.logTable, 'log-table');
+console.table = overwriteFunction(originalTable, 'log-table');
 
 declare global {
   interface Console {
     perfLog: (...args: any[]) => void;
     testLog: (...args: any[]) => void;
-    logTable: (...args: any[]) => void;
   }
 }
 
 console.perfLog = overwriteFunction(originalLog, 'perf-log');
 console.testLog = overwriteFunction(originalLog, 'test-log');
-console.logTable = overwriteFunction(originalLog, 'log-table');
+console.table = overwriteFunction(originalTable, 'log-table');
 
 declare global {
   interface Window {
@@ -73,7 +73,7 @@ declare global {
     warn: typeof console.warn;
     error: typeof console.error;
     info: typeof console.info;
-    logTable: typeof console.logTable;
+    logTable: typeof console.table;
   }
 }
 
@@ -82,5 +82,5 @@ if (isObject(window)) {
   window.warn = overwriteFunction(originalWarn, 'warn');
   window.error = overwriteFunction(originalError, 'error');
   window.info = overwriteFunction(originalInfo, 'info');
-  window.logTable = overwriteFunction(originalLog, 'log-table');
+  window.logTable = overwriteFunction(originalTable, 'log-table');
 }
