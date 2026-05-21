@@ -19,6 +19,9 @@ export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOp
   'fontLigatures': true,
   'fontSize': 16,
 
+  'formatOnType': true,
+  'formatOnPaste': true,
+
   'tabSize': 2,
 
   'minimap': {
