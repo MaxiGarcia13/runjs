@@ -22,7 +22,7 @@ export function DefaultLogLine(
           type === 'warn' && 'border-accent',
           type === 'error' && 'border-danger',
           type === 'info' && 'border-info',
-          type === 'perf-log' && 'border-purple',
+          type === 'perf-log' && 'border-highlight',
         )
       }
       {...props}

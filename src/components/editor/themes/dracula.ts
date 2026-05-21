@@ -1,19 +1,5 @@
 import type { editor } from 'monaco-editor';
-
-/** Aligned with CSS variables in `src/app.css` (`:root`). */
-const THEME = {
-  background: '282a36',
-  foreground: 'f8f8f2',
-  comment: '6272a4',
-  invisibles: '3b3a32',
-  orange: 'ffb86c',
-  green: '50fa7b',
-  cyan: '8be9fd',
-  purple: 'bd93f9',
-  pink: 'ff79c6',
-  yellow: 'f1fa8c',
-  currentLine: '44475a',
-} as const;
+import { DRACULA_PALETTE as THEME } from '@/styles/themes/dracula';
 
 export const draculaTheme: editor.IStandaloneThemeData = {
   base: 'vs-dark',
