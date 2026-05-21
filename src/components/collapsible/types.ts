@@ -6,7 +6,7 @@ export interface CollapsibleContextValue {
   contentId: string;
 }
 
-export interface CollapsibleProps {
+export interface CollapsibleProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   className?: string;
   defaultOpen?: boolean;
