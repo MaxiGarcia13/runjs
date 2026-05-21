@@ -40,7 +40,7 @@ export function LogLineWrapper({ children, className, callSite, title, ...props 
         <span className="shrink-0 text-xs">{title}</span>
       </CollapsibleTrigger>
 
-      <CollapsibleContent className="relative min-h-[30px] flex-1 flex-col gap-2">
+      <CollapsibleContent className="flex-1 flex-col gap-2">
         {children}
       </CollapsibleContent>
       {callSite && (
