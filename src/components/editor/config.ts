@@ -17,7 +17,7 @@ export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOp
 
   'fontFamily': 'Fira Code, monospace',
   'fontLigatures': true,
-  'fontSize': 16,
+  'fontSize': 15,
 
   'formatOnType': true,
   'formatOnPaste': true,
