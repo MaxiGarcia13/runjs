@@ -2,6 +2,7 @@ import type { CallSite, Output, Variant } from './types';
 import { cn, debounce } from '@maxigarcia/js-utils';
 import { useEffect, useRef, useState } from 'react';
 import { useEditorStore } from '@/store/useEditorStore';
+import { indentStringValue } from '@/utils/value';
 import { Iframe } from './iframe';
 import { Outputs } from './outputs';
 
@@ -25,10 +26,7 @@ export function Preview({ className }: PreviewProps) {
   const [outputs, setOutputs] = useState<Output[]>([]);
 
   const formatOutput = (content: string) => {
-    if (typeof content === 'object' || Array.isArray(content))
-      return JSON.stringify(content, null, 2);
-
-    return content;
+    return indentStringValue(content);
   };
 
   const mapOutput = (data: Message, offset: number) => {
