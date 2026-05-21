@@ -4,15 +4,15 @@ import type { editor } from 'monaco-editor';
 const THEME = {
   background: '282a36',
   foreground: 'f8f8f2',
-  muted: '6272a4',
-  subtle: '3b3a32',
-  accent: 'ffb86c',
-  success: '50fa7b',
-  info: '8be9fd',
+  comment: '6272a4',
+  invisibles: '3b3a32',
+  orange: 'ffb86c',
+  green: '50fa7b',
+  cyan: '8be9fd',
   purple: 'bd93f9',
   pink: 'ff79c6',
   yellow: 'f1fa8c',
-  line: '44475a',
+  currentLine: '44475a',
 } as const;
 
 export const draculaTheme: editor.IStandaloneThemeData = {
@@ -24,8 +24,12 @@ export const draculaTheme: editor.IStandaloneThemeData = {
       token: '',
     },
     {
-      foreground: THEME.muted,
+      foreground: THEME.comment,
       token: 'comment',
+    },
+    {
+      foreground: THEME.purple,
+      token: 'number',
     },
     {
       foreground: THEME.yellow,
@@ -77,17 +81,17 @@ export const draculaTheme: editor.IStandaloneThemeData = {
       token: 'storage.type',
     },
     {
-      foreground: THEME.info,
+      foreground: THEME.cyan,
       fontStyle: 'underline',
       token: 'entity.name.class',
     },
     {
-      foreground: THEME.info,
+      foreground: THEME.cyan,
       fontStyle: 'italic underline',
       token: 'entity.other.inherited-class',
     },
     {
-      foreground: THEME.info,
+      foreground: THEME.cyan,
       token: 'type.class',
     },
     {
@@ -99,7 +103,7 @@ export const draculaTheme: editor.IStandaloneThemeData = {
       token: 'type.class.declaration.readonly',
     },
     {
-      foreground: THEME.info,
+      foreground: THEME.cyan,
       token: 'type.interface',
     },
     {
@@ -111,11 +115,11 @@ export const draculaTheme: editor.IStandaloneThemeData = {
       token: 'type.interface.declaration.readonly',
     },
     {
-      foreground: THEME.info,
+      foreground: THEME.cyan,
       token: 'type.namespace',
     },
     {
-      foreground: THEME.info,
+      foreground: THEME.cyan,
       token: 'type',
     },
     {
@@ -123,44 +127,44 @@ export const draculaTheme: editor.IStandaloneThemeData = {
       token: 'type.enum',
     },
     {
-      foreground: THEME.success,
+      foreground: THEME.green,
       token: 'entity.name.function',
     },
     {
-      foreground: THEME.success,
+      foreground: THEME.green,
       token: 'variable.function',
     },
     {
-      foreground: THEME.success,
+      foreground: THEME.green,
       token: 'variable.function.declaration',
     },
     {
-      foreground: THEME.success,
+      foreground: THEME.green,
       token: 'variable.function.defaultLibrary',
     },
     {
-      foreground: THEME.success,
+      foreground: THEME.green,
       token: 'member',
     },
     {
-      foreground: THEME.success,
+      foreground: THEME.green,
       token: 'member.declaration',
     },
     {
-      foreground: THEME.success,
+      foreground: THEME.green,
       token: 'member.defaultLibrary',
     },
     {
-      foreground: THEME.success,
+      foreground: THEME.green,
       token: 'support.function',
     },
     {
-      foreground: THEME.accent,
+      foreground: THEME.orange,
       fontStyle: 'italic',
       token: 'variable.parameter',
     },
     {
-      foreground: THEME.accent,
+      foreground: THEME.orange,
       token: 'type.parameters',
     },
     {
@@ -200,12 +204,12 @@ export const draculaTheme: editor.IStandaloneThemeData = {
       token: 'support.constant',
     },
     {
-      foreground: THEME.info,
+      foreground: THEME.cyan,
       fontStyle: 'italic',
       token: 'support.type',
     },
     {
-      foreground: THEME.info,
+      foreground: THEME.cyan,
       fontStyle: 'italic',
       token: 'support.class',
     },
@@ -224,11 +228,11 @@ export const draculaTheme: editor.IStandaloneThemeData = {
       token: 'meta.structure.dictionary.json string.quoted.double.json',
     },
     {
-      foreground: THEME.muted,
+      foreground: THEME.comment,
       token: 'meta.diff',
     },
     {
-      foreground: THEME.muted,
+      foreground: THEME.comment,
       token: 'meta.diff.header',
     },
     {
@@ -236,7 +240,7 @@ export const draculaTheme: editor.IStandaloneThemeData = {
       token: 'markup.deleted',
     },
     {
-      foreground: THEME.success,
+      foreground: THEME.green,
       token: 'markup.inserted',
     },
     {
@@ -264,7 +268,7 @@ export const draculaTheme: editor.IStandaloneThemeData = {
       token: 'punctuation.definition.string.end.json - meta.structure.dictionary.value.json',
     },
     {
-      foreground: THEME.info,
+      foreground: THEME.cyan,
       token: 'meta.structure.dictionary.json string.quoted.double.json',
     },
     {
@@ -275,10 +279,10 @@ export const draculaTheme: editor.IStandaloneThemeData = {
   colors: {
     'editor.foreground': `#${THEME.foreground}`,
     'editor.background': `#${THEME.background}`,
-    'editor.selectionBackground': `#${THEME.line}`,
-    'editor.lineHighlightBackground': `#${THEME.line}`,
+    'editor.selectionBackground': `#${THEME.currentLine}`,
+    'editor.lineHighlightBackground': `#${THEME.currentLine}`,
     'editorCursor.foreground': '#f8f8f0',
-    'editorWhitespace.foreground': `#${THEME.subtle}`,
+    'editorWhitespace.foreground': `#${THEME.invisibles}`,
     'editorIndentGuide.activeBackground': '#9D550FB0',
     'editor.selectionHighlightBorder': '#222218',
   },
