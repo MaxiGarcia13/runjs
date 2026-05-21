@@ -10,11 +10,15 @@ export default eslintConfig(
     typescript: true,
     jsx: true,
     tailwindcss: true,
+
+    formatters: {
+      css: true,
+    },
   },
   {
     settings: {
       tailwindcss: {
-        config: join(rootDir, 'src/app.css'),
+        config: join(rootDir, 'src/styles/app.css'),
       },
     },
   },
