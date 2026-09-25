@@ -11,9 +11,9 @@ export function Outputs({ outputs }: OutputsProps) {
   }
 
   return (
-    <div role="list" aria-label="Console messages" className="flex flex-col gap-2">
+    <div role="list" aria-label="Console messages" className="flex flex-col gap-0.5 px-2 py-1">
       {outputs.map((item) => (
-        <LogLine key={item.id} id={item.id} {...item} />
+        <LogLine key={item.id} {...item} />
       ))}
     </div>
   );

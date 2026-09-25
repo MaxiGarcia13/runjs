@@ -1,6 +1,5 @@
 import type { CallSite } from '../types';
 import { cn } from '@maxigarcia/js-utils';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/collapsible';
 import { useEditorStore } from '@/store/useEditorStore';
 import { CallSiteLink } from './call-site-link';
 
@@ -9,9 +8,17 @@ interface LogLineWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   callSite?: CallSite;
   title?: string;
+  icon?: React.ReactNode;
 }
 
-export function LogLineWrapper({ children, className, callSite, title, ...props }: LogLineWrapperProps) {
+export function LogLineWrapper({
+  children,
+  className,
+  callSite,
+  title,
+  icon,
+  ...props
+}: LogLineWrapperProps) {
   const requestRevealLine = useEditorStore((state) => state.requestRevealLine);
 
   const handleRevealLine = () => {
@@ -25,30 +32,32 @@ export function LogLineWrapper({ children, className, callSite, title, ...props 
     : title;
 
   return (
-    <Collapsible
+    <div
       role="listitem"
       aria-label={ariaLabel}
-      className={cn('flex flex-col gap-2 w-full rounded-md justify-between p-2 text-foreground bg-surface/30 border-l-4', callSite && 'cursor-pointer', className)}
+      className={cn(
+        'flex w-full items-start gap-2 px-1 py-0.5 text-foreground transition-colors hover:bg-surface/40',
+        callSite && 'cursor-pointer',
+        className,
+      )}
       onMouseEnter={callSite ? handleRevealLine : undefined}
-      defaultOpen
       {...props}
     >
-      <CollapsibleTrigger
-        className="text-muted"
-        aria-label={`Toggle ${title}`}
-      >
-        <span className="shrink-0 text-xs">{title}</span>
-      </CollapsibleTrigger>
+      {callSite
+        ? (
+            <CallSiteLink callSite={callSite} className="w-6 shrink-0 text-right" />
+          )
+        : (
+            <span className="w-6 shrink-0" aria-hidden />
+          )}
 
-      <CollapsibleContent className="flex-1 flex-col gap-2">
+      <span className="mt-0.5 flex w-4 shrink-0 justify-center" aria-hidden={!icon}>
+        {icon}
+      </span>
+
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
         {children}
-      </CollapsibleContent>
-      {callSite && (
-        <div className="flex justify-end">
-          <CallSiteLink callSite={callSite} className="shrink-0 text-xs" />
-        </div>
-      )}
-
-    </Collapsible>
+      </div>
+    </div>
   );
 }

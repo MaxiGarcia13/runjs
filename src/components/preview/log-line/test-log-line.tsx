@@ -1,6 +1,7 @@
 import type { Output, OutputTestContent } from '../types';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/collapsible';
 import { LogLineContent } from './log-line-content';
+import { LogLineIcon } from './log-line-icon';
 import { LogLineWrapper } from './log-line-wrapper';
 
 export function TestLogLine({
@@ -11,17 +12,16 @@ export function TestLogLine({
   title: string;
   content?: OutputTestContent;
 }) {
-  const { expected, received, isPassed } = content;
+  const { expected, received, isPassed } = content ?? {};
 
-  const className = isPassed ? 'border-success' : 'border-danger';
   const testTitle = isPassed ? `${title} PASSED` : `${title} FAILED`;
 
   if (!received) {
     return (
       <LogLineWrapper
         callSite={callSite}
-        className={className}
         title={testTitle}
+        icon={<LogLineIcon type="test-log" isPassed={isPassed} />}
       >
         <span className="font-bold text-muted">Expected:</span>
         <LogLineContent content={expected} />
@@ -32,8 +32,8 @@ export function TestLogLine({
   return (
     <LogLineWrapper
       callSite={callSite}
-      className={className}
       title={testTitle}
+      icon={<LogLineIcon type="test-log" isPassed={isPassed} />}
     >
       <Collapsible role="group" aria-label="Received output" defaultOpen>
         <CollapsibleTrigger className="text-muted" aria-label="Toggle received output">

@@ -11,6 +11,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@root/package.json': fileURLToPath(new URL('./package.json', import.meta.url)),
     },
   },
   build: {

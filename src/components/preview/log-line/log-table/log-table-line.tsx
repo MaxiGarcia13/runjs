@@ -11,11 +11,7 @@ export function LogTableLine({
   const { columns, rows } = buildTable(content);
 
   return (
-    <LogLineWrapper
-      callSite={callSite}
-      title={title}
-      className="border-surface"
-    >
+    <LogLineWrapper callSite={callSite} title={title}>
       <LogTable columns={columns} rows={rows} />
     </LogLineWrapper>
   );
