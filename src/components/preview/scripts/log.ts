@@ -1,6 +1,6 @@
 import type { Variant } from '../types';
 import type { CallSite } from '../utils/call-site';
-import { isObject } from '@/utils/data-type';
+import { isObject, isThenable } from '@/utils/data-type';
 import { getCallSite } from '../utils/call-site';
 import {
   buildLogPayload,
@@ -84,8 +84,25 @@ function reportResult(value: unknown) {
 
   const callSite = getCallSite();
   const id = crypto.randomUUID();
-  const { values, states } = createLogPayloadState([value]);
 
+  // Async matchers (e.g. expect(...).toBe()) return a Promise<void>.
+  // Don't surface "pending" — wait until settled, and skip void fulfillments.
+  if (isThenable(value)) {
+    const { values, states } = createLogPayloadState([value]);
+
+    subscribeToThenables([value], values, states, () => {
+      const state = states[0];
+      if (state === 'pending')
+        return;
+      if (state === 'fulfilled' && values[0] === undefined)
+        return;
+
+      postLogMessage(buildLogPayload([value], values, states), id, 'log', callSite);
+    });
+    return;
+  }
+
+  const { values, states } = createLogPayloadState([value]);
   postLogMessage(buildLogPayload([value], values, states), id, 'log', callSite);
 }
 
