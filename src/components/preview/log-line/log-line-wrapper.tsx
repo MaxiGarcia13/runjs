@@ -45,10 +45,10 @@ export function LogLineWrapper({
     >
       {callSite
         ? (
-            <CallSiteLink callSite={callSite} className="w-6 shrink-0 text-right" />
+            <CallSiteLink callSite={callSite} className="w-8 shrink-0 text-right" />
           )
         : (
-            <span className="w-6 shrink-0" aria-hidden />
+            <span className="w-8 shrink-0" aria-hidden />
           )}
 
       <span className="mt-0.5 flex w-4 shrink-0 justify-center" aria-hidden={!icon}>

@@ -12,7 +12,7 @@ export function CallSiteLink({ callSite, className }: { callSite: CallSite; clas
       type="button"
       aria-label={`Go to line ${line}, column 1`}
       className={cn(
-        'cursor-pointer self-start text-xs tabular-nums text-muted hover:text-foreground',
+        'cursor-pointer self-start tabular-nums text-[#858585] hover:text-foreground',
         className,
       )}
       onClick={() => requestRevealLine(line)}
