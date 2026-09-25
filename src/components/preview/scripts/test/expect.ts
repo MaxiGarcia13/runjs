@@ -1,7 +1,7 @@
 import { deepEqual } from '@maxigarcia/js-utils';
+import { getCallSite } from '@/components/preview/utils/call-site';
 import { isObject, isPrimitive, isRegExp, isString } from '@/utils/data-type';
 import { indentValue } from '@/utils/value';
-import { getCallSite } from '../../utils/call-site';
 import { expectSpy } from './spy';
 import { getValue } from './utils';
 

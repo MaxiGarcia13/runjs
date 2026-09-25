@@ -1,6 +1,6 @@
 import { cn } from '@maxigarcia/js-utils';
+import { homepage, version } from '@root/package.json';
 import { GithubIcon } from '@/assets/icons/github';
-import { homepage, version } from '../../package.json';
 
 export function GithubLink({ className }: { className?: string }) {
   return (

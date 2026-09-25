@@ -1,4 +1,4 @@
-import type { CallSite } from '../../types';
+import type { CallSite } from '@/components/preview/types';
 import { deepEqual } from '@maxigarcia/js-utils';
 import { indentValue } from '@/utils/value';
 import { getValue } from './utils';

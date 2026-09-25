@@ -1,4 +1,4 @@
-import type { Output } from '../../types';
+import type { Output } from '@/components/preview/types';
 import { LogLineWrapper } from '../log-line-wrapper';
 import { LogTable } from './log-table';
 import { buildTable } from './table.utils';

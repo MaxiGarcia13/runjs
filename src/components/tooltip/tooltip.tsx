@@ -62,12 +62,13 @@ export function Tooltip({
       {!disabled && isOpen && (
         createPortal(
           <TooltipContent
-            id={tooltipId}
             ref={tooltipElementRef}
-            children={content}
+            id={tooltipId}
             coords={coords}
             className={cn(contentClassName)}
-          />,
+          >
+            {content}
+          </TooltipContent>,
           document.body,
         )
       )}

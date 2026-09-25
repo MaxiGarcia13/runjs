@@ -21,21 +21,29 @@ export function LogTable({ columns, rows }: LogTableProps) {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, rowIndex) => (
-            <tr
-              key={rowIndex}
-              className="border-b border-line/50 last:border-b-0"
-            >
-              {row.map((cell, cellIndex) => (
-                <td
-                  key={cellIndex}
-                  className="px-2 py-1 whitespace-pre-wrap"
-                >
-                  {cell}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {rows.map((row, rowIndex) => {
+            const key = `${rowIndex}-${row.join('-')}`;
+
+            return (
+              <tr
+                key={key}
+                className="border-b border-line/50 last:border-b-0"
+              >
+                {row.map((cell, cellIndex) => {
+                  const key = `${cellIndex}-${cell}`;
+
+                  return (
+                    <td
+                      key={key}
+                      className="px-2 py-1 whitespace-pre-wrap"
+                    >
+                      {cell}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
