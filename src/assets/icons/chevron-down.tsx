@@ -1,10 +1,9 @@
-import type { SVGAttributes } from 'react';
+import type { SvgProps } from './type';
 
-export function ChevronDownIcon({ className, ...props }: { className: string } & SVGAttributes<SVGSVGElement>) {
+export function ChevronDownIcon(props: SvgProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
       width={24}
       height={24}
       viewBox="0 0 24 24"
@@ -13,7 +12,7 @@ export function ChevronDownIcon({ className, ...props }: { className: string } &
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={className}
+      {...props}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M6 9l6 6l6 -6" />

@@ -1,8 +1,10 @@
-export function CommandIcon({ className, combination }: { className?: string; combination?: string }) {
+import type { SvgProps } from './type';
+
+export function CommandIcon({ combination, ...props }: SvgProps & { combination?: string }) {
   if (combination) {
     return (
       <span className="flex items-center justify-center gap-1 text-muted">
-        <BaseCommandIcon className={className} />
+        <BaseCommandIcon {...props} />
 
         <span className="mt-0.5 text-xs">{combination}</span>
       </span>
@@ -10,11 +12,11 @@ export function CommandIcon({ className, combination }: { className?: string; co
   }
 
   return (
-    <BaseCommandIcon className={className} />
+    <BaseCommandIcon {...props} />
   );
 }
 
-function BaseCommandIcon({ className }: { className?: string }) {
+function BaseCommandIcon(props: SvgProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +28,7 @@ function BaseCommandIcon({ className }: { className?: string }) {
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={className}
+      {...props}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M7 9a2 2 0 1 1 2 -2v10a2 2 0 1 1 -2 -2h10a2 2 0 1 1 -2 2v-10a2 2 0 1 1 2 2h-10" />

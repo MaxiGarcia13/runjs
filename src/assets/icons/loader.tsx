@@ -1,4 +1,6 @@
-export function LoaderIcon({ className }: { className?: string }) {
+import type { SvgProps } from './type';
+
+export function LoaderIcon(props: SvgProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +12,7 @@ export function LoaderIcon({ className }: { className?: string }) {
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={className}
+      {...props}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3a9 9 0 1 0 9 9" />
