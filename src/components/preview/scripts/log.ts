@@ -74,7 +74,19 @@ declare global {
     error: typeof console.error;
     info: typeof console.info;
     logTable: typeof console.table;
+    reportResult: (value: unknown) => void;
   }
+}
+
+function reportResult(value: unknown) {
+  if (value === undefined)
+    return;
+
+  const callSite = getCallSite();
+  const id = crypto.randomUUID();
+  const { values, states } = createLogPayloadState([value]);
+
+  postLogMessage(buildLogPayload([value], values, states), id, 'log', callSite);
 }
 
 if (isObject(window)) {
@@ -83,4 +95,5 @@ if (isObject(window)) {
   window.error = overwriteFunction(originalError, 'error');
   window.info = overwriteFunction(originalInfo, 'info');
   window.logTable = overwriteFunction(originalTable, 'log-table');
+  window.reportResult = reportResult;
 }

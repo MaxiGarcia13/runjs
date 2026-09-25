@@ -9,10 +9,13 @@
   <!-- Test helper -->
   <script src="/preview/scripts/test/index.js"></script>
 
-  <!-- User code -->
+  <!-- User code (evaluated below; text/plain avoids syntax issues with wrapping) -->
+  <script type="text/plain" id="user-code">// your code here</script>
+
   <script>
     try {
-      // your code here
+      const code = document.getElementById('user-code').textContent;
+      (0, eval)(code);
     } catch (error) {
       console.error(error);
     }

@@ -15,31 +15,36 @@ interface Message {
   payload?: any[];
   type?: string;
   id: string;
-  callSite?: CallSite;
+  callSite?: CallSite | null;
 }
 
 export function Preview({ className }: PreviewProps) {
   const { code } = useEditorStore();
 
   const scrollRef = useRef<HTMLElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const [outputs, setOutputs] = useState<Output[]>([]);
 
-  const formatOutput = (content: string) => {
+  const formatOutput = (content: unknown) => {
     return indentValue(content);
   };
 
-  const mapOutput = (data: Message, offset: number) => {
-    const line = (data.callSite?.line ?? 0) - offset;
-    const column = data.callSite?.column;
+  const mapCallSite = (callSite: CallSite | null | undefined, offset: number): CallSite | undefined => {
+    if (!callSite)
+      return undefined;
 
+    return {
+      line: callSite.line - offset,
+      column: callSite.column,
+    };
+  };
+
+  const mapOutput = (data: Message, offset: number) => {
     const base = {
       id: data.id,
       type: data.type as Variant,
-      callSite: {
-        line,
-        column,
-      },
+      callSite: mapCallSite(data.callSite, offset),
     };
 
     if (data.type === 'error') {
@@ -55,10 +60,7 @@ export function Preview({ className }: PreviewProps) {
 
       return {
         ...base,
-        callSite: {
-          line: location.line - offset,
-          column: location.column,
-        },
+        callSite: mapCallSite(location, offset),
         content: {
           isPassed: Boolean(isPassed),
           received,
@@ -80,14 +82,16 @@ export function Preview({ className }: PreviewProps) {
   }, 100);
 
   const onMessage = (lastPosition: number) => (event: MessageEvent) => {
-    const data: Message = event.data;
-
-    if (data.source !== 'runjs-preview')
+    if (event.source !== iframeRef.current?.contentWindow)
       return;
 
-    // Hardcoded offset for the try/catch block
-    // TODO: Implement a more dynamic way to get the offset
-    const offset = 14;
+    const data: Message = event.data;
+
+    if (!data || data.source !== 'runjs-preview' || typeof data.id !== 'string')
+      return;
+
+    // User code runs via eval, so stack lines are relative to the source string.
+    const offset = 0;
 
     setOutputs(
       (prev) => {
@@ -124,7 +128,7 @@ export function Preview({ className }: PreviewProps) {
       aria-live="polite"
       aria-relevant="additions"
     >
-      <Iframe code={code} />
+      <Iframe ref={iframeRef} code={code} />
       <Outputs outputs={outputs} />
     </section>
   );
