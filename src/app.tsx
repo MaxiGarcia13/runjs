@@ -14,7 +14,7 @@ export function App() {
         className="min-h-0 flex-1 overflow-hidden"
         direction={isMobile() ? 'vertical' : 'horizontal'}
         leftContent={<LazyEditor className="py-2 pr-2 pl-0" />}
-        rightContent={<Preview className="pt-4 pr-4 pb-2 pl-4" />}
+        rightContent={<Preview className="pt-2 pr-4 pb-2" />}
       />
       <Footer />
     </ToastProvider>

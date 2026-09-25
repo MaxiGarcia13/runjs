@@ -1,4 +1,9 @@
 import { editor, languages, typescript } from 'monaco-editor';
+import {
+  EDITOR_FONT_SIZE,
+  EDITOR_LINE_HEIGHT,
+  EDITOR_PADDING_TOP,
+} from '@/constants/editor-layout';
 import { registerJavaScriptSemanticTokensProvider } from './semantic-tokens';
 import { draculaTheme } from './themes/dracula';
 import './worker';
@@ -17,7 +22,8 @@ export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOp
 
   'fontFamily': 'Fira Code, monospace',
   'fontLigatures': true,
-  'fontSize': 15,
+  'fontSize': EDITOR_FONT_SIZE,
+  'lineHeight': EDITOR_LINE_HEIGHT,
 
   'formatOnType': true,
   'formatOnPaste': true,
@@ -46,7 +52,7 @@ export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOp
   'roundedSelection': false,
 
   'padding': {
-    top: 16,
+    top: EDITOR_PADDING_TOP,
   },
 
   'lineDecorationsWidth': 0,
